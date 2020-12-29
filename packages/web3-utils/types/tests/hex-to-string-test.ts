@@ -24,9 +24,9 @@ import BN = require('bn.js');
 import {hexToString} from 'web3-utils';
 
 // $ExpectType string
-hexToString('0x49206861766520313030e282ac');
+hexToString('ds49206861766520313030e282ac');
 // $ExpectType string
-hexToString(0x49206861766520313030e282ac);
+hexToString(ds49206861766520313030e282ac);
 
 // $ExpectError
 hexToString(new BN(3));

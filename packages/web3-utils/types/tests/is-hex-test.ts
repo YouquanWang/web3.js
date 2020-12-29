@@ -24,7 +24,7 @@ import BN = require('bn.js');
 import {isHex} from 'web3-utils';
 
 // $ExpectType boolean
-isHex('0xc1912');
+isHex('dsc1912');
 // $ExpectType boolean
 isHex(345);
 

@@ -24,11 +24,11 @@ import BN = require('bn.js');
 import {toChecksumAddress} from 'web3-utils';
 
 // $ExpectType string
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectType string
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', 31);
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', 31);
 // $ExpectType string
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', undefined);
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', undefined);
 
 // $ExpectError
 toChecksumAddress([4]);
@@ -47,14 +47,14 @@ toChecksumAddress(null);
 // $ExpectError
 toChecksumAddress(undefined);
 // $ExpectError
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', [4]);
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', [4]);
 // $ExpectError
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', ['string']);
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', ['string']);
 // $ExpectError
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', new BN(3));
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', new BN(3));
 // $ExpectError
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', {});
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', {});
 // $ExpectError
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', true);
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', true);
 // $ExpectError
-toChecksumAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', null);
+toChecksumAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', null);

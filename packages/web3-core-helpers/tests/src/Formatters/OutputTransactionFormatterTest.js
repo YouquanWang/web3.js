@@ -60,8 +60,8 @@ describe('OutputTransactionFormatterTest', () => {
             gasPrice: 100,
             nonce: 1,
             value: 100,
-            to: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078',
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            to: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078',
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         };
 
         expect(outputTransactionFormatter(receipt)).toEqual({
@@ -71,8 +71,8 @@ describe('OutputTransactionFormatterTest', () => {
             gasPrice: '100',
             nonce: 1,
             value: '100',
-            to: '0x03C9A938fF7f54090d0d99e2c6f80380510Ea078',
-            from: '0x03C9A938fF7f54090d0d99e2c6f80380510Ea078'
+            to: 'ds03C9A938fF7f54090d0d99e2c6f80380510Ea078',
+            from: 'ds03C9A938fF7f54090d0d99e2c6f80380510Ea078'
         });
     });
 });

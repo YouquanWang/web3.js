@@ -28,7 +28,7 @@ describe('AccountTest', () => {
     let account, accountsMock, transactionSignerMock, mockKey;
 
     beforeEach(() => {
-        mockKey = '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+        mockKey = 'ds0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
         transactionSignerMock = new TransactionSigner();
 
         new Accounts();
@@ -141,7 +141,7 @@ describe('AccountTest', () => {
                 ciphertext: 'xx',
                 cipher: 'cipher',
                 cipherparams: {
-                    iv: ['0x0']
+                    iv: ['ds0']
                 },
                 kdfparams: {
                     n: 'n',
@@ -154,13 +154,13 @@ describe('AccountTest', () => {
         };
 
         fromPrivate.mockReturnValueOnce({
-            address: '0x0',
-            privateKey: '0x0'
+            address: 'ds0',
+            privateKey: 'ds0'
         });
 
         scrypt.mockReturnValueOnce(Buffer.from('00000000000000000000000000000000'));
 
-        keccak256.mockReturnValueOnce('0xmac');
+        keccak256.mockReturnValueOnce('dsmac');
 
         const decipher = {
             update: jest.fn(),
@@ -193,7 +193,7 @@ describe('AccountTest', () => {
         expect(createDecipheriv).toHaveBeenCalledWith(
             'cipher',
             Buffer.from('0000000000000000'),
-            Buffer.from(['0x0'], 'hex')
+            Buffer.from(['ds0'], 'hex')
         );
 
         expect(decipher.update).toHaveBeenCalledWith(Buffer.from(json.crypto.ciphertext, 'hex'));
@@ -210,7 +210,7 @@ describe('AccountTest', () => {
                 ciphertext: 'xx',
                 cipher: 'cipher',
                 cipherparams: {
-                    iv: ['0x0']
+                    iv: ['ds0']
                 },
                 kdfparams: {
                     c: 1,
@@ -222,11 +222,11 @@ describe('AccountTest', () => {
         };
 
         fromPrivate.mockReturnValueOnce({
-            address: '0x0',
-            privateKey: '0x0'
+            address: 'ds0',
+            privateKey: 'ds0'
         });
 
-        keccak256.mockReturnValueOnce('0xmac');
+        keccak256.mockReturnValueOnce('dsmac');
 
         const decipher = {
             update: jest.fn(),
@@ -260,7 +260,7 @@ describe('AccountTest', () => {
         expect(createDecipheriv).toHaveBeenCalledWith(
             'cipher',
             Buffer.from('0000000000000000'),
-            Buffer.from(['0x0'], 'hex')
+            Buffer.from(['ds0'], 'hex')
         );
 
         expect(decipher.update).toHaveBeenCalledWith(Buffer.from(json.crypto.ciphertext, 'hex'));
@@ -301,7 +301,7 @@ describe('AccountTest', () => {
                 ciphertext: 'xx',
                 cipher: 'cipher',
                 cipherparams: {
-                    iv: ['0x0']
+                    iv: ['ds0']
                 },
                 kdfparams: {
                     c: 1,
@@ -312,7 +312,7 @@ describe('AccountTest', () => {
             }
         };
 
-        keccak256.mockReturnValueOnce('0xmac');
+        keccak256.mockReturnValueOnce('dsmac');
 
         pbkdf2Sync.mockReturnValueOnce(Buffer.from('00000000000000000000000000000000'));
 
@@ -337,8 +337,8 @@ describe('AccountTest', () => {
         const options = {};
 
         fromPrivate.mockReturnValueOnce({
-            privateKey: '0xxx',
-            address: '0xA'
+            privateKey: 'dsxx',
+            address: 'dsA'
         });
 
         randomBytes.mockReturnValue(Buffer.from('random'));
@@ -356,7 +356,7 @@ describe('AccountTest', () => {
 
         scrypt.mockReturnValueOnce(Buffer.from('0000000000000000'));
 
-        keccak256.mockReturnValueOnce('0xmac');
+        keccak256.mockReturnValueOnce('dsmac');
 
         uuid.v4.mockReturnValueOnce(0);
 
@@ -396,7 +396,7 @@ describe('AccountTest', () => {
             Buffer.from('random')
         );
 
-        expect(cipher.update).toHaveBeenCalledWith(Buffer.from(account.privateKey.replace('0x', ''), 'hex'));
+        expect(cipher.update).toHaveBeenCalledWith(Buffer.from(account.privateKey.replace('ds', ''), 'hex'));
 
         expect(cipher.final).toHaveBeenCalled();
 
@@ -414,8 +414,8 @@ describe('AccountTest', () => {
         const options = {kdf: 'pbkdf2'};
 
         fromPrivate.mockReturnValueOnce({
-            privateKey: '0xxx',
-            address: '0xA'
+            privateKey: 'dsxx',
+            address: 'dsA'
         });
 
         randomBytes.mockReturnValue(Buffer.from('random'));
@@ -433,7 +433,7 @@ describe('AccountTest', () => {
 
         pbkdf2Sync.mockReturnValueOnce(Buffer.from('0000000000000000'));
 
-        keccak256.mockReturnValueOnce('0xmac');
+        keccak256.mockReturnValueOnce('dsmac');
 
         uuid.v4.mockReturnValueOnce(0);
 
@@ -472,7 +472,7 @@ describe('AccountTest', () => {
             Buffer.from('random')
         );
 
-        expect(cipher.update).toHaveBeenCalledWith(Buffer.from(account.privateKey.replace('0x', ''), 'hex'));
+        expect(cipher.update).toHaveBeenCalledWith(Buffer.from(account.privateKey.replace('ds', ''), 'hex'));
 
         expect(cipher.final).toHaveBeenCalled();
 
@@ -488,8 +488,8 @@ describe('AccountTest', () => {
 
     it('calls encrypt with a unsupported sheme', () => {
         fromPrivate.mockReturnValueOnce({
-            privateKey: '0xxx',
-            address: '0xA'
+            privateKey: 'dsxx',
+            address: 'dsA'
         });
 
         randomBytes.mockReturnValue(Buffer.from('random'));
@@ -509,8 +509,8 @@ describe('AccountTest', () => {
         const options = {kdf: 'pbkdf2'};
 
         fromPrivate.mockReturnValueOnce({
-            privateKey: '0xxx',
-            address: '0xA'
+            privateKey: 'dsxx',
+            address: 'dsA'
         });
 
         randomBytes.mockReturnValue(Buffer.from('random'));
@@ -519,7 +519,7 @@ describe('AccountTest', () => {
 
         pbkdf2Sync.mockReturnValueOnce(Buffer.from('0000000000000000'));
 
-        keccak256.mockReturnValueOnce('0xmac');
+        keccak256.mockReturnValueOnce('dsmac');
 
         expect(() => {
             Account.fromPrivateKey(mockKey).toV3Keystore('password', options);

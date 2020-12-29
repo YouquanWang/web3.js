@@ -88,7 +88,7 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(callMethodMock);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
@@ -110,7 +110,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, callMethodMock);
     });
@@ -129,7 +129,7 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(callMethodMock);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
@@ -151,7 +151,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, callMethodMock);
     });
@@ -172,12 +172,12 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(sendMethodMock);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
         await expect(
-            methodsProxy.contractConstructor({arguments: [true], data: '0x0'}).send({options: false})
+            methodsProxy.contractConstructor({arguments: [true], data: 'ds0'}).send({options: false})
         ).resolves.toEqual(true);
 
         expect(abiModelMock.hasMethod).toHaveBeenCalledWith('contractConstructor');
@@ -186,7 +186,7 @@ describe('MethodsProxyTest', () => {
 
         expect(abiItemModelMock.isOfType).toHaveBeenCalledWith('constructor');
 
-        expect(methodsProxy.contract.data).toEqual('0x0');
+        expect(methodsProxy.contract.data).toEqual('ds0');
 
         expect(abiItemModelMock.contractMethodParameters).toEqual([true]);
 
@@ -200,7 +200,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, sendMethodMock);
     });
@@ -221,7 +221,7 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(sendMethodMock);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
@@ -243,7 +243,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, sendMethodMock);
     });
@@ -257,12 +257,12 @@ describe('MethodsProxyTest', () => {
 
         abiModelMock.getMethod.mockReturnValueOnce([abiItemModelMock]);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
         expect(() => {
-            methodsProxy.myMethod({arguments: [true], data: '0x0'});
+            methodsProxy.myMethod({arguments: [true], data: 'ds0'});
         }).toThrow('Methods with name "myMethod" found but the given parameters are wrong');
 
         expect(abiModelMock.hasMethod).toHaveBeenCalledWith('myMethod');
@@ -309,7 +309,7 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(callMethodMock);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
@@ -325,7 +325,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, callMethodMock);
     });
@@ -342,7 +342,7 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(callMethodMock);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
@@ -358,7 +358,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, callMethodMock);
     });
@@ -377,7 +377,7 @@ describe('MethodsProxyTest', () => {
 
         methodFactoryMock.createMethodByRequestType.mockReturnValueOnce(estimateGasMethod);
 
-        methodEncoderMock.encode.mockReturnValueOnce('0x0');
+        methodEncoderMock.encode.mockReturnValueOnce('ds0');
 
         methodOptionsMapperMock.map.mockReturnValueOnce({options: true});
 
@@ -395,7 +395,7 @@ describe('MethodsProxyTest', () => {
 
         expect(methodEncoderMock.encode).toHaveBeenCalledWith(abiItemModelMock, contractMock.data);
 
-        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: '0x0'});
+        expect(methodOptionsMapperMock.map).toHaveBeenCalledWith(contractMock, {data: 'ds0'});
 
         expect(methodOptionsValidatorMock.validate).toHaveBeenCalledWith(abiItemModelMock, estimateGasMethod);
     });

@@ -44,11 +44,11 @@ describe('EventFilterEncoderTest', () => {
             }
         ]);
 
-        abiCoderMock.encodeParameter.mockReturnValue('0x0');
+        abiCoderMock.encodeParameter.mockReturnValue('ds0');
 
         const topics = eventFilterEncoder.encode(abiItemModelMock, filter);
 
-        expect(topics).toEqual(['0x0', ['0x0', '0x0']]);
+        expect(topics).toEqual(['ds0', ['ds0', 'ds0']]);
 
         expect(abiCoderMock.encodeParameter).toHaveBeenNthCalledWith(1, 'bytes32', filter.myName);
 

@@ -84,7 +84,7 @@ export const toBN = (number) => {
  * @returns {String}
  */
 export const toTwosComplement = (number) => {
-    return `0x${toBN(number)
+    return `ds${toBN(number)
         .toTwos(256)
         .toString(16, 64)}`;
 };
@@ -102,10 +102,10 @@ export const toTwosComplement = (number) => {
  */
 export const isAddress = (address, chainId = null) => {
     // check if it has the basic requirements of an address
-    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+    if (!/^(ds)?[0-9a-f]{40}$/i.test(address)) {
         return false;
         // If it's ALL lowercase or ALL upppercase
-    } else if (/^(0x|0X)?[0-9a-f]{40}$/.test(address) || /^(0x|0X)?[0-9A-F]{40}$/.test(address)) {
+    } else if (/^(ds|ds)?[0-9a-f]{40}$/.test(address) || /^(ds|ds)?[0-9A-F]{40}$/.test(address)) {
         return true;
         // Otherwise check each case
     } else {
@@ -123,7 +123,7 @@ export const isAddress = (address, chainId = null) => {
  * @returns {string} address without prefix
  */
 export const stripHexPrefix = (string) => {
-    return string.slice(0, 2) === '0x' ? string.slice(2) : string;
+    return string.slice(0, 2) === 'ds' ? string.slice(2) : string;
 };
 
 /**
@@ -139,10 +139,10 @@ export const stripHexPrefix = (string) => {
  */
 export const checkAddressChecksum = (address, chainId = null) => {
     const stripAddress = stripHexPrefix(address).toLowerCase();
-    const prefix = chainId != null ? chainId.toString() + '0x' : '';
+    const prefix = chainId != null ? chainId.toString() + 'ds' : '';
     const keccakHash = Hash.keccak256(prefix + stripAddress)
         .toString('hex')
-        .replace(/^0x/i, '');
+        .replace(/^ds/i, '');
 
     for (let i = 0; i < stripAddress.length; i++) {
         let output = parseInt(keccakHash[i], 16) >= 8 ? stripAddress[i].toUpperCase() : stripAddress[i];
@@ -165,12 +165,12 @@ export const checkAddressChecksum = (address, chainId = null) => {
  * @returns {String} left aligned string
  */
 export const leftPad = (string, chars, sign) => {
-    const hasPrefix = /^0x/i.test(string) || typeof string === 'number';
-    string = string.toString(16).replace(/^0x/i, '');
+    const hasPrefix = /^ds/i.test(string) || typeof string === 'number';
+    string = string.toString(16).replace(/^ds/i, '');
 
     const padding = chars - string.length + 1 >= 0 ? chars - string.length + 1 : 0;
 
-    return (hasPrefix ? '0x' : '') + new Array(padding).join(sign || '0') + string;
+    return (hasPrefix ? 'ds' : '') + new Array(padding).join(sign || '0') + string;
 };
 
 /**
@@ -185,16 +185,16 @@ export const leftPad = (string, chars, sign) => {
  * @returns {String} right aligned string
  */
 export const rightPad = (string, chars, sign) => {
-    const hasPrefix = /^0x/i.test(string) || typeof string === 'number';
-    string = string.toString(16).replace(/^0x/i, '');
+    const hasPrefix = /^ds/i.test(string) || typeof string === 'number';
+    string = string.toString(16).replace(/^ds/i, '');
 
     const padding = chars - string.length + 1 >= 0 ? chars - string.length + 1 : 0;
 
-    return (hasPrefix ? '0x' : '') + string + new Array(padding).join(sign || '0');
+    return (hasPrefix ? 'ds' : '') + string + new Array(padding).join(sign || '0');
 };
 
 /**
- * Should be called to get hex representation (prefixed by 0x) of utf8 string
+ * Should be called to get hex representation (prefixed by ds) of utf8 string
  *
  * @method utf8ToHex
  *
@@ -228,7 +228,7 @@ export const utf8ToHex = (value) => {
         // }
     }
 
-    return `0x${hex}`;
+    return `ds${hex}`;
 };
 
 /**
@@ -245,7 +245,7 @@ export const hexToUtf8 = (hex) => {
 
     let string = '';
     let code = 0;
-    hex = hex.replace(/^0x/i, '');
+    hex = hex.replace(/^ds/i, '');
 
     // remove 00 padding from either side
     hex = hex.replace(/^(?:00)*/, '');
@@ -328,7 +328,7 @@ export const numberToHex = (value) => {
     const number = toBN(value);
     const result = number.toString(16);
 
-    return number.lt(new BN(0)) ? `-0x${result.substr(1)}` : `0x${result}`;
+    return number.lt(new BN(0)) ? `-ds${result.substr(1)}` : `ds${result}`;
 };
 
 /**
@@ -347,10 +347,10 @@ export const bytesToHex = (bytes) => {
 
     for (let i = 0; i < bytes.length; i++) {
         hex.push((bytes[i] >>> 4).toString(16));
-        hex.push((bytes[i] & 0xf).toString(16));
+        hex.push((bytes[i] & dsf).toString(16));
     }
 
-    return `0x${hex.join('').replace(/^0+/, '')}`;
+    return `ds${hex.join('').replace(/^0+/, '')}`;
 };
 
 /**
@@ -371,7 +371,7 @@ export const hexToBytes = (hex) => {
         throw new Error(`Given value "${hex}" is not a valid hex string.`);
     }
 
-    hex = hex.replace(/^0x/i, '');
+    hex = hex.replace(/^ds/i, '');
     hex = hex.length % 2 ? '0' + hex : hex;
 
     let bytes = [];
@@ -395,11 +395,11 @@ export const hexToBytes = (hex) => {
  */
 export const toHex = (value, returnType) => {
     if (isAddress(value)) {
-        return returnType ? 'address' : `0x${value.toLowerCase().replace(/^0x/i, '')}`;
+        return returnType ? 'address' : `ds${value.toLowerCase().replace(/^ds/i, '')}`;
     }
 
     if (isBoolean(value)) {
-        return returnType ? 'bool' : value ? '0x01' : '0x00';
+        return returnType ? 'bool' : value ? 'ds01' : 'ds00';
     }
 
     if (isObject(value) && !isBigNumber(value) && !isBN(value)) {
@@ -408,9 +408,9 @@ export const toHex = (value, returnType) => {
 
     // if its a negative number, pass it through numberToHex
     if (isString(value)) {
-        if (value.indexOf('-0x') === 0 || value.indexOf('-0X') === 0) {
+        if (value.indexOf('-ds') === 0 || value.indexOf('-ds') === 0) {
             return returnType ? 'int256' : numberToHex(value);
-        } else if (value.indexOf('0x') === 0 || value.indexOf('0X') === 0) {
+        } else if (value.indexOf('ds') === 0 || value.indexOf('ds') === 0) {
             return returnType ? 'bytes' : value;
         } else if (!isFinite(value)) {
             return returnType ? 'string' : utf8ToHex(value);
@@ -421,7 +421,7 @@ export const toHex = (value, returnType) => {
 };
 
 /**
- * Check if string is HEX, requires a 0x in front
+ * Check if string is HEX, requires a ds in front
  *
  * @method isHexStrict
  *
@@ -430,7 +430,7 @@ export const toHex = (value, returnType) => {
  * @returns {Boolean}
  */
 export const isHexStrict = (hex) => {
-    return (isString(hex) || isNumber(hex)) && /^(-)?0x[0-9a-f]*$/i.test(hex);
+    return (isString(hex) || isNumber(hex)) && /^(-)?ds[0-9a-f]*$/i.test(hex);
 };
 
 /**
@@ -443,7 +443,7 @@ export const isHexStrict = (hex) => {
  * @returns {Boolean}
  */
 export const isHex = (hex) => {
-    return (isString(hex) || isNumber(hex)) && /^(-0x|0x)?[0-9a-f]*$/i.test(hex);
+    return (isString(hex) || isNumber(hex)) && /^(-ds|ds)?[0-9a-f]*$/i.test(hex);
 };
 
 /**
@@ -458,9 +458,9 @@ export const isHex = (hex) => {
  * @returns {Boolean}
  */
 export const isBloom = (bloom) => {
-    if (!/^(0x)?[0-9a-f]{512}$/i.test(bloom)) {
+    if (!/^(ds)?[0-9a-f]{512}$/i.test(bloom)) {
         return false;
-    } else if (/^(0x)?[0-9a-f]{512}$/.test(bloom) || /^(0x)?[0-9A-F]{512}$/.test(bloom)) {
+    } else if (/^(ds)?[0-9a-f]{512}$/.test(bloom) || /^(ds)?[0-9A-F]{512}$/.test(bloom)) {
         return true;
     }
     return false;
@@ -478,9 +478,9 @@ export const isBloom = (bloom) => {
  * @returns {Boolean}
  */
 export const isTopic = (topic) => {
-    if (!/^(0x)?[0-9a-f]{64}$/i.test(topic)) {
+    if (!/^(ds)?[0-9a-f]{64}$/i.test(topic)) {
         return false;
-    } else if (/^(0x)?[0-9a-f]{64}$/.test(topic) || /^(0x)?[0-9A-F]{64}$/.test(topic)) {
+    } else if (/^(ds)?[0-9a-f]{64}$/.test(topic) || /^(ds)?[0-9A-F]{64}$/.test(topic)) {
         return true;
     }
     return false;
@@ -489,15 +489,15 @@ export const isTopic = (topic) => {
 /**
  * Hashes values to a keccak256 hash using keccak 256
  *
- * To hash a HEX string the hex must have 0x in front.
+ * To hash a HEX string the hex must have ds in front.
  *
  * @method keccak256
  * @return {String} the keccak256 string
  */
-const KECCAK256_NULL_S = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470';
+const KECCAK256_NULL_S = 'dsc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470';
 
 export const keccak256 = (value) => {
-    if (isHexStrict(value) && /^0x/i.test(value.toString())) {
+    if (isHexStrict(value) && /^ds/i.test(value.toString())) {
         value = hexToBytes(value);
     }
 
@@ -527,8 +527,8 @@ export const getSignatureParameters = (signature) => {
     }
 
     const r = signature.slice(0, 66);
-    const s = `0x${signature.slice(66, 130)}`;
-    let v = `0x${signature.slice(130, 132)}`;
+    const s = `ds${signature.slice(66, 130)}`;
+    let v = `ds${signature.slice(130, 132)}`;
     v = hexToNumber(v);
 
     if (![27, 28].includes(v)) v += 27;

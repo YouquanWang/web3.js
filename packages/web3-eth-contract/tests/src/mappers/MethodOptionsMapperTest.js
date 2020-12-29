@@ -25,31 +25,31 @@ describe('MethodOptionsMapperTest', () => {
 
     it('calls map with a from property and returns the expected result', () => {
         const options = {
-            from: '0x0'
+            from: 'ds0'
         };
 
         const contract = {
             defaultGasPrice: 100,
             defaultGas: 100,
-            address: '0x0'
+            address: 'ds0'
         };
 
-        formatters.inputAddressFormatter.mockReturnValue('0x0');
+        formatters.inputAddressFormatter.mockReturnValue('ds0');
 
-        Utils.toChecksumAddress.mockReturnValueOnce('0x0');
+        Utils.toChecksumAddress.mockReturnValueOnce('ds0');
 
         const response = methodOptionsMapper.map(contract, options);
 
         expect(response).toEqual({
-            to: '0x0',
-            from: '0x0',
+            to: 'ds0',
+            from: 'ds0',
             gasPrice: 100,
             gas: 100
         });
 
-        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('ds0');
 
-        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('0x0');
+        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('ds0');
     });
 
     it('calls map with a gasPrice property and returns the expected result', () => {
@@ -59,15 +59,15 @@ describe('MethodOptionsMapperTest', () => {
 
         const contract = {
             defaultGas: 100,
-            defaultAccount: '0x0',
-            address: '0x0'
+            defaultAccount: 'ds0',
+            address: 'ds0'
         };
 
         const response = methodOptionsMapper.map(contract, options);
 
         expect(response).toEqual({
-            to: '0x0',
-            from: '0x0',
+            to: 'ds0',
+            from: 'ds0',
             gasPrice: 100,
             gas: 100
         });
@@ -80,15 +80,15 @@ describe('MethodOptionsMapperTest', () => {
 
         const contract = {
             defaultGasPrice: 100,
-            defaultAccount: '0x0',
-            address: '0x0'
+            defaultAccount: 'ds0',
+            address: 'ds0'
         };
 
         const response = methodOptionsMapper.map(contract, options);
 
         expect(response).toEqual({
-            to: '0x0',
-            from: '0x0',
+            to: 'ds0',
+            from: 'ds0',
             gasPrice: 100,
             gas: 100
         });

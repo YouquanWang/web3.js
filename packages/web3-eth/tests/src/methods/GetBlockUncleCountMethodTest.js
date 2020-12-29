@@ -16,7 +16,7 @@ describe('GetBlockUncleCountMethodTest', () => {
     });
 
     it('calls execute with hash', () => {
-        getBlockUncleCountMethod.parameters = ['0x0'];
+        getBlockUncleCountMethod.parameters = ['ds0'];
 
         getBlockUncleCountMethod.beforeExecution({});
 

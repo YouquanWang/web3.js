@@ -26,64 +26,64 @@ accounts.create();
 accounts.create('2435@#@#@±±±±!!!!678543213456764321§34567543213456785432134567');
 
 // $ExpectType Account
-accounts.privateKeyToAccount('0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709');
+accounts.privateKeyToAccount('ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709');
 
 // $ExpectType Promise<SignedTransaction>
 accounts.signTransaction(
     {
-        to: '0xF0109fC8DF283027b6285cc889F5aA624EaC1F55',
+        to: 'dsF0109fC8DF283027b6285cc889F5aA624EaC1F55',
         value: '1000000000',
         gas: 2000000
     },
-    '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318'
+    'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318'
 );
 
 // $ExpectType Promise<SignedTransaction>
 accounts.signTransaction(
     {
-        to: '0xF0109fC8DF283027b6285cc889F5aA624EaC1F55',
+        to: 'dsF0109fC8DF283027b6285cc889F5aA624EaC1F55',
         value: '1000000000',
         gas: 2000000
     },
-    '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318',
+    'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318',
     () => {
         console.log('hey');
     }
 );
 
 // $ExpectType string
-accounts.recoverTransaction('0xf861808084aefcdfa08e7d2ee3f0b9d9ae184b2001fe0aff07603d9');
+accounts.recoverTransaction('dsf861808084aefcdfa08e7d2ee3f0b9d9ae184b2001fe0aff07603d9');
 
 // $ExpectType string
 accounts.hashMessage('hello world');
 
 // $ExpectType Sign
-accounts.sign('Some data', '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+accounts.sign('Some data', 'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
 
 // $ExpectType string
 accounts.recover({
-    messageHash: '0x1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
-    v: '0x1c',
-    r: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
-    s: '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029'
+    messageHash: 'ds1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
+    v: 'ds1c',
+    r: 'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
+    s: 'ds6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029'
 });
 
 // $ExpectType string
 accounts.recover(
     'Some data',
-    '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
+    'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
 );
 
 // $ExpectType string
 accounts.recover(
     'Some data',
-    '0x1c',
-    '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
-    '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029'
+    'ds1c',
+    'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
+    'ds6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029'
 );
 
 // $ExpectType EncryptedKeystoreV3Json
-accounts.encrypt('0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318', 'test!');
+accounts.encrypt('ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318', 'test!');
 
 // $ExpectType Account
 accounts.decrypt(
@@ -119,16 +119,16 @@ accounts.wallet[0];
 accounts.wallet.create(2, '54674321§3456764321§345674321§3453647544±±±§±±±!!!43534534534534');
 
 // $ExpectType AddedAccount
-accounts.wallet.add('0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+accounts.wallet.add('ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
 
 // $ExpectType AddedAccount
 accounts.wallet.add({
-    privateKey: '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
-    address: '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
+    privateKey: 'ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
+    address: 'dsb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
 });
 
 // $ExpectType boolean
-accounts.wallet.remove('0xF0109fC8DF283027b6285cc889F5aA624EaC1F55');
+accounts.wallet.remove('dsF0109fC8DF283027b6285cc889F5aA624EaC1F55');
 
 // $ExpectType boolean
 accounts.wallet.remove(3);

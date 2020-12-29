@@ -184,21 +184,21 @@ describe('EthTest', () => {
     });
 
     it('sets the defaultAccount property', () => {
-        eth.initiatedContracts = [{defaultAccount: '0x0'}];
+        eth.initiatedContracts = [{defaultAccount: 'ds0'}];
 
-        Utils.toChecksumAddress.mockReturnValueOnce('0x1');
+        Utils.toChecksumAddress.mockReturnValueOnce('ds1');
 
-        eth.defaultAccount = '0x1';
+        eth.defaultAccount = 'ds1';
 
-        expect(eth.initiatedContracts[0].defaultAccount).toEqual('0x1');
+        expect(eth.initiatedContracts[0].defaultAccount).toEqual('ds1');
 
-        expect(eth.defaultAccount).toEqual('0x1');
+        expect(eth.defaultAccount).toEqual('ds1');
 
-        expect(networkMock.defaultAccount).toEqual('0x1');
+        expect(networkMock.defaultAccount).toEqual('ds1');
 
-        expect(personalMock.defaultAccount).toEqual('0x1');
+        expect(personalMock.defaultAccount).toEqual('ds1');
 
-        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('0x1');
+        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('ds1');
     });
 
     it('sets the defaultBlock property', () => {
@@ -294,15 +294,15 @@ describe('EthTest', () => {
         contractModuleFactoryMock.createContract.mockReturnValueOnce({});
 
         eth.currentProvider = providerMock;
-        expect(new eth.Contract([], '0x0', {data: '', from: '0x0', gas: '0x0', gasPrice: '0x0'})).toEqual({});
+        expect(new eth.Contract([], 'ds0', {data: '', from: 'ds0', gas: 'ds0', gasPrice: 'ds0'})).toEqual({});
 
         expect(eth.initiatedContracts).toHaveLength(1);
 
-        expect(contractModuleFactoryMock.createContract).toHaveBeenCalledWith(providerMock, eth.accounts, [], '0x0', {
-            defaultAccount: '0x0',
+        expect(contractModuleFactoryMock.createContract).toHaveBeenCalledWith(providerMock, eth.accounts, [], 'ds0', {
+            defaultAccount: 'ds0',
             defaultBlock: eth.defaultBlock,
-            defaultGas: '0x0',
-            defaultGasPrice: '0x0',
+            defaultGas: 'ds0',
+            defaultGasPrice: 'ds0',
             transactionBlockTimeout: eth.transactionBlockTimeout,
             transactionConfirmationBlocks: eth.transactionConfirmationBlocks,
             transactionPollingTimeout: eth.transactionPollingTimeout,
@@ -315,11 +315,11 @@ describe('EthTest', () => {
         contractModuleFactoryMock.createContract.mockReturnValueOnce({});
 
         eth.currentProvider = providerMock;
-        expect(new eth.Contract([], '0x0', {})).toEqual({});
+        expect(new eth.Contract([], 'ds0', {})).toEqual({});
 
         expect(eth.initiatedContracts).toHaveLength(1);
 
-        expect(contractModuleFactoryMock.createContract).toHaveBeenCalledWith(providerMock, eth.accounts, [], '0x0', {
+        expect(contractModuleFactoryMock.createContract).toHaveBeenCalledWith(providerMock, eth.accounts, [], 'ds0', {
             defaultAccount: eth.defaultAccount,
             defaultBlock: eth.defaultBlock,
             defaultGas: eth.defaultGas,

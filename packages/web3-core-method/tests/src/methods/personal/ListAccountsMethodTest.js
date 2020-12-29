@@ -28,10 +28,10 @@ describe('ListAccountsMethodTest', () => {
     });
 
     it('afterExecution should map the response', () => {
-        Utils.toChecksumAddress.mockReturnValueOnce('0x0');
+        Utils.toChecksumAddress.mockReturnValueOnce('ds0');
 
-        expect(method.afterExecution(['0x0'])[0]).toEqual('0x0');
+        expect(method.afterExecution(['ds0'])[0]).toEqual('ds0');
 
-        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('0x0');
+        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('ds0');
     });
 });

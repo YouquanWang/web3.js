@@ -37,6 +37,6 @@ Example
 
     export class MyContract extends Contract {
         constructor(provider) {
-            super(provider, MyAbi, new Accounts(...), '0x0', options);
+            super(provider, MyAbi, new Accounts(...), 'ds0', options);
         }
     }

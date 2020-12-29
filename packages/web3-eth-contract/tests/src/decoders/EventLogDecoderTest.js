@@ -29,8 +29,8 @@ describe('EventLogDecoderTest', () => {
         const abiItemModel = AbiItemModel.mock.instances[0];
 
         const response = {
-            topics: ['0x0'],
-            data: '0x0'
+            topics: ['ds0'],
+            data: 'ds0'
         };
 
         abiItemModel.name = 'Event';
@@ -38,7 +38,7 @@ describe('EventLogDecoderTest', () => {
 
         abiItemModel.getInputs.mockReturnValueOnce([]);
 
-        abiCoderMock.decodeLog.mockReturnValueOnce(['0x0']);
+        abiCoderMock.decodeLog.mockReturnValueOnce(['ds0']);
 
         const decodedLog = eventLogDecoder.decode(abiItemModel, response);
 
@@ -46,17 +46,17 @@ describe('EventLogDecoderTest', () => {
 
         expect(decodedLog.topics).toEqual(undefined);
 
-        expect(decodedLog.raw.data).toEqual('0x0');
+        expect(decodedLog.raw.data).toEqual('ds0');
 
-        expect(decodedLog.raw.topics).toEqual(['0x0']);
+        expect(decodedLog.raw.topics).toEqual(['ds0']);
 
         expect(decodedLog.signature).toEqual(abiItemModel.signature);
 
         expect(decodedLog.event).toEqual(abiItemModel.name);
 
-        expect(decodedLog.returnValues).toEqual(['0x0']);
+        expect(decodedLog.returnValues).toEqual(['ds0']);
 
-        expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], '0x0', []);
+        expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], 'ds0', []);
 
         expect(abiItemModel.getInputs).toHaveBeenCalled();
     });
@@ -66,8 +66,8 @@ describe('EventLogDecoderTest', () => {
         const abiItemModel = AbiItemModel.mock.instances[0];
 
         const response = {
-            topics: ['0x0'],
-            data: '0x'
+            topics: ['ds0'],
+            data: 'ds'
         };
 
         abiItemModel.name = 'Event';
@@ -75,7 +75,7 @@ describe('EventLogDecoderTest', () => {
 
         abiItemModel.getInputs.mockReturnValueOnce([]);
 
-        abiCoderMock.decodeLog.mockReturnValueOnce(['0x0']);
+        abiCoderMock.decodeLog.mockReturnValueOnce(['ds0']);
 
         const decodedLog = eventLogDecoder.decode(abiItemModel, response);
 
@@ -85,13 +85,13 @@ describe('EventLogDecoderTest', () => {
 
         expect(decodedLog.raw.data).toEqual(null);
 
-        expect(decodedLog.raw.topics).toEqual(['0x0']);
+        expect(decodedLog.raw.topics).toEqual(['ds0']);
 
         expect(decodedLog.signature).toEqual(abiItemModel.signature);
 
         expect(decodedLog.event).toEqual(abiItemModel.name);
 
-        expect(decodedLog.returnValues).toEqual(['0x0']);
+        expect(decodedLog.returnValues).toEqual(['ds0']);
 
         expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], null, []);
 
@@ -104,7 +104,7 @@ describe('EventLogDecoderTest', () => {
 
         const response = {
             topics: [],
-            data: '0x0'
+            data: 'ds0'
         };
 
         abiItemModel.name = 'Event';
@@ -113,7 +113,7 @@ describe('EventLogDecoderTest', () => {
 
         abiItemModel.getInputs.mockReturnValueOnce([]);
 
-        abiCoderMock.decodeLog.mockReturnValueOnce(['0x0']);
+        abiCoderMock.decodeLog.mockReturnValueOnce(['ds0']);
 
         const decodedLog = eventLogDecoder.decode(abiItemModel, response);
 
@@ -121,7 +121,7 @@ describe('EventLogDecoderTest', () => {
 
         expect(decodedLog.topics).toEqual(undefined);
 
-        expect(decodedLog.raw.data).toEqual('0x0');
+        expect(decodedLog.raw.data).toEqual('ds0');
 
         expect(decodedLog.raw.topics).toEqual([]);
 
@@ -129,9 +129,9 @@ describe('EventLogDecoderTest', () => {
 
         expect(decodedLog.event).toEqual(abiItemModel.name);
 
-        expect(decodedLog.returnValues).toEqual(['0x0']);
+        expect(decodedLog.returnValues).toEqual(['ds0']);
 
-        expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], '0x0', []);
+        expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], 'ds0', []);
 
         expect(abiItemModel.getInputs).toHaveBeenCalled();
     });

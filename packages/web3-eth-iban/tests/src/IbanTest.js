@@ -76,9 +76,9 @@ describe('IbanTest', () => {
     it('calls toAddress with a direct Iban and returns the expected string', () => {
         iban._iban = '0000000000000000000000000000000000';
 
-        Utils.toChecksumAddress.mockReturnValueOnce('0x0');
+        Utils.toChecksumAddress.mockReturnValueOnce('ds0');
 
-        expect(iban.toAddress()).toEqual('0x0');
+        expect(iban.toAddress()).toEqual('ds0');
 
         expect(Utils.toChecksumAddress).toHaveBeenCalledWith(new BigNumber(iban._iban.substr(4)).toString(16, 20));
     });
@@ -92,9 +92,9 @@ describe('IbanTest', () => {
     });
 
     it('calls the static method toAddress and returns the expected string', () => {
-        Utils.toChecksumAddress.mockReturnValueOnce('0x0');
+        Utils.toChecksumAddress.mockReturnValueOnce('ds0');
 
-        expect(Iban.toAddress('0000000000000000000000000000000000')).toEqual('0x0');
+        expect(Iban.toAddress('0000000000000000000000000000000000')).toEqual('ds0');
 
         expect(Utils.toChecksumAddress).toHaveBeenCalledWith(new BigNumber(iban._iban.substr(4)).toString(16, 20));
     });
@@ -108,9 +108,9 @@ describe('IbanTest', () => {
     it('calls toIban and returns the expected string', () => {
         Utils.isAddress.mockReturnValueOnce(true);
 
-        expect(Iban.toIban('0x0').toString()).toEqual('XE50000000000000000000000000000000');
+        expect(Iban.toIban('ds0').toString()).toEqual('XE50000000000000000000000000000000');
 
-        expect(Utils.isAddress).toHaveBeenCalledWith('0x0');
+        expect(Utils.isAddress).toHaveBeenCalledWith('ds0');
     });
 
     it('calls fromAddress and throws an error', () => {

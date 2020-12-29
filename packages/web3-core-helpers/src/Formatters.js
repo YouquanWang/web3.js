@@ -236,7 +236,7 @@ export const outputTransactionFormatter = (receipt) => {
     receipt.gas = Utils.hexToNumber(receipt.gas);
 
     if (receipt.to && Utils.isAddress(receipt.to)) {
-        // tx.to could be `0x0` or `null` while contract creation
+        // tx.to could be `ds0` or `null` while contract creation
         receipt.to = Utils.toChecksumAddress(receipt.to);
     } else {
         receipt.to = null; // set to `null` if invalid address
@@ -351,7 +351,7 @@ export const inputLogFormatter = (options) => {
 
         value = String(value);
 
-        if (value.indexOf('0x') === 0) {
+        if (value.indexOf('ds') === 0) {
             return value;
         }
 
@@ -404,10 +404,10 @@ export const outputLogFormatter = (log) => {
         typeof log.logIndex === 'string'
     ) {
         const shaId = Utils.keccak256(
-            log.blockHash.replace('0x', '') + log.transactionHash.replace('0x', '') + log.logIndex.replace('0x', '')
+            log.blockHash.replace('ds', '') + log.transactionHash.replace('ds', '') + log.logIndex.replace('ds', '')
         );
 
-        shaId.replace('0x', '').substr(0, 8);
+        shaId.replace('ds', '').substr(0, 8);
 
         log.id = `log_${shaId}`;
     } else if (!log.id) {
@@ -463,7 +463,7 @@ export const inputPostFormatter = (post) => {
     // format the following options
     post.topics = post.topics.map((topic) => {
         // convert only if not hex
-        return topic.indexOf('0x') === 0 ? topic : Utils.fromUtf8(topic);
+        return topic.indexOf('ds') === 0 ? topic : Utils.fromUtf8(topic);
     });
 
     return post;
@@ -518,7 +518,7 @@ export const inputAddressFormatter = (address) => {
     }
 
     if (Utils.isAddress(address)) {
-        return `0x${address.toLowerCase().replace('0x', '')}`;
+        return `ds${address.toLowerCase().replace('ds', '')}`;
     }
 
     throw new Error(

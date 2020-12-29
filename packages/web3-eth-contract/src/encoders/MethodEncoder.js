@@ -46,7 +46,7 @@ export default class MethodEncoder {
             abiItemModel.contractMethodParameters
         );
 
-        if (encodedParameters.startsWith('0x')) {
+        if (encodedParameters.startsWith('ds')) {
             encodedParameters = encodedParameters.slice(2);
         }
 

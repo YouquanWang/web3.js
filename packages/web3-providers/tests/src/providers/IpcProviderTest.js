@@ -69,12 +69,12 @@ describe('IpcProviderTest', () => {
     it('calls onMessage with one chunk', (done) => {
         const objectWithToString = {
             toString: jest.fn(() => {
-                return '{"id":"0x0"}';
+                return '{"id":"ds0"}';
             })
         };
 
-        ipcProvider.on('0x0', (response) => {
-            expect(response).toEqual({id: '0x0'});
+        ipcProvider.on('ds0', (response) => {
+            expect(response).toEqual({id: 'ds0'});
 
             done();
         });
@@ -88,12 +88,12 @@ describe('IpcProviderTest', () => {
         let callCount = 0;
         const firstChunk = {
             toString: jest.fn(() => {
-                return '{"id":"0x0"}{"id":"0x0"}';
+                return '{"id":"ds0"}{"id":"ds0"}';
             })
         };
         const secondChunk = {
             toString: jest.fn(() => {
-                return '{"id":"0x0"}{"id":"0x';
+                return '{"id":"ds0"}{"id":"ds';
             })
         };
         const thirdChunk = {
@@ -102,8 +102,8 @@ describe('IpcProviderTest', () => {
             })
         };
 
-        ipcProvider.on('0x0', (response) => {
-            expect(response).toEqual({id: '0x0'});
+        ipcProvider.on('ds0', (response) => {
+            expect(response).toEqual({id: 'ds0'});
 
             if (callCount === 1) {
                 done();
@@ -217,26 +217,26 @@ describe('IpcProviderTest', () => {
         socketMock.writable = true;
 
         socketMock.write = jest.fn((jsonString) => {
-            expect(jsonString).toEqual('{"id":"0x0"}');
+            expect(jsonString).toEqual('{"id":"ds0"}');
 
             return true;
         });
 
         setTimeout(() => {
-            ipcProvider.emit('0x0', {result: true});
+            ipcProvider.emit('ds0', {result: true});
         }, 1);
 
-        const response = await ipcProvider.sendPayload({id: '0x0'});
+        const response = await ipcProvider.sendPayload({id: 'ds0'});
 
         expect(response).toEqual({result: true});
 
-        expect(ipcProvider.listenerCount('0x0')).toEqual(0);
+        expect(ipcProvider.listenerCount('ds0')).toEqual(0);
     });
 
     it('calls sendPayload and returns a rejected promise because the socket is still pending', async () => {
         socketMock.pending = true;
 
-        await expect(ipcProvider.sendPayload({id: '0x0'})).rejects.toBeInstanceOf(Error);
+        await expect(ipcProvider.sendPayload({id: 'ds0'})).rejects.toBeInstanceOf(Error);
     });
 
     it('calls sendPayload, connect to the node and returns a resolved promise', async () => {
@@ -245,20 +245,20 @@ describe('IpcProviderTest', () => {
         socketMock.connect = jest.fn();
 
         socketMock.write = jest.fn((jsonString) => {
-            expect(jsonString).toEqual('{"id":"0x0"}');
+            expect(jsonString).toEqual('{"id":"ds0"}');
 
             return true;
         });
 
         setTimeout(() => {
-            ipcProvider.emit('0x0', {result: true});
+            ipcProvider.emit('ds0', {result: true});
         }, 1);
 
-        const response = await ipcProvider.sendPayload({id: '0x0'});
+        const response = await ipcProvider.sendPayload({id: 'ds0'});
 
         expect(response).toEqual({result: true});
 
-        expect(ipcProvider.listenerCount('0x0')).toEqual(0);
+        expect(ipcProvider.listenerCount('ds0')).toEqual(0);
 
         expect(socketMock.connect).toHaveBeenCalledWith({path: ipcProvider.path});
     });
@@ -268,16 +268,16 @@ describe('IpcProviderTest', () => {
         socketMock.writable = true;
 
         socketMock.write = jest.fn((jsonString) => {
-            expect(jsonString).toEqual('{"id":"0x0"}');
+            expect(jsonString).toEqual('{"id":"ds0"}');
 
             return false;
         });
 
         setTimeout(() => {
-            ipcProvider.emit('0x0', {result: true});
+            ipcProvider.emit('ds0', {result: true});
         }, 1);
 
-        await expect(ipcProvider.sendPayload({id: '0x0'})).rejects.toThrow(
+        await expect(ipcProvider.sendPayload({id: 'ds0'})).rejects.toThrow(
             "Connection error: Couldn't write on the socket with Socket.write(payload)"
         );
     });
@@ -287,12 +287,12 @@ describe('IpcProviderTest', () => {
         socketMock.writable = true;
 
         socketMock.write = jest.fn((jsonString) => {
-            expect(jsonString).toEqual('{"id":"0x0"}');
+            expect(jsonString).toEqual('{"id":"ds0"}');
 
             ipcProvider.emit('error', {error: true});
         });
 
-        await expect(ipcProvider.sendPayload({id: '0x0'})).rejects.toEqual({error: true});
+        await expect(ipcProvider.sendPayload({id: 'ds0'})).rejects.toEqual({error: true});
     });
 
     it('calls sendPayload with a batch payload and returns a resolved promise', async () => {
@@ -300,19 +300,19 @@ describe('IpcProviderTest', () => {
         socketMock.writable = true;
 
         socketMock.write = jest.fn((jsonString) => {
-            expect(jsonString).toEqual('[{"id":"0x0"}]');
+            expect(jsonString).toEqual('[{"id":"ds0"}]');
 
             return true;
         });
 
         setTimeout(() => {
-            ipcProvider.emit('0x0', {result: true});
+            ipcProvider.emit('ds0', {result: true});
         }, 1);
 
-        const response = await ipcProvider.sendPayload([{id: '0x0'}]);
+        const response = await ipcProvider.sendPayload([{id: 'ds0'}]);
 
         expect(response).toEqual({result: true});
 
-        expect(ipcProvider.listenerCount('0x0')).toEqual(0);
+        expect(ipcProvider.listenerCount('ds0')).toEqual(0);
     });
 });

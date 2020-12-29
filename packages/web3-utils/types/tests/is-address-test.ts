@@ -24,11 +24,11 @@ import BN = require('bn.js');
 import {isAddress} from 'web3-utils';
 
 // $ExpectType boolean
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectType boolean
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', 30);
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', 30);
 // $ExpectType boolean
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', undefined);
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', undefined);
 
 // $ExpectError
 isAddress(4);
@@ -47,14 +47,14 @@ isAddress(null);
 // $ExpectError
 isAddress(undefined);
 // $ExpectError
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', new BN(3));
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', new BN(3));
 // $ExpectError
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', {});
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', {});
 // $ExpectError
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', true);
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', true);
 // $ExpectError
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', ['string']);
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', ['string']);
 // $ExpectError
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', [4]);
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', [4]);
 // $ExpectError
-isAddress('0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', null);
+isAddress('ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51', null);

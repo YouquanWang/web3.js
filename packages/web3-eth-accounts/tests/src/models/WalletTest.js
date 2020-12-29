@@ -42,7 +42,7 @@ describe('WalletTest', () => {
     it('calls create and returns the expected value', () => {
         Utils.randomHex.mockReturnValueOnce('asdf');
 
-        Account.from.mockReturnValueOnce({address: '0x0', privateKey: '0x0'});
+        Account.from.mockReturnValueOnce({address: 'ds0', privateKey: 'ds0'});
 
         expect(wallet.create(1)).toEqual(wallet);
 
@@ -56,7 +56,7 @@ describe('WalletTest', () => {
     it('calls add with a Account object and returns the expected value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
+        accountMock.address = 'ds0';
 
         expect(wallet.add(accountMock)).toEqual(accountMock);
 
@@ -70,8 +70,8 @@ describe('WalletTest', () => {
     it('calls add with an already existing account and returns the expected value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
-        wallet.accounts['0x0'] = accountMock;
+        accountMock.address = 'ds0';
+        wallet.accounts['ds0'] = accountMock;
 
         expect(wallet.add(accountMock)).toEqual(accountMock);
 
@@ -81,13 +81,13 @@ describe('WalletTest', () => {
     it('calls add with a privateKey and returns the expected value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
+        accountMock.address = 'ds0';
 
         Account.fromPrivateKey.mockReturnValueOnce(accountMock);
 
-        expect(wallet.add('0x0')).toEqual(accountMock);
+        expect(wallet.add('ds0')).toEqual(accountMock);
 
-        expect(Account.fromPrivateKey).toHaveBeenCalledWith('0x0', accountsMock);
+        expect(Account.fromPrivateKey).toHaveBeenCalledWith('ds0', accountsMock);
 
         expect(wallet.accounts[accountMock.address]).toEqual(accountMock);
 
@@ -99,20 +99,20 @@ describe('WalletTest', () => {
     it('calls get returns the expected value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
-        wallet.accounts['0x0'] = accountMock;
+        accountMock.address = 'ds0';
+        wallet.accounts['ds0'] = accountMock;
 
-        expect(wallet.get('0x0')).toEqual(accountMock);
+        expect(wallet.get('ds0')).toEqual(accountMock);
     });
 
     it('calls remove and returns true', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0A';
-        wallet.accounts['0xA'] = accountMock;
-        wallet.accounts['0xa'] = accountMock;
+        accountMock.address = 'ds0A';
+        wallet.accounts['dsA'] = accountMock;
+        wallet.accounts['dsa'] = accountMock;
 
-        expect(wallet.remove('0xA')).toEqual(true);
+        expect(wallet.remove('dsA')).toEqual(true);
 
         expect(wallet.accountsIndex).toEqual(0);
     });
@@ -124,7 +124,7 @@ describe('WalletTest', () => {
     it('calls clear and returns the expect value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
+        accountMock.address = 'ds0';
 
         expect(wallet.clear()).toEqual(wallet);
 
@@ -134,7 +134,7 @@ describe('WalletTest', () => {
     it('calls encrypt and returns the expect value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
+        accountMock.address = 'ds0';
 
         accountMock.encrypt.mockReturnValueOnce(true);
 
@@ -151,7 +151,7 @@ describe('WalletTest', () => {
     it('calls decrypt and returns the expected value', () => {
         new Account();
         const accountMock = Account.mock.instances[0];
-        accountMock.address = '0x0';
+        accountMock.address = 'ds0';
 
         Account.fromV3Keystore.mockReturnValueOnce(accountMock);
 

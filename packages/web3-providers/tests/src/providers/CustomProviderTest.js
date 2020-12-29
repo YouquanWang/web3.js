@@ -41,13 +41,13 @@ describe('CustomProviderTest', () => {
 
     it('calls send and returns with a resolved promise', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(true);
 
         connectionMock.sendAsync = jest.fn((payload, callback) => {
-            expect(payload).toEqual({id: '0x0'});
+            expect(payload).toEqual({id: 'ds0'});
 
             callback(false, {result: true});
         });
@@ -65,14 +65,14 @@ describe('CustomProviderTest', () => {
 
     it('calls send without the sendAsync method and returns with a resolved promise', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(true);
 
         connectionMock.sendAsync = false;
         connectionMock.send = jest.fn((payload, callback) => {
-            expect(payload).toEqual({id: '0x0'});
+            expect(payload).toEqual({id: 'ds0'});
 
             callback(false, {result: true});
         });
@@ -90,13 +90,13 @@ describe('CustomProviderTest', () => {
 
     it('calls send and returns with a rejected promise because of an invalid JSON-RPC response', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(new Error('invalid'));
 
         connectionMock.sendAsync = jest.fn((payload, callback) => {
-            expect(payload).toEqual({id: '0x0'});
+            expect(payload).toEqual({id: 'ds0'});
 
             callback(false, true);
         });
@@ -120,10 +120,10 @@ describe('CustomProviderTest', () => {
         abstractMethodMock.parameters = [];
 
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         connectionMock.sendAsync = jest.fn((payload, callback) => {
-            expect(payload).toEqual([{id: '0x0'}]);
+            expect(payload).toEqual([{id: 'ds0'}]);
 
             callback(false, true);
         });

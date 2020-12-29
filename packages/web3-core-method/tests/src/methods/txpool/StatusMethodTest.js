@@ -26,9 +26,9 @@ describe('StatusMethodTest', () => {
     it('calls afterExecution and returns the expected object', () => {
         Utils.hexToNumber.mockReturnValue(1);
 
-        expect(method.afterExecution({pending: '0x1', queued: '0x1'})).toEqual({pending: 1, queued: 1});
+        expect(method.afterExecution({pending: 'ds1', queued: 'ds1'})).toEqual({pending: 1, queued: 1});
 
-        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(1, '0x1');
-        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(2, '0x1');
+        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(1, 'ds1');
+        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(2, 'ds1');
     });
 });

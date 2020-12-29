@@ -30,13 +30,13 @@ describe('MethodOptionsValidatorTest', () => {
         abiItemModelMock.payable = true;
         abiItemModelMock.isOfType.mockReturnValueOnce(true);
 
-        sendContractMethodMock.parameters = [{value: 100, from: '0x0'}];
+        sendContractMethodMock.parameters = [{value: 100, from: 'ds0'}];
 
         Utils.isAddress.mockReturnValueOnce(true);
 
         expect(methodOptionsValidator.validate(abiItemModelMock, sendContractMethodMock)).toEqual(true);
 
-        expect(Utils.isAddress).toHaveBeenCalledWith('0x0');
+        expect(Utils.isAddress).toHaveBeenCalledWith('ds0');
 
         expect(abiItemModelMock.isOfType).toHaveBeenCalledWith('constructor');
     });
@@ -44,7 +44,7 @@ describe('MethodOptionsValidatorTest', () => {
     it('calls validate and throws isToSet error', () => {
         abiItemModelMock.isOfType.mockReturnValueOnce(false);
 
-        sendContractMethodMock.parameters = [{value: 100, to: '0x0'}];
+        sendContractMethodMock.parameters = [{value: 100, to: 'ds0'}];
 
         Utils.isAddress.mockReturnValueOnce(false);
 
@@ -52,7 +52,7 @@ describe('MethodOptionsValidatorTest', () => {
             methodOptionsValidator.validate(abiItemModelMock, sendContractMethodMock);
         }).toThrow("This contract object doesn't have address set yet, please set an address first.");
 
-        expect(Utils.isAddress).toHaveBeenCalledWith('0x0');
+        expect(Utils.isAddress).toHaveBeenCalledWith('ds0');
 
         expect(abiItemModelMock.isOfType).toHaveBeenCalledWith('constructor');
     });
@@ -77,7 +77,7 @@ describe('MethodOptionsValidatorTest', () => {
         abiItemModelMock.payable = false;
         abiItemModelMock.isOfType.mockReturnValueOnce(true);
 
-        sendContractMethodMock.parameters = [{value: 100, from: '0x0'}];
+        sendContractMethodMock.parameters = [{value: 100, from: 'ds0'}];
 
         Utils.isAddress.mockReturnValueOnce(true);
 
@@ -91,7 +91,7 @@ describe('MethodOptionsValidatorTest', () => {
         abiItemModelMock.payable = true;
         abiItemModelMock.isOfType.mockReturnValueOnce(true);
 
-        sendContractMethodMock.parameters = [{value: 0, from: '0x0'}];
+        sendContractMethodMock.parameters = [{value: 0, from: 'ds0'}];
 
         Utils.isAddress.mockReturnValueOnce(true);
 

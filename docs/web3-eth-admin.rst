@@ -165,8 +165,8 @@ Example
         protocols: {
             eth: {
             difficulty: 17334254859343145000,
-            genesis: "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3",
-            head: "0xb83f73fbe6220c111136aefd27b160bf4a34085c65ba89f24246b3162257c36a",
+            genesis: "dsd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3",
+            head: "dsb83f73fbe6220c111136aefd27b160bf4a34085c65ba89f24246b3162257c36a",
             network: 1
             }
         }

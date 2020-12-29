@@ -114,7 +114,7 @@ describe('AbstractMethodTest', () => {
     });
 
     it('isHash returns true', () => {
-        expect(abstractMethod.isHash('0x0')).toBeTruthy();
+        expect(abstractMethod.isHash('ds0')).toBeTruthy();
     });
 
     it('isHash returns false', () => {
@@ -123,22 +123,22 @@ describe('AbstractMethodTest', () => {
 
     it('calls execute and returns with the expected value', async () => {
         abstractMethod.afterExecution = jest.fn(() => {
-            return '0x00';
+            return 'ds00';
         });
 
-        providerMock.send.mockReturnValueOnce(Promise.resolve('0x0'));
+        providerMock.send.mockReturnValueOnce(Promise.resolve('ds0'));
 
         moduleInstanceMock.currentProvider = providerMock;
 
         const response = await abstractMethod.execute(moduleInstanceMock);
 
-        expect(response).toEqual('0x00');
+        expect(response).toEqual('ds00');
 
         expect(providerMock.send).toHaveBeenCalledWith(abstractMethod.rpcMethod, abstractMethod.parameters);
 
         expect(abstractMethod.beforeExecution).toHaveBeenCalledWith(moduleInstanceMock);
 
-        expect(abstractMethod.afterExecution).toHaveBeenCalledWith('0x0');
+        expect(abstractMethod.afterExecution).toHaveBeenCalledWith('ds0');
     });
 
     it('calls execute and returns a rejected promise on sending the request to the connected node', async () => {

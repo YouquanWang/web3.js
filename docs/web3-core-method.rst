@@ -117,11 +117,11 @@ Example
 
     const example = new Example(...);
 
-    const response = await example.sign('0x0', 'message').
+    const response = await example.sign('ds0', 'message').
     // > "response"
 
 
-    example.sign('0x0', 'message', (error, response) => {
+    example.sign('ds0', 'message', (error, response) => {
         console.log(response);
     };
     // > "response"

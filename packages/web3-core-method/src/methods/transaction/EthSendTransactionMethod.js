@@ -180,9 +180,9 @@ export default class EthSendTransactionMethod extends SendTransactionMethod {
         }
 
         let transaction = this.parameters[0];
-        transaction.to = transaction.to || '0x';
-        transaction.data = transaction.data || '0x';
-        transaction.value = transaction.value || '0x';
+        transaction.to = transaction.to || 'ds';
+        transaction.data = transaction.data || 'ds';
+        transaction.value = transaction.value || 'ds';
         transaction.chainId = this.utils.numberToHex(transaction.chainId);
 
         delete transaction.from;

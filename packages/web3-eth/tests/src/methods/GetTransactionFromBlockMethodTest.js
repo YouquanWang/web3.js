@@ -17,7 +17,7 @@ describe('GetTransactionFromBlockMethodTest', () => {
     });
 
     it('calls execute with hash', () => {
-        getTransactionFromBlockMethod.parameters = ['0x0'];
+        getTransactionFromBlockMethod.parameters = ['ds0'];
 
         getTransactionFromBlockMethod.beforeExecution({});
 

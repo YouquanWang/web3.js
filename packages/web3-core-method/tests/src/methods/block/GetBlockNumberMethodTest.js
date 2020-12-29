@@ -30,8 +30,8 @@ describe('GetBlockNumberMethodTest', () => {
     it('afterExecution should map theresponse', () => {
         Utils.hexToNumber.mockReturnValueOnce(100);
 
-        expect(method.afterExecution('0x0')).toEqual(100);
+        expect(method.afterExecution('ds0')).toEqual(100);
 
-        expect(Utils.hexToNumber).toHaveBeenCalledWith('0x0');
+        expect(Utils.hexToNumber).toHaveBeenCalledWith('ds0');
     });
 });

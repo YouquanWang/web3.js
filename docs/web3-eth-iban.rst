@@ -70,7 +70,7 @@ Example
 .. code-block:: javascript
 
     web3.eth.Iban.toAddress("XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS");
-    > "0x00c5496aEe77C1bA1f0854206A26DdA82a81D6D8"
+    > "ds00c5496aEe77C1bA1f0854206A26DdA82a81D6D8"
 
 
 ------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.Iban.toIban("0x00c5496aEe77C1bA1f0854206A26DdA82a81D6D8");
+    web3.eth.Iban.toIban("ds00c5496aEe77C1bA1f0854206A26DdA82a81D6D8");
     > "XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS"
 
 
@@ -143,7 +143,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.Iban.fromAddress("0x00c5496aEe77C1bA1f0854206A26DdA82a81D6D8");
+    web3.eth.Iban.fromAddress("ds00c5496aEe77C1bA1f0854206A26DdA82a81D6D8");
     > Iban {_iban: "XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS"}
 
 
@@ -481,7 +481,7 @@ Example
 
     const iban = new web3.eth.Iban('XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS');
     iban.toAddress();
-    > '0x00c5496aEe77C1bA1f0854206A26DdA82a81D6D8'
+    > 'ds00c5496aEe77C1bA1f0854206A26DdA82a81D6D8'
 
 
 ------------------------------------------------------------------------------

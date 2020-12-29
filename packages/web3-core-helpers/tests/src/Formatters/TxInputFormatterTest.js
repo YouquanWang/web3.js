@@ -8,7 +8,7 @@ describe('TxInputFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
@@ -19,20 +19,20 @@ describe('TxInputFormatterTest', () => {
         expect(txInputFormatter(tx)).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: undefined,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64'
         });
     });
 
     it('call txInputFormatter with data and input set on the tx object', () => {
         const tx = {
             to: undefined,
-            input: '0x0',
-            data: '0x0',
+            input: 'ds0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
@@ -68,7 +68,7 @@ describe('TxInputFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: undefined,
             gasLimit: 100,
             gasPrice: 100,
@@ -79,19 +79,19 @@ describe('TxInputFormatterTest', () => {
         expect(txInputFormatter(tx)).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: 100,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64'
         });
     });
 
     it('call txInputFormatter with input instead of data as tx object property', () => {
         const tx = {
             to: undefined,
-            input: '0x0',
+            input: 'ds0',
             data: undefined,
             gas: undefined,
             gasLimit: 100,
@@ -102,19 +102,19 @@ describe('TxInputFormatterTest', () => {
 
         expect(txInputFormatter(tx)).toEqual({
             to: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: 100,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64'
         });
     });
 
     it('call txInputFormatter with to and input instead of data as tx object property', () => {
         const tx = {
-            to: '0x03C9A938fF7f54090d0d99e2c6f80380510Ea078',
-            input: '0x0',
+            to: 'ds03C9A938fF7f54090d0d99e2c6f80380510Ea078',
+            input: 'ds0',
             data: undefined,
             gas: undefined,
             gasLimit: 100,
@@ -124,13 +124,13 @@ describe('TxInputFormatterTest', () => {
         };
 
         expect(txInputFormatter(tx)).toEqual({
-            to: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078',
-            data: '0x0',
-            gas: '0x64',
+            to: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: 100,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64'
         });
     });
 });

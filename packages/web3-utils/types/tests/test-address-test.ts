@@ -26,37 +26,37 @@ import {testAddress} from 'web3-utils';
 const bigNumber = new BN(3);
 
 // $ExpectType boolean
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 
 // $ExpectError
-testAddress(656, '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress(656, 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress(bigNumber, '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress(bigNumber, 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress(['string'], '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress(['string'], 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress([4], '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress([4], 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress({}, '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress({}, 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress(true, '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress(true, 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress(null, '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress(null, 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress(undefined, '0x8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
+testAddress(undefined, 'ds8ee7f17bb3f88b01247c21ab6603880b64ae53e811f5e01138822e558cf1ab51');
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', 656);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', 656);
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', bigNumber);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', bigNumber);
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', ['string']);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', ['string']);
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', [4]);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', [4]);
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', {});
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', {});
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', true);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', true);
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', null);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', null);
 // $ExpectError
-testAddress('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', undefined);
+testAddress('dsddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', undefined);

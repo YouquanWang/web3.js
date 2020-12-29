@@ -162,15 +162,15 @@ describe('Web3EthereumProviderTest', () => {
     });
 
     it('calls onMessage and emits the correct event', (done) => {
-        ethereumProvider.subscriptions['0x0'] = true;
+        ethereumProvider.subscriptions['ds0'] = true;
 
-        ethereumProvider.on('0x0', (accounts) => {
-            expect(accounts).toEqual({subscription: '0x0'});
+        ethereumProvider.on('ds0', (accounts) => {
+            expect(accounts).toEqual({subscription: 'ds0'});
 
             done();
         });
 
-        ethereumProvider.onMessage({subscription: '0x0'});
+        ethereumProvider.onMessage({subscription: 'ds0'});
     });
 
     it('calls send and returns a resolved promise with the response', async () => {

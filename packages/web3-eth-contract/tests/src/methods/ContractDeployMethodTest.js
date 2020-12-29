@@ -46,9 +46,9 @@ describe('ContractDeployMethodTest', () => {
     it('calls afterExecution and returns the cloned contract object', () => {
         contractMock.clone.mockReturnValueOnce({options: {address: ''}});
 
-        const clonedContract = contractDeployMethod.afterExecution({contractAddress: '0x0'});
+        const clonedContract = contractDeployMethod.afterExecution({contractAddress: 'ds0'});
 
-        expect(clonedContract.address).toEqual('0x0');
+        expect(clonedContract.address).toEqual('ds0');
 
         expect(contractMock.clone).toHaveBeenCalled();
     });

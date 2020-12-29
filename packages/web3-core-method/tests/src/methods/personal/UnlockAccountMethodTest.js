@@ -28,14 +28,14 @@ describe('UnlockAccountMethodTest', () => {
     });
 
     it('beforeExecution should call inputSignFormatter and inputAddressFormatter', () => {
-        method.parameters = ['0x0'];
+        method.parameters = ['ds0'];
 
-        formatters.inputAddressFormatter.mockReturnValueOnce('0x00');
+        formatters.inputAddressFormatter.mockReturnValueOnce('ds00');
 
         method.beforeExecution();
 
-        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('ds0');
 
-        expect(method.parameters[0]).toEqual('0x00');
+        expect(method.parameters[0]).toEqual('ds00');
     });
 });

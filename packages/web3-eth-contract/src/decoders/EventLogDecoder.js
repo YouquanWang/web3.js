@@ -47,7 +47,7 @@ export default class EventLogDecoder {
             argumentTopics = response.topics.slice(1);
         }
 
-        if (response.data === '0x') {
+        if (response.data === 'ds') {
             response.data = null;
         }
 

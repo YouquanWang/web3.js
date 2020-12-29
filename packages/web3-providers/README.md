@@ -66,7 +66,7 @@ const provider = new ProviderResolver().resolve('ws://localhost:8546');
 const batchRequest = new BatchRequest(provider);
 
 batchRequest.add(web3.eth.getBalance.request(
-    '0x0000000000000000000000000000000000000000',
+    'ds0000000000000000000000000000000000000000',
     'latest',
     callback
 ));

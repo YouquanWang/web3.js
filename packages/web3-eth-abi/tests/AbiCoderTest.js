@@ -27,48 +27,48 @@ describe('AbiCoderTest', () => {
 
     it('calls encodeFunctionSignature with a string as parameter', () => {
         Utils.keccak256 = jest.fn(() => {
-            return '0x000000000';
+            return 'ds000000000';
         });
 
-        expect(abiCoder.encodeFunctionSignature('functionName')).toEqual('0x00000000');
+        expect(abiCoder.encodeFunctionSignature('functionName')).toEqual('ds00000000');
 
         expect(Utils.keccak256).toHaveBeenCalledWith('functionName');
     });
 
     it('calls encodeFunctionSignature with a object as parameter', () => {
-        Utils.jsonInterfaceMethodToString.mockReturnValueOnce('0x000000000');
+        Utils.jsonInterfaceMethodToString.mockReturnValueOnce('ds000000000');
 
         Utils.keccak256 = jest.fn(() => {
-            return '0x000000000';
+            return 'ds000000000';
         });
 
-        expect(abiCoder.encodeFunctionSignature({})).toEqual('0x00000000');
+        expect(abiCoder.encodeFunctionSignature({})).toEqual('ds00000000');
 
         expect(Utils.jsonInterfaceMethodToString).toHaveBeenCalledWith({});
 
-        expect(Utils.keccak256).toHaveBeenCalledWith('0x000000000');
+        expect(Utils.keccak256).toHaveBeenCalledWith('ds000000000');
     });
 
     it('calls encodeEventSignature with a object as parameter', () => {
-        Utils.jsonInterfaceMethodToString.mockReturnValueOnce('0x000000000');
+        Utils.jsonInterfaceMethodToString.mockReturnValueOnce('ds000000000');
 
         Utils.keccak256 = jest.fn(() => {
-            return '0x000000000';
+            return 'ds000000000';
         });
 
-        expect(abiCoder.encodeEventSignature({})).toEqual('0x000000000');
+        expect(abiCoder.encodeEventSignature({})).toEqual('ds000000000');
 
         expect(Utils.jsonInterfaceMethodToString).toHaveBeenCalledWith({});
 
-        expect(Utils.keccak256).toHaveBeenCalledWith('0x000000000');
+        expect(Utils.keccak256).toHaveBeenCalledWith('ds000000000');
     });
 
     it('calls encodeEventSignature with a string as parameter', () => {
         Utils.keccak256 = jest.fn(() => {
-            return '0x000000000';
+            return 'ds000000000';
         });
 
-        expect(abiCoder.encodeEventSignature('functionName')).toEqual('0x000000000');
+        expect(abiCoder.encodeEventSignature('functionName')).toEqual('ds000000000');
 
         expect(Utils.keccak256).toHaveBeenCalledWith('functionName');
     });
@@ -91,12 +91,12 @@ describe('AbiCoderTest', () => {
 
     it('calls encodeFunctionCall and returns the expected string', () => {
         Utils.keccak256 = jest.fn(() => {
-            return '0x000000000';
+            return 'ds000000000';
         });
 
-        ethersAbiCoderMock.encode.mockReturnValueOnce('0x0');
+        ethersAbiCoderMock.encode.mockReturnValueOnce('ds0');
 
-        expect(abiCoder.encodeFunctionCall({inputs: [{components: true}]}, [])).toEqual('0x000000000');
+        expect(abiCoder.encodeFunctionCall({inputs: [{components: true}]}, [])).toEqual('ds000000000');
 
         expect(ethersAbiCoderMock.encode).toHaveBeenCalledWith([{components: true}], []);
     });
@@ -104,35 +104,35 @@ describe('AbiCoderTest', () => {
     it('calls decodeParameters and returns the expected object', () => {
         ethersAbiCoderMock.decode.mockReturnValueOnce('0');
 
-        expect(abiCoder.decodeParameters([{name: 'output'}], '0x0')).toEqual({output: '0', 0: '0'});
+        expect(abiCoder.decodeParameters([{name: 'output'}], 'ds0')).toEqual({output: '0', 0: '0'});
 
-        expect(ethersAbiCoderMock.decode).toHaveBeenCalledWith([{name: 'output'}], '0x0');
+        expect(ethersAbiCoderMock.decode).toHaveBeenCalledWith([{name: 'output'}], 'ds0');
     });
 
     it('calls decodeParameters and throws an error', () => {
         expect(() => {
-            abiCoder.decodeParameters(['0'], '0x');
-        }).toThrow('Invalid bytes string given: 0x');
+            abiCoder.decodeParameters(['0'], 'ds');
+        }).toThrow('Invalid bytes string given: ds');
 
         expect(() => {
             abiCoder.decodeParameters(['0']);
         }).toThrow('Invalid bytes string given: undefined');
 
         expect(() => {
-            abiCoder.decodeParameters(['0'], '0X');
-        }).toThrow('Invalid bytes string given: 0X');
+            abiCoder.decodeParameters(['0'], 'ds');
+        }).toThrow('Invalid bytes string given: ds');
 
         expect(() => {
-            abiCoder.decodeParameters([], '0X');
+            abiCoder.decodeParameters([], 'ds');
         }).toThrow('Empty outputs array given!');
     });
 
     it('calls decodeParameter and returns the expected object', () => {
         ethersAbiCoderMock.decode.mockReturnValueOnce('0');
 
-        expect(abiCoder.decodeParameter({name: 'output'}, '0x0')).toEqual('0');
+        expect(abiCoder.decodeParameter({name: 'output'}, 'ds0')).toEqual('0');
 
-        expect(ethersAbiCoderMock.decode).toHaveBeenCalledWith([{name: 'output'}], '0x0');
+        expect(ethersAbiCoderMock.decode).toHaveBeenCalledWith([{name: 'output'}], 'ds0');
     });
 
     it('calls decodeLog and returns the expected object', () => {
@@ -169,7 +169,7 @@ describe('AbiCoderTest', () => {
             }
         ];
 
-        expect(abiCoder.decodeLog(inputs, '0x0', ['0x0', '0x0'])).toEqual({
+        expect(abiCoder.decodeLog(inputs, 'ds0', ['ds0', 'ds0'])).toEqual({
             '0': '0',
             first: '0',
             '1': ['', '', '0'],
@@ -180,10 +180,10 @@ describe('AbiCoderTest', () => {
             fourth: '0'
         });
 
-        expect(ethersAbiCoderMock.decode).toHaveBeenNthCalledWith(1, [inputs[0].type], '0x0');
+        expect(ethersAbiCoderMock.decode).toHaveBeenNthCalledWith(1, [inputs[0].type], 'ds0');
 
-        expect(ethersAbiCoderMock.decode).toHaveBeenNthCalledWith(2, [inputs[1].type], '0x0');
+        expect(ethersAbiCoderMock.decode).toHaveBeenNthCalledWith(2, [inputs[1].type], 'ds0');
 
-        expect(ethersAbiCoderMock.decode).toHaveBeenNthCalledWith(3, [inputs[2], inputs[3]], '0x0');
+        expect(ethersAbiCoderMock.decode).toHaveBeenNthCalledWith(3, [inputs[2], inputs[3]], 'ds0');
     });
 });

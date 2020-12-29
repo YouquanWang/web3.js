@@ -38,13 +38,13 @@ contract.clone();
 
 // $ExpectType ContractSendMethod
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
 });
 
 // $ExpectType void
 contract.once('MyEvent', {
-    filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+    filter: {myIndexedParam: [20,23], myOtherIndexedParam: 'ds123456789...'},
     fromBlock: 0
 }, (error, event) => { console.log(event); });
 
@@ -56,7 +56,7 @@ contract.getPastEvents('MyEvent');
 
 // $ExpectType Promise<EventData[]>
 contract.getPastEvents('MyEvent', {
-    filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+    filter: {myIndexedParam: [20,23], myOtherIndexedParam: 'ds123456789...'},
     fromBlock: 0,
     toBlock: 'latest'
 });
@@ -66,7 +66,7 @@ contract.getPastEvents('MyEvent', {});
 
 // $ExpectType Promise<EventData[]>
 contract.getPastEvents('MyEvent', {
-    filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+    filter: {myIndexedParam: [20,23], myOtherIndexedParam: 'ds123456789...'},
     fromBlock: 0,
     toBlock: 'latest'
 }, (error, events) => { console.log(events); });
@@ -76,36 +76,36 @@ contract.getPastEvents('MyEvent', (error, events) => { console.log(events); });
 
 // $ExpectType Promise<number>
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
 }).estimateGas();
 
 // $ExpectType Promise<number>
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
-}).estimateGas({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'});
+}).estimateGas({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'});
 
 // $ExpectType Promise<number>
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
 }).estimateGas((err: Error, gas: number) => { console.log(gas) });
 
 // $ExpectType string
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
 }).encodeABI();
 
 // $ExpectType PromiEvent<Contract>
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
-}).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'});
+}).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'});
 
 // $ExpectType PromiEvent<Contract>
 contract.deploy({
-    data: '0x12345...',
+    data: 'ds12345...',
     arguments: [123, 'My String']
-}).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (err: Error, transactionHash: string) => { console.log(transactionHash) });
+}).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (err: Error, transactionHash: string) => { console.log(transactionHash) });

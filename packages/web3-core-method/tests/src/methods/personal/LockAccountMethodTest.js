@@ -28,14 +28,14 @@ describe('LockAccountMethodTest', () => {
     });
 
     it('beforeExecution should call inputAddressFormatter', () => {
-        method.parameters = ['0x0'];
+        method.parameters = ['ds0'];
 
-        formatters.inputAddressFormatter.mockReturnValueOnce('0x0');
+        formatters.inputAddressFormatter.mockReturnValueOnce('ds0');
 
         method.beforeExecution();
 
-        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('ds0');
 
-        expect(method.parameters[0]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
     });
 });

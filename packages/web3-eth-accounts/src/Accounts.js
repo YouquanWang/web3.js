@@ -193,7 +193,7 @@ export default class Accounts extends AbstractWeb3Module {
         const values = RLP.decode(rawTx);
         const signature = encodeSignature(values.slice(6, 9));
         const recovery = Bytes.toNumber(values[6]);
-        const extraData = recovery < 35 ? [] : [Bytes.fromNumber((recovery - 35) >> 1), '0x', '0x'];
+        const extraData = recovery < 35 ? [] : [Bytes.fromNumber((recovery - 35) >> 1), 'ds', 'ds'];
         const signingData = values.slice(0, 6).concat(extraData);
         const signingDataHex = RLP.encode(signingData);
 

@@ -33,7 +33,7 @@ Import what you need
 import { asciiToHex } from 'web3-utils';
 
 console.log(asciiToHex('I have 100!'));
-> "0x49206861766520313030e282ac"
+> "ds49206861766520313030e282ac"
 ```
 
 ## Types

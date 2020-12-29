@@ -93,10 +93,10 @@ Example
 
     const example = new Example(provider, net, options);
 
-    example.sign('0x0', 'message').then(console.log);
+    example.sign('ds0', 'message').then(console.log);
     // > "response"
 
-    example.sign('0x0', 'message', (error, response) => {
+    example.sign('ds0', 'message', (error, response) => {
         console.log(response);
     };
     // > "response"

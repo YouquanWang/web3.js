@@ -13,7 +13,7 @@ describe('EthGetAccountsMethodTest', () => {
 
     beforeEach(() => {
         accountsMock = {};
-        accountsMock.wallet = {0: {privateKey: '0x0', address: '0x0'}, accountsIndex: 1};
+        accountsMock.wallet = {0: {privateKey: 'ds0', address: 'ds0'}, accountsIndex: 1};
 
         new AbstractWeb3Module({}, {}, {}, {});
         moduleInstanceMock = {};
@@ -29,6 +29,6 @@ describe('EthGetAccountsMethodTest', () => {
     it('calls execute with unlocked accounts', async () => {
         const response = await method.execute();
 
-        expect(response).toEqual(['0x0']);
+        expect(response).toEqual(['ds0']);
     });
 });

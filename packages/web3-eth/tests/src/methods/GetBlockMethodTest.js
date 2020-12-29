@@ -16,7 +16,7 @@ describe('GetBlockMethodTest', () => {
     });
 
     it('calls execute with hash', () => {
-        getBlockMethod.parameters = ['0x0'];
+        getBlockMethod.parameters = ['ds0'];
 
         getBlockMethod.beforeExecution({});
 

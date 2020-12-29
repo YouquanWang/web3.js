@@ -28,13 +28,13 @@ describe('SignMethodTest', () => {
 
         formatters.inputSignFormatter.mockReturnValueOnce('string');
 
-        formatters.inputAddressFormatter.mockReturnValueOnce('0x0');
+        formatters.inputAddressFormatter.mockReturnValueOnce('ds0');
 
         method.beforeExecution(moduleInstanceMock);
 
         expect(method.parameters[1]).toEqual('string');
 
-        expect(method.parameters[0]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
 
         expect(formatters.inputSignFormatter).toHaveBeenCalledWith('string');
 

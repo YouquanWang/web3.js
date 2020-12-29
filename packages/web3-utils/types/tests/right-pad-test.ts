@@ -26,9 +26,9 @@ import {rightPad} from 'web3-utils';
 const bigNumber = new BN(3);
 
 // $ExpectType string
-rightPad('0x3456ff', 20);
+rightPad('ds3456ff', 20);
 // $ExpectType string
-rightPad(0x3456ff, 20);
+rightPad(ds3456ff, 20);
 // $ExpectType string
 rightPad('Hello', 20, 'x');
 
@@ -47,19 +47,19 @@ rightPad(null, 20);
 // $ExpectError
 rightPad(undefined, 20);
 // $ExpectError
-rightPad('0x3456ff', bigNumber);
+rightPad('ds3456ff', bigNumber);
 // $ExpectError
-rightPad('0x3456ff', ['string']);
+rightPad('ds3456ff', ['string']);
 // $ExpectError
-rightPad('0x3456ff', [4]);
+rightPad('ds3456ff', [4]);
 // $ExpectError
-rightPad('0x3456ff', {});
+rightPad('ds3456ff', {});
 // $ExpectError
-rightPad('0x3456ff', true);
+rightPad('ds3456ff', true);
 // $ExpectError
-rightPad('0x3456ff', null);
+rightPad('ds3456ff', null);
 // $ExpectError
-rightPad('0x3456ff', undefined);
+rightPad('ds3456ff', undefined);
 // $ExpectError
 rightPad('Hello', 20, bigNumber);
 // $ExpectError

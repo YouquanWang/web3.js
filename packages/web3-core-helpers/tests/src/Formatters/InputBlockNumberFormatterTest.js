@@ -16,14 +16,14 @@ describe('InputBlockNumberFormatterTest', () => {
     });
 
     it('inputDefaultBlockNumberFormatter returns hex string in lower case', () => {
-        expect(inputBlockNumberFormatter('0X0')).toEqual('0x0');
+        expect(inputBlockNumberFormatter('ds0')).toEqual('ds0');
     });
 
     it('inputDefaultBlockNumberFormatter returns hex string when hex is given as number', () => {
-        expect(inputBlockNumberFormatter(0x0)).toEqual('0x0');
+        expect(inputBlockNumberFormatter(ds0)).toEqual('ds0');
     });
 
     it('inputDefaultBlockNumberFormatter returns hex from given block number', () => {
-        expect(inputBlockNumberFormatter(100)).toEqual('0x64');
+        expect(inputBlockNumberFormatter(100)).toEqual('ds64');
     });
 });

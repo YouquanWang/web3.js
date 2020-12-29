@@ -86,15 +86,15 @@ describe('AdminTest', () => {
     });
 
     it('sets the defaultAccount property', () => {
-        Utils.toChecksumAddress.mockReturnValue('0x2');
+        Utils.toChecksumAddress.mockReturnValue('ds2');
 
-        admin.defaultAccount = '0x0';
+        admin.defaultAccount = 'ds0';
 
-        expect(admin.defaultAccount).toEqual('0x2');
+        expect(admin.defaultAccount).toEqual('ds2');
 
-        expect(networkMock.defaultAccount).toEqual('0x0');
+        expect(networkMock.defaultAccount).toEqual('ds0');
 
-        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('0x0');
+        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('ds0');
     });
 
     it('sets the defaultBlock property', () => {

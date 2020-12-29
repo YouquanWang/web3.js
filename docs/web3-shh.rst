@@ -322,7 +322,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.shh.addPrivateKey('0x8bda3abeb454847b515fa9b404cede50b1cc63cfdeddd4999d074284b4c21e15')
+    web3.shh.addPrivateKey('ds8bda3abeb454847b515fa9b404cede50b1cc63cfdeddd4999d074284b4c21e15')
     .then(console.log);
     > "3e22b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f"
 
@@ -441,7 +441,7 @@ Example
 
     web3.shh.getPublicKey('3e22b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f')
     .then(console.log);
-    > "0x04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6"
+    > "ds04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6"
 
 
 ------------------------------------------------------------------------------
@@ -480,7 +480,7 @@ Example
 
     web3.shh.getPrivateKey('3e22b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f')
     .then(console.log);
-    > "0x234234e22b9ffc2387e18636e0534534a3d0c56b0243567432453264c16e78a2adc"
+    > "ds234234e22b9ffc2387e18636e0534534a3d0c56b0243567432453264c16e78a2adc"
 
 
 ------------------------------------------------------------------------------
@@ -556,7 +556,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.shh.addSymKey('0x5e11b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f')
+    web3.shh.addSymKey('ds5e11b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f')
     .then(console.log);
     > "fea94d139ff51d7df1d228812b90c23ec1f909afa0840ed80f1e04030bb681e4"
 
@@ -675,7 +675,7 @@ Example
 
     web3.shh.getSymKey('af33b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f')
     .then(console.log);
-    > "0xa82a520aff70f7a989098376e48ec128f25f767085e84d7fb995a9815eebff0a"
+    > "dsa82a520aff70f7a989098376e48ec128f25f767085e84d7fb995a9815eebff0a"
 
 
 ------------------------------------------------------------------------------
@@ -771,7 +771,7 @@ Example
         // will receive also its own message send, below
         const subscription = shh.subscribe("messages", {
             symKeyID: identities[0],
-            topics: ['0xffaadd11']
+            topics: ['dsffaadd11']
         }).on('data', console.log);
 
     }).then(() => {
@@ -779,8 +779,8 @@ Example
             symKeyID: identities[0], // encrypts using the sym key ID
             sig: identities[1], // signs the message using the keyPair ID
             ttl: 10,
-            topic: '0xffaadd11',
-            payload: '0xffffffdddddd1122',
+            topic: 'dsffaadd11',
+            payload: 'dsffffffdddddd1122',
             powTime: 3,
             powTarget: 0.5
         }).then(hash => console.log(`Message with hash ${hash} was successfuly sent`))
@@ -846,22 +846,22 @@ Example
 
     web3.shh.subscribe('messages', {
         symKeyID: 'bf31b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f',
-        sig: '0x04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6',
+        sig: 'ds04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6',
         ttl: 20,
-        topics: ['0xffddaa11'],
+        topics: ['dsffddaa11'],
         minPow: 0.8,
     }, (error, message, subscription) => {
 
         console.log(message);
         > {
-            "hash": "0x4158eb81ad8e30cfcee67f20b1372983d388f1243a96e39f94fd2797b1e9c78e",
-            "padding": "0xc15f786f34e5cef0fef6ce7c1185d799ecdb5ebca72b3310648c5588db2e99a0d73301c7a8d90115a91213f0bc9c72295fbaf584bf14dc97800550ea53577c9fb57c0249caeb081733b4e605cdb1a6011cee8b6d8fddb972c2b90157e23ba3baae6c68d4f0b5822242bb2c4cd821b9568d3033f10ec1114f641668fc1083bf79ebb9f5c15457b538249a97b22a4bcc4f02f06dec7318c16758f7c008001c2e14eba67d26218ec7502ad6ba81b2402159d7c29b068b8937892e3d4f0d4ad1fb9be5e66fb61d3d21a1c3163bce74c0a9d16891e2573146aa92ecd7b91ea96a6987ece052edc5ffb620a8987a83ac5b8b6140d8df6e92e64251bf3a2cec0cca",
-            "payload": "0xdeadbeaf",
+            "hash": "ds4158eb81ad8e30cfcee67f20b1372983d388f1243a96e39f94fd2797b1e9c78e",
+            "padding": "dsc15f786f34e5cef0fef6ce7c1185d799ecdb5ebca72b3310648c5588db2e99a0d73301c7a8d90115a91213f0bc9c72295fbaf584bf14dc97800550ea53577c9fb57c0249caeb081733b4e605cdb1a6011cee8b6d8fddb972c2b90157e23ba3baae6c68d4f0b5822242bb2c4cd821b9568d3033f10ec1114f641668fc1083bf79ebb9f5c15457b538249a97b22a4bcc4f02f06dec7318c16758f7c008001c2e14eba67d26218ec7502ad6ba81b2402159d7c29b068b8937892e3d4f0d4ad1fb9be5e66fb61d3d21a1c3163bce74c0a9d16891e2573146aa92ecd7b91ea96a6987ece052edc5ffb620a8987a83ac5b8b6140d8df6e92e64251bf3a2cec0cca",
+            "payload": "dsdeadbeaf",
             "pow": 0.5371803278688525,
             "recipientPublicKey": null,
             "sig": null,
             "timestamp": 1496991876,
-            "topic": "0x01020304",
+            "topic": "ds01020304",
             "ttl": 50
         }
     })
@@ -1011,13 +1011,13 @@ Example
     web3.shh.getFilterMessages('2b47fbafb3cce24570812a82e6e93cd9e2551bbc4823f6548ff0d82d2206b326')
     .then(console.log);
     > [{
-        "hash": "0x4158eb81ad8e30cfcee67f20b1372983d388f1243a96e39f94fd2797b1e9c78e",
-        "padding": "0xc15f786f34e5cef0fef6ce7c1185d799ecdb5ebca72b3310648c5588db2e99a0d73301c7a8d90115a91213f0bc9c72295fbaf584bf14dc97800550ea53577c9fb57c0249caeb081733b4e605cdb1a6011cee8b6d8fddb972c2b90157e23ba3baae6c68d4f0b5822242bb2c4cd821b9568d3033f10ec1114f641668fc1083bf79ebb9f5c15457b538249a97b22a4bcc4f02f06dec7318c16758f7c008001c2e14eba67d26218ec7502ad6ba81b2402159d7c29b068b8937892e3d4f0d4ad1fb9be5e66fb61d3d21a1c3163bce74c0a9d16891e2573146aa92ecd7b91ea96a6987ece052edc5ffb620a8987a83ac5b8b6140d8df6e92e64251bf3a2cec0cca",
-        "payload": "0xdeadbeaf",
+        "hash": "ds4158eb81ad8e30cfcee67f20b1372983d388f1243a96e39f94fd2797b1e9c78e",
+        "padding": "dsc15f786f34e5cef0fef6ce7c1185d799ecdb5ebca72b3310648c5588db2e99a0d73301c7a8d90115a91213f0bc9c72295fbaf584bf14dc97800550ea53577c9fb57c0249caeb081733b4e605cdb1a6011cee8b6d8fddb972c2b90157e23ba3baae6c68d4f0b5822242bb2c4cd821b9568d3033f10ec1114f641668fc1083bf79ebb9f5c15457b538249a97b22a4bcc4f02f06dec7318c16758f7c008001c2e14eba67d26218ec7502ad6ba81b2402159d7c29b068b8937892e3d4f0d4ad1fb9be5e66fb61d3d21a1c3163bce74c0a9d16891e2573146aa92ecd7b91ea96a6987ece052edc5ffb620a8987a83ac5b8b6140d8df6e92e64251bf3a2cec0cca",
+        "payload": "dsdeadbeaf",
         "pow": 0.5371803278688525,
         "recipientPublicKey": null,
         "sig": null,
         "timestamp": 1496991876,
-        "topic": "0x01020304",
+        "topic": "ds01020304",
         "ttl": 50
     },{...}]

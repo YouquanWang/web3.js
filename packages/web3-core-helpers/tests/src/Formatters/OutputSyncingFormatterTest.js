@@ -6,11 +6,11 @@ import {outputSyncingFormatter} from '../../../src/Formatters';
 describe('OutputSyncingFormatterTest', () => {
     it('call outputSyncingFormatter with valid syncing response', () => {
         const response = {
-            startingBlock: '0x0',
-            currentBlock: '0x0',
-            highestBlock: '0x0',
-            knownStates: '0x0',
-            pulledStates: '0x0'
+            startingBlock: 'ds0',
+            currentBlock: 'ds0',
+            highestBlock: 'ds0',
+            knownStates: 'ds0',
+            pulledStates: 'ds0'
         };
 
         expect(outputSyncingFormatter(response)).toEqual({

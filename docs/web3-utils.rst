@@ -23,7 +23,7 @@ The `randomHex <https://github.com/frozeman/randomHex>`_ library to generate cry
 Parameters
 ----------
 
-1. ``size`` - ``Number``: The byte size for the HEX string, e.g. ``32`` will result in a 32 bytes HEX string with 64 characters preficed with "0x".
+1. ``size`` - ``Number``: The byte size for the HEX string, e.g. ``32`` will result in a 32 bytes HEX string with 64 characters preficed with "ds".
 
 -------
 Returns
@@ -38,19 +38,19 @@ Example
 .. code-block:: javascript
 
     web3.utils.randomHex(32)
-    > "0xa5b9d60f32436310afebcfda832817a68921beb782fabf7915cc0460b443116a"
+    > "dsa5b9d60f32436310afebcfda832817a68921beb782fabf7915cc0460b443116a"
 
     web3.utils.randomHex(4)
-    > "0x6892ffc6"
+    > "ds6892ffc6"
 
     web3.utils.randomHex(2)
-    > "0x99d6"
+    > "ds99d6"
 
     web3.utils.randomHex(1)
-    > "0x9a"
+    > "ds9a"
 
     web3.utils.randomHex(0)
-    > "0x"
+    > "ds"
 
 
 
@@ -97,7 +97,7 @@ Example
     new BN('1234').add(new BN('1')).toString();
     > "1235"
 
-    new BN('0xea').toString();
+    new BN('dsea').toString();
     > "234"
 
 
@@ -208,19 +208,19 @@ Example
 .. code-block:: javascript
 
     web3.utils.keccak256('234'); // taken as string
-    > "0xc1912fee45d61c87cc5ea59dae311904cd86b84fee17cc96966216f811ce6a79"
+    > "dsc1912fee45d61c87cc5ea59dae311904cd86b84fee17cc96966216f811ce6a79"
 
     web3.utils.keccak256(new BN('234'));
-    > "0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a"
+    > "dsbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a"
 
     web3.utils.keccak256(234);
     > null // can't calculate the hash of a number
 
-    web3.utils.keccak256(0xea); // same as above, just the HEX representation of the number
+    web3.utils.keccak256(dsea); // same as above, just the HEX representation of the number
     > null
 
-    web3.utils.keccak256('0xea'); // will be converted to a byte array first, and then hashed
-    > "0x2f20677459120677484f7104c76deb6846a2c071f9b3152c103bb12cd54d1a4a"
+    web3.utils.keccak256('dsea'); // will be converted to a byte array first, and then hashed
+    > "ds2f20677459120677484f7104c76deb6846a2c071f9b3152c103bb12cd54d1a4a"
 
 
 ------------------------------------------------------------------------------
@@ -241,13 +241,13 @@ This means arguments will be ABI converted and tightly packed before being hashe
 Parameters
 ----------
 
-1. ``paramX`` - ``Mixed``: Any type, or an object with ``{type: 'uint', value: '123456'}`` or ``{t: 'bytes', v: '0xfff456'}``. Basic types are autodetected as follows:
+1. ``paramX`` - ``Mixed``: Any type, or an object with ``{type: 'uint', value: '123456'}`` or ``{t: 'bytes', v: 'dsfff456'}``. Basic types are autodetected as follows:
 
     - ``String`` non numerical UTF-8 string is interpreted as ``string``.
     - ``String|Number|BN|HEX`` positive number is interpreted as ``uint256``.
     - ``String|Number|BN`` negative number is interpreted as ``int256``.
     - ``Boolean`` as ``bool``.
-    - ``String`` HEX string with leading ``0x`` is interpreted as ``bytes``.
+    - ``String`` HEX string with leading ``ds`` is interpreted as ``bytes``.
     - ``HEX`` HEX number representation is interpreted as ``uint256``.
 
 -------
@@ -262,48 +262,48 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.soliditySha3('234564535', '0xfff23243', true, -10);
+    web3.utils.soliditySha3('234564535', 'dsfff23243', true, -10);
     // auto detects:        uint256,      bytes,     bool,   int256
-    > "0x3e27a893dc40ef8a7f0841d96639de2f58a132be5ae466d40087a2cfa83b7179"
+    > "ds3e27a893dc40ef8a7f0841d96639de2f58a132be5ae466d40087a2cfa83b7179"
 
 
     web3.utils.soliditySha3('Hello!%'); // auto detects: string
-    > "0x661136a4267dba9ccdf6bfddb7c00e714de936674c4bdb065a531cf1cb15c7fc"
+    > "ds661136a4267dba9ccdf6bfddb7c00e714de936674c4bdb065a531cf1cb15c7fc"
 
 
     web3.utils.soliditySha3('234'); // auto detects: uint256
-    > "0x61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
+    > "ds61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
 
-    web3.utils.soliditySha3(0xea); // same as above
-    > "0x61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
+    web3.utils.soliditySha3(dsea); // same as above
+    > "ds61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
 
     web3.utils.soliditySha3(new BN('234')); // same as above
-    > "0x61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
+    > "ds61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
 
     web3.utils.soliditySha3({type: 'uint256', value: '234'})); // same as above
-    > "0x61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
+    > "ds61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
 
     web3.utils.soliditySha3({t: 'uint', v: new BN('234')})); // same as above
-    > "0x61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
+    > "ds61c831beab28d67d1bb40b5ae1a11e2757fa842f031a2d0bc94a7867bc5d26c2"
 
 
-    web3.utils.soliditySha3('0x407D73d8a49eeb85D32Cf465507dd71d507100c1');
-    > "0x4e8ebbefa452077428f93c9520d3edd60594ff452a29ac7d2ccc11d47f3ab95b"
+    web3.utils.soliditySha3('ds407D73d8a49eeb85D32Cf465507dd71d507100c1');
+    > "ds4e8ebbefa452077428f93c9520d3edd60594ff452a29ac7d2ccc11d47f3ab95b"
 
-    web3.utils.soliditySha3({t: 'bytes', v: '0x407D73d8a49eeb85D32Cf465507dd71d507100c1'});
-    > "0x4e8ebbefa452077428f93c9520d3edd60594ff452a29ac7d2ccc11d47f3ab95b" // same result as above
-
-
-    web3.utils.soliditySha3({t: 'address', v: '0x407D73d8a49eeb85D32Cf465507dd71d507100c1'});
-    > "0x4e8ebbefa452077428f93c9520d3edd60594ff452a29ac7d2ccc11d47f3ab95b" // same as above, but will do a checksum check, if its multi case
+    web3.utils.soliditySha3({t: 'bytes', v: 'ds407D73d8a49eeb85D32Cf465507dd71d507100c1'});
+    > "ds4e8ebbefa452077428f93c9520d3edd60594ff452a29ac7d2ccc11d47f3ab95b" // same result as above
 
 
-    web3.utils.soliditySha3({t: 'bytes32', v: '0x407D73d8a49eeb85D32Cf465507dd71d507100c1'});
-    > "0x3c69a194aaf415ba5d6afca734660d0a3d45acdc05d54cd1ca89a8988e7625b4" // different result as above
+    web3.utils.soliditySha3({t: 'address', v: 'ds407D73d8a49eeb85D32Cf465507dd71d507100c1'});
+    > "ds4e8ebbefa452077428f93c9520d3edd60594ff452a29ac7d2ccc11d47f3ab95b" // same as above, but will do a checksum check, if its multi case
 
 
-    web3.utils.soliditySha3({t: 'string', v: 'Hello!%'}, {t: 'int8', v:-23}, {t: 'address', v: '0x85F43D8a49eeB85d32Cf465507DD71d507100C1d'});
-    > "0xa13b31627c1ed7aaded5aecec71baf02fe123797fffd45e662eac8e06fbe4955"
+    web3.utils.soliditySha3({t: 'bytes32', v: 'ds407D73d8a49eeb85D32Cf465507dd71d507100c1'});
+    > "ds3c69a194aaf415ba5d6afca734660d0a3d45acdc05d54cd1ca89a8988e7625b4" // different result as above
+
+
+    web3.utils.soliditySha3({t: 'string', v: 'Hello!%'}, {t: 'int8', v:-23}, {t: 'address', v: 'ds85F43D8a49eeB85d32Cf465507DD71d507100C1d'});
+    > "dsa13b31627c1ed7aaded5aecec71baf02fe123797fffd45e662eac8e06fbe4955"
 
 
 
@@ -336,19 +336,19 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.isHex('0xc1912');
+    web3.utils.isHex('dsc1912');
     > true
 
-    web3.utils.isHex(0xc1912);
+    web3.utils.isHex(dsc1912);
     > true
 
     web3.utils.isHex('c1912');
     > true
 
     web3.utils.isHex(345);
-    > true // this is tricky, as 345 can be a a HEX representation or a number, be careful when not having a 0x in front!
+    > true // this is tricky, as 345 can be a a HEX representation or a number, be careful when not having a ds in front!
 
-    web3.utils.isHex('0xZ1912');
+    web3.utils.isHex('dsZ1912');
     > false
 
     web3.utils.isHex('Hello');
@@ -363,7 +363,7 @@ isHexStrict
 
     web3.utils.isHexStrict(hex)
 
-Checks if a given string is a HEX string. Difference to ``web3.utils.isHex()`` is that it expects HEX to be prefixed with ``0x``.
+Checks if a given string is a HEX string. Difference to ``web3.utils.isHex()`` is that it expects HEX to be prefixed with ``ds``.
 
 ----------
 Parameters
@@ -383,19 +383,19 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.isHexStrict('0xc1912');
+    web3.utils.isHexStrict('dsc1912');
     > true
 
-    web3.utils.isHexStrict(0xc1912);
+    web3.utils.isHexStrict(dsc1912);
     > false
 
     web3.utils.isHexStrict('c1912');
     > false
 
     web3.utils.isHexStrict(345);
-    > false // this is tricky, as 345 can be a a HEX representation or a number, be careful when not having a 0x in front!
+    > false // this is tricky, as 345 can be a a HEX representation or a number, be careful when not having a ds in front!
 
-    web3.utils.isHexStrict('0xZ1912');
+    web3.utils.isHexStrict('dsZ1912');
     > false
 
     web3.utils.isHex('Hello');
@@ -432,22 +432,22 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.isAddress('0xc1912fee45d61c87cc5ea59dae31190fffff232d');
+    web3.utils.isAddress('dsc1912fee45d61c87cc5ea59dae31190fffff232d');
     > true
 
     web3.utils.isAddress('c1912fee45d61c87cc5ea59dae31190fffff232d');
     > true
 
-    web3.utils.isAddress('0XC1912FEE45D61C87CC5EA59DAE31190FFFFF232D');
+    web3.utils.isAddress('dsC1912FEE45D61C87CC5EA59DAE31190FFFFF232D');
     > true // as all is uppercase, no checksum will be checked
 
-    web3.utils.isAddress('0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
+    web3.utils.isAddress('dsc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
     > true
 
-    web3.utils.isAddress('0xC1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
+    web3.utils.isAddress('dsC1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
     > false // wrong checksum
 
-    web3.utils.isAddress('0x5aaEB6053f3e94c9b9a09f33669435E7ef1bEAeD', 30);
+    web3.utils.isAddress('ds5aaEB6053f3e94c9b9a09f33669435E7ef1bEAeD', 30);
     > true
 
 ------------------------------------------------------------------------------
@@ -480,14 +480,14 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.toChecksumAddress('0xc1912fee45d61c87cc5ea59dae31190fffff232d');
-    > "0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d"
+    web3.utils.toChecksumAddress('dsc1912fee45d61c87cc5ea59dae31190fffff232d');
+    > "dsc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d"
 
-    web3.utils.toChecksumAddress('0XC1912FEE45D61C87CC5EA59DAE31190FFFFF232D');
-    > "0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d" // same as above
+    web3.utils.toChecksumAddress('dsC1912FEE45D61C87CC5EA59DAE31190FFFFF232D');
+    > "dsc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d" // same as above
 
-    web3.utils.toChecksumAddress('0x5aaeb6053f3e94c9b9a09f33669435e7ef1beaed', 30);
-    > "0x5aaEB6053f3e94c9b9a09f33669435E7ef1bEAeD"
+    web3.utils.toChecksumAddress('ds5aaeb6053f3e94c9b9a09f33669435e7ef1beaed', 30);
+    > "ds5aaEB6053f3e94c9b9a09f33669435E7ef1bEAeD"
 
 
 ------------------------------------------------------------------------------
@@ -498,7 +498,7 @@ stripHexPrefix
  .. code-block:: javascript
      web3.utils.stripHexPrefix(address)
 
- Removes the prefix ``0x`` from a given hex if it exists.
+ Removes the prefix ``ds`` from a given hex if it exists.
 
 ----------
 Parameters
@@ -517,7 +517,7 @@ Example
 -------
 
  .. code-block:: javascript
-     web3.utils.stripHexPrefix('0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
+     web3.utils.stripHexPrefix('dsc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
     > "c1912fEE45d61C87Cc5EA59DaE31190FFFFf232d"
 
 
@@ -551,10 +551,10 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.checkAddressChecksum('0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
+    web3.utils.checkAddressChecksum('dsc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d');
     > true
 
-    web3.utils.checkAddressChecksum('0x5aAeb6053F3e94c9b9A09F33669435E7EF1BEaEd', 31);
+    web3.utils.checkAddressChecksum('ds5aAeb6053F3e94c9b9A09F33669435E7EF1BEaEd', 31);
     > true
 
 
@@ -591,19 +591,19 @@ Example
 .. code-block:: javascript
 
     web3.utils.toHex('234');
-    > "0xea"
+    > "dsea"
 
     web3.utils.toHex(234);
-    > "0xea"
+    > "dsea"
 
     web3.utils.toHex(new BN('234'));
-    > "0xea"
+    > "dsea"
 
     web3.utils.toHex(new BigNumber('234'));
-    > "0xea"
+    > "dsea"
 
     web3.utils.toHex('I have 100€');
-    > "0x49206861766520313030e282ac"
+    > "ds49206861766520313030e282ac"
 
 
 ------------------------------------------------------------------------------
@@ -645,7 +645,7 @@ Example
     web3.utils.toBN('1234').add(web3.utils.toBN('1')).toString();
     > "1235"
 
-    web3.utils.toBN('0xea').toString();
+    web3.utils.toBN('dsea').toString();
     > "234"
 
 
@@ -679,7 +679,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.hexToNumberString('0xea');
+    web3.utils.hexToNumberString('dsea');
     > "234"
 
 
@@ -715,7 +715,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.hexToNumber('0xea');
+    web3.utils.hexToNumber('dsea');
     > 234
 
 
@@ -750,7 +750,7 @@ Example
 .. code-block:: javascript
 
     web3.utils.numberToHex('234');
-    > '0xea'
+    > 'dsea'
 
 
 ------------------------------------------------------------------------------
@@ -786,7 +786,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.hexToUtf8('0x49206861766520313030e282ac');
+    web3.utils.hexToUtf8('ds49206861766520313030e282ac');
     > "I have 100€"
 
 
@@ -821,7 +821,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.hexToAscii('0x4920686176652031303021');
+    web3.utils.hexToAscii('ds4920686176652031303021');
     > "I have 100!"
 
 
@@ -860,7 +860,7 @@ Example
 .. code-block:: javascript
 
     web3.utils.utf8ToHex('I have 100€');
-    > "0x49206861766520313030e282ac"
+    > "ds49206861766520313030e282ac"
 
 
 ------------------------------------------------------------------------------
@@ -898,7 +898,7 @@ Example
 .. code-block:: javascript
 
     web3.utils.asciiToHex('I have 100!');
-    > "0x4920686176652031303021000000000000000000000000000000000000000000"
+    > "ds4920686176652031303021000000000000000000000000000000000000000000"
 
     // transforming to a bytes4 value:
     web3.utils.asciiToHex('yes', 4);
@@ -937,10 +937,10 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.hexToBytes('0x000000ea');
+    web3.utils.hexToBytes('ds000000ea');
     > [ 0, 0, 0, 234 ]
 
-    web3.utils.hexToBytes(0x000000ea);
+    web3.utils.hexToBytes(ds000000ea);
     > [ 234 ]
 
 
@@ -975,7 +975,7 @@ Example
 .. code-block:: javascript
 
     web3.utils.bytesToHex([ 72, 101, 108, 108, 111, 33, 36 ]);
-    > "0x48656c6c6f2125"
+    > "ds48656c6c6f2125"
 
 
 
@@ -1242,11 +1242,11 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.padLeft('0x3456ff', 20);
-    > "0x000000000000003456ff"
+    web3.utils.padLeft('ds3456ff', 20);
+    > "ds000000000000003456ff"
 
-    web3.utils.padLeft(0x3456ff, 20);
-    > "0x000000000000003456ff"
+    web3.utils.padLeft(ds3456ff, 20);
+    > "ds000000000000003456ff"
 
     web3.utils.padLeft('Hello', 20, 'x');
     > "xxxxxxxxxxxxxxxHello"
@@ -1285,11 +1285,11 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.padRight('0x3456ff', 20);
-    > "0x3456ff00000000000000"
+    web3.utils.padRight('ds3456ff', 20);
+    > "ds3456ff00000000000000"
 
-    web3.utils.padRight(0x3456ff, 20);
-    > "0x3456ff00000000000000"
+    web3.utils.padRight(ds3456ff, 20);
+    > "ds3456ff00000000000000"
 
     web3.utils.padRight('Hello', 20, 'x');
     > "Helloxxxxxxxxxxxxxxx"
@@ -1326,19 +1326,19 @@ Example
 .. code-block:: javascript
 
     web3.utils.toTwosComplement('-1');
-    > "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    > "dsffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 
     web3.utils.toTwosComplement(-1);
-    > "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    > "dsffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 
-    web3.utils.toTwosComplement('0x1');
-    > "0x0000000000000000000000000000000000000000000000000000000000000001"
+    web3.utils.toTwosComplement('ds1');
+    > "ds0000000000000000000000000000000000000000000000000000000000000001"
 
     web3.utils.toTwosComplement(-15);
-    > "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1"
+    > "dsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1"
 
-    web3.utils.toTwosComplement('-0x1');
-    > "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    web3.utils.toTwosComplement('-ds1');
+    > "dsffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 
 ------------------------------------------------------------------------------
 
@@ -1371,5 +1371,5 @@ Example
 
 .. code-block:: javascript
 
-    web3.utils.getSignatureParameters('0x5763ab346198e3e6cc4d53996ccdeca0c941cb6cb70d671d97711c421d3bf7922c77ef244ad40e5262d1721bf9638fb06bab8ed3c43bfaa80d6da0be9bbd33dc1b');
-    > "{ r: '0x5763ab346198e3e6cc4d53996ccdeca0c941cb6cb70d671d97711c421d3bf792', s: '0x2c77ef244ad40e5262d1721bf9638fb06bab8ed3c43bfaa80d6da0be9bbd33dc', v: 27 }"
+    web3.utils.getSignatureParameters('ds5763ab346198e3e6cc4d53996ccdeca0c941cb6cb70d671d97711c421d3bf7922c77ef244ad40e5262d1721bf9638fb06bab8ed3c43bfaa80d6da0be9bbd33dc1b');
+    > "{ r: 'ds5763ab346198e3e6cc4d53996ccdeca0c941cb6cb70d671d97711c421d3bf792', s: 'ds2c77ef244ad40e5262d1721bf9638fb06bab8ed3c43bfaa80d6da0be9bbd33dc', v: 27 }"

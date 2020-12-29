@@ -72,7 +72,7 @@ Example
 
     web3.eth.personal.newAccount('!@superpassword')
     .then(console.log);
-    > '0x1234567891011121314151617181920212223456'
+    > 'ds1234567891011121314151617181920212223456'
 
 ------------------------------------------------------------------------------
 
@@ -116,14 +116,14 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.personal.sign("Hello world", "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!")
+    web3.eth.personal.sign("Hello world", "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!")
     .then(console.log);
-    > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
+    > "ds30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 
     // the below is the same
-    web3.eth.personal.sign(web3.utils.utf8ToHex("Hello world"), "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!")
+    web3.eth.personal.sign(web3.utils.utf8ToHex("Hello world"), "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!")
     .then(console.log);
-    > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
+    > "ds30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 
 
 ------------------------------------------------------------------------------
@@ -163,8 +163,8 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.personal.ecRecover("Hello world", "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400").then(console.log);
-    > "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe"
+    web3.eth.personal.ecRecover("Hello world", "ds30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400").then(console.log);
+    > "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe"
 
 ------------------------------------------------------------------------------
 
@@ -206,26 +206,26 @@ Example
 .. code-block:: javascript
 
     web3.eth.signTransaction({
-        from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+        from: "dsEB014f8c8B418Db6b45774c326A0E64C78914dC0",
         gasPrice: "20000000000",
         gas: "21000",
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: "1000000000000000000",
         data: ""
     }, 'MyPassword!').then(console.log);
     > {
-        raw: '0xf86c808504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008025a04f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88da07e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
+        raw: 'dsf86c808504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008025a04f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88da07e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
         tx: {
-            nonce: '0x0',
-            gasPrice: '0x4a817c800',
-            gas: '0x5208',
-            to: '0x3535353535353535353535353535353535353535',
-            value: '0xde0b6b3a7640000',
-            input: '0x',
-            v: '0x25',
-            r: '0x4f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88d',
-            s: '0x7e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
-            hash: '0xda3be87732110de6c1354c83770aae630ede9ac308d9f7b399ecfba23d923384'
+            nonce: 'ds0',
+            gasPrice: 'ds4a817c800',
+            gas: 'ds5208',
+            to: 'ds3535353535353535353535353535353535353535',
+            value: 'dsde0b6b3a7640000',
+            input: 'ds',
+            v: 'ds25',
+            r: 'ds4f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88d',
+            s: 'ds7e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
+            hash: 'dsda3be87732110de6c1354c83770aae630ede9ac308d9f7b399ecfba23d923384'
         }
     }
 
@@ -269,14 +269,14 @@ Example
 .. code-block:: javascript
 
     web3.eth.sendTransaction({
-        from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+        from: "dsEB014f8c8B418Db6b45774c326A0E64C78914dC0",
         gasPrice: "20000000000",
         gas: "21000",
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: "1000000000000000000",
         data: ""
     }, 'MyPassword!').then(console.log);
-    > '0xda3be87732110de6c1354c83770aae630ede9ac308d9f7b399ecfba23d923384'
+    > 'dsda3be87732110de6c1354c83770aae630ede9ac308d9f7b399ecfba23d923384'
 
 ------------------------------------------------------------------------------
 
@@ -315,7 +315,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.personal.unlockAccount("0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!", 600)
+    web3.eth.personal.unlockAccount("ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!", 600)
     .then(console.log('Account unlocked!'));
     > "Account unlocked!"
 
@@ -357,7 +357,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.personal.lockAccount("0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe")
+    web3.eth.personal.lockAccount("ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe")
     .then(console.log('Account locked!'));
     > "Account locked!"
 
@@ -396,7 +396,7 @@ Example
 
     web3.eth.personal.getAccounts()
     .then(console.log);
-    > ["0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "0xDCc6960376d6C6dEa93647383FfB245CfCed97Cf"]
+    > ["ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "dsDCc6960376d6C6dEa93647383FfB245CfCed97Cf"]
 
 
 ------------------------------------------------------------------------------
@@ -440,6 +440,6 @@ Example
 
     web3.eth.personal.importRawKey("cd3376bb711cb332ee3fb2ca04c6a8b9f70c316fcdf7a1f44ef4c7999483295e", "password1234")
     .then(console.log);
-    > "0x8f337bf484b2fc75e4b0436645dcc226ee2ac531"
+    > "ds8f337bf484b2fc75e4b0436645dcc226ee2ac531"
 
 ------------------------------------------------------------------------------

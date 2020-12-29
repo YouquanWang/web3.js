@@ -28,9 +28,9 @@ describe('GetAccountsMethodTest', () => {
     });
 
     it('afterExecution should just return the response', () => {
-        Utils.toChecksumAddress.mockReturnValueOnce('0x0');
+        Utils.toChecksumAddress.mockReturnValueOnce('ds0');
 
-        expect(method.afterExecution([{}])[0]).toEqual('0x0');
+        expect(method.afterExecution([{}])[0]).toEqual('ds0');
 
         expect(Utils.toChecksumAddress).toHaveBeenCalledWith({});
     });

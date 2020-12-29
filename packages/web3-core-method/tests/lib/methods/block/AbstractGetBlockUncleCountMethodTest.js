@@ -32,22 +32,22 @@ describe('AbstractGetBlockUncleCountMethodTest', () => {
     });
 
     it('calls beforeExecution with a block number hash as parameter and calls the inputBlockNumberFormatter', () => {
-        method.parameters = ['0x0'];
+        method.parameters = ['ds0'];
 
-        formatters.inputBlockNumberFormatter.mockReturnValueOnce('0x0');
+        formatters.inputBlockNumberFormatter.mockReturnValueOnce('ds0');
 
         method.beforeExecution({});
 
-        expect(method.parameters[0]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
 
-        expect(formatters.inputBlockNumberFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputBlockNumberFormatter).toHaveBeenCalledWith('ds0');
     });
 
     it('afterExecution should map the hex string to a number', () => {
         Utils.hexToNumber.mockReturnValueOnce(100);
 
-        expect(method.afterExecution('0x0')).toEqual(100);
+        expect(method.afterExecution('ds0')).toEqual(100);
 
-        expect(Utils.hexToNumber).toHaveBeenCalledWith('0x0');
+        expect(Utils.hexToNumber).toHaveBeenCalledWith('ds0');
     });
 });

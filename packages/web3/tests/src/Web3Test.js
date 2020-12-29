@@ -82,17 +82,17 @@ describe('Web3Test', () => {
     });
 
     it('sets the defaultAccount property', () => {
-        Utils.toChecksumAddress.mockReturnValue('0x2');
+        Utils.toChecksumAddress.mockReturnValue('ds2');
 
-        web3.defaultAccount = '0x1';
+        web3.defaultAccount = 'ds1';
 
-        expect(web3.defaultAccount).toEqual('0x2');
+        expect(web3.defaultAccount).toEqual('ds2');
 
-        expect(Eth.mock.instances[0].defaultAccount).toEqual('0x1');
+        expect(Eth.mock.instances[0].defaultAccount).toEqual('ds1');
 
-        expect(Shh.mock.instances[0].defaultAccount).toEqual('0x1');
+        expect(Shh.mock.instances[0].defaultAccount).toEqual('ds1');
 
-        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('0x1');
+        expect(Utils.toChecksumAddress).toHaveBeenCalledWith('ds1');
     });
 
     it('sets the defaultBlock property', () => {

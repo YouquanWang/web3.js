@@ -79,7 +79,7 @@ describe('AbstractContractTest', () => {
             Utils,
             formatters,
             abi,
-            '0x0',
+            'ds0',
             options
         );
     });
@@ -105,7 +105,7 @@ describe('AbstractContractTest', () => {
 
         expect(abstractContract.abiMapper).toEqual(abiMapperMock);
 
-        expect(abstractContract.options).toEqual({address: '0x0', transactionSigner: {}, data: ''});
+        expect(abstractContract.options).toEqual({address: 'ds0', transactionSigner: {}, data: ''});
 
         expect(abstractContract.accounts).toEqual({});
 
@@ -113,7 +113,7 @@ describe('AbstractContractTest', () => {
 
         expect(abstractContract.abiModel).toEqual(abiModelMock);
 
-        expect(abstractContract.address).toEqual('0x0');
+        expect(abstractContract.address).toEqual('ds0');
 
         expect(abstractContract.data).toEqual('');
 

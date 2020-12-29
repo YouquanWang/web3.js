@@ -8,25 +8,25 @@ describe('InputTransactionFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
             nonce: 1,
             value: 100,
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         };
 
         expect(inputTransactionFormatter(tx, {})).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: undefined,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64',
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64',
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         });
     });
 
@@ -34,25 +34,25 @@ describe('InputTransactionFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
             nonce: 1,
             value: 100,
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         };
 
-        expect(inputTransactionFormatter(tx, {defaultAccount: '0x03c9a938ff7f54090d0d99e2c6f80380510ea080'})).toEqual({
+        expect(inputTransactionFormatter(tx, {defaultAccount: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea080'})).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: undefined,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64',
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64',
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         });
     });
 
@@ -60,7 +60,7 @@ describe('InputTransactionFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
@@ -68,16 +68,16 @@ describe('InputTransactionFormatterTest', () => {
             value: 100
         };
 
-        expect(inputTransactionFormatter(tx, {defaultAccount: '0x03c9a938ff7f54090d0d99e2c6f80380510ea080'})).toEqual({
+        expect(inputTransactionFormatter(tx, {defaultAccount: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea080'})).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: undefined,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64',
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea080'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64',
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea080'
         });
     });
 
@@ -85,7 +85,7 @@ describe('InputTransactionFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,

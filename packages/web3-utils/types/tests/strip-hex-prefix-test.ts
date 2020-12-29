@@ -24,7 +24,7 @@ import BN = require('bn.js');
 import {stripHexPrefix} from 'web3-utils';
 
 // $ExpectType string
-stripHexPrefix('0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb');
+stripHexPrefix('dsd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb');
 
 // $ExpectError
 stripHexPrefix(123);

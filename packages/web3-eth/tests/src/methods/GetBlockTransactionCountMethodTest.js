@@ -16,7 +16,7 @@ describe('GetBlockTransactionCountMethodTest', () => {
     });
 
     it('calls execute with hash', () => {
-        getBlockTransactionCountMethod.parameters = ['0x0'];
+        getBlockTransactionCountMethod.parameters = ['ds0'];
 
         getBlockTransactionCountMethod.beforeExecution({});
 

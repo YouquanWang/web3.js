@@ -240,7 +240,7 @@ isHash
     method.isHash(value)
 
 
-This method will check if the given value is a string and starts with ``0x``.
+This method will check if the given value is a string and starts with ``ds``.
 It will be used in several methods for deciding which JSON-RPC method should get executed.
 
 ----------

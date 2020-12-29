@@ -24,7 +24,7 @@ import BN = require('bn.js');
 import {toAscii} from 'web3-utils';
 
 // $ExpectType string
-toAscii('0x4920686176652031303021');
+toAscii('ds4920686176652031303021');
 
 // $ExpectError
 toAscii(345);

@@ -28,7 +28,7 @@ describe('EcRecoverMethodTest', () => {
     });
 
     it('beforeExecution should do nothing with the parameters', () => {
-        method.parameters = [{}, '0x0'];
+        method.parameters = [{}, 'ds0'];
 
         formatters.inputSignFormatter.mockReturnValueOnce({sign: true});
 
@@ -36,7 +36,7 @@ describe('EcRecoverMethodTest', () => {
 
         expect(method.parameters[0]).toHaveProperty('sign', true);
 
-        expect(method.parameters[1]).toEqual('0x0');
+        expect(method.parameters[1]).toEqual('ds0');
 
         expect(formatters.inputSignFormatter).toHaveBeenCalledWith({});
     });

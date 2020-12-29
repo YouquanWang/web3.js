@@ -6,11 +6,11 @@ import {outputPostFormatter} from '../../../src/Formatters';
 describe('OutputPostFormatterTest', () => {
     it('call outputPostFormatter with a valid post object', () => {
         const post = {
-            expiry: '0x0',
-            sent: '0x0',
-            ttl: '0x0',
-            workProved: '0x0',
-            topics: ['0x64']
+            expiry: 'ds0',
+            sent: 'ds0',
+            ttl: 'ds0',
+            workProved: 'ds0',
+            topics: ['ds64']
         };
 
         expect(outputPostFormatter(post)).toEqual({
@@ -24,10 +24,10 @@ describe('OutputPostFormatterTest', () => {
 
     it('call outputPostFormatter without the topics property defined on the post object', () => {
         const post = {
-            expiry: '0x0',
-            sent: '0x0',
-            ttl: '0x0',
-            workProved: '0x0'
+            expiry: 'ds0',
+            sent: 'ds0',
+            ttl: 'ds0',
+            workProved: 'ds0'
         };
 
         expect(outputPostFormatter(post)).toEqual({

@@ -276,7 +276,7 @@ Example
 .. code-block:: javascript
 
     debug.getBlockRlp(100).then(console.log);
-    > '0x0'
+    > 'ds0'
 
 
 ------------------------------------------------------------------------------
@@ -389,7 +389,7 @@ Example
 .. code-block:: javascript
 
     debug.getSeedHash().then(console.log);
-    > '0x0'
+    > 'ds0'
 
 ------------------------------------------------------------------------------
 
@@ -685,7 +685,7 @@ Example
 
 .. code-block:: javascript
 
-    debug.getBlockTrace('0x0', {}).then(console.log);
+    debug.getBlockTrace('ds0', {}).then(console.log);
     > {
         gas: 85301,
         returnValue: "",
@@ -770,7 +770,7 @@ Example
 
 .. code-block:: javascript
 
-    debug.getBlockTraceByHash('0x0', {}).then(console.log);
+    debug.getBlockTraceByHash('ds0', {}).then(console.log);
     > {
         gas: 85301,
         returnValue: "",
@@ -869,7 +869,7 @@ Example
 
 .. code-block:: javascript
 
-    debug.getTransactionTrace('0x0', {}).then(console.log);
+    debug.getTransactionTrace('ds0', {}).then(console.log);
     > {
         gas: 85301,
         returnValue: "",

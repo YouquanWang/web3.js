@@ -26,9 +26,9 @@ import {padLeft} from 'web3-utils';
 const bigNumber = new BN(3);
 
 // $ExpectType string
-padLeft('0x3456ff', 20);
+padLeft('ds3456ff', 20);
 // $ExpectType string
-padLeft(0x3456ff, 20);
+padLeft(ds3456ff, 20);
 // $ExpectType string
 padLeft('Hello', 20, 'x');
 
@@ -47,19 +47,19 @@ padLeft(null, 20);
 // $ExpectError
 padLeft(undefined, 20);
 // $ExpectError
-padLeft('0x3456ff', bigNumber);
+padLeft('ds3456ff', bigNumber);
 // $ExpectError
-padLeft('0x3456ff', ['string']);
+padLeft('ds3456ff', ['string']);
 // $ExpectError
-padLeft('0x3456ff', [4]);
+padLeft('ds3456ff', [4]);
 // $ExpectError
-padLeft('0x3456ff', {});
+padLeft('ds3456ff', {});
 // $ExpectError
-padLeft('0x3456ff', true);
+padLeft('ds3456ff', true);
 // $ExpectError
-padLeft('0x3456ff', null);
+padLeft('ds3456ff', null);
 // $ExpectError
-padLeft('0x3456ff', undefined);
+padLeft('ds3456ff', undefined);
 // $ExpectError
 padLeft('Hello', 20, bigNumber);
 // $ExpectError

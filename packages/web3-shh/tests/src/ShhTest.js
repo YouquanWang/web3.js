@@ -99,12 +99,12 @@ describe('ShhTest', () => {
     });
 
     it('sets the defaultAccount property', () => {
-        Utils.toChecksumAddress.mockReturnValue('0x2');
+        Utils.toChecksumAddress.mockReturnValue('ds2');
 
-        shh.defaultAccount = '0x1';
+        shh.defaultAccount = 'ds1';
 
-        expect(shh.defaultAccount).toEqual('0x2');
-        expect(networkMock.defaultAccount).toEqual('0x2');
+        expect(shh.defaultAccount).toEqual('ds2');
+        expect(networkMock.defaultAccount).toEqual('ds2');
     });
 
     it('sets the defaultBlock property', () => {

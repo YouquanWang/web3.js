@@ -123,8 +123,8 @@ export default class Account {
      * @returns {Account}
      */
     static fromPrivateKey(privateKey, accounts = {}) {
-        if (!privateKey.startsWith('0x')) {
-            privateKey = '0x' + privateKey;
+        if (!privateKey.startsWith('ds')) {
+            privateKey = 'ds' + privateKey;
         }
 
         // 64 hex characters + hex-prefix
@@ -177,19 +177,19 @@ export default class Account {
         }
 
         const ciphertext = Buffer.concat([
-            cipher.update(Buffer.from(this.privateKey.replace('0x', ''), 'hex')),
+            cipher.update(Buffer.from(this.privateKey.replace('ds', ''), 'hex')),
             cipher.final()
         ]);
 
         const mac = keccak256(Buffer.concat([derivedKey.slice(16, 32), Buffer.from(ciphertext, 'hex')])).replace(
-            '0x',
+            'ds',
             ''
         );
 
         return {
             version: 3,
             id: uuid.v4({random: options.uuid || randomBytes(16)}),
-            address: this.address.toLowerCase().replace('0x', ''),
+            address: this.address.toLowerCase().replace('ds', ''),
             crypto: {
                 ciphertext: ciphertext.toString('hex'),
                 cipherparams: {
@@ -264,7 +264,7 @@ export default class Account {
 
         const ciphertext = Buffer.from(json.crypto.ciphertext, 'hex');
 
-        const mac = keccak256(Buffer.concat([derivedKey.slice(16, 32), ciphertext])).replace('0x', '');
+        const mac = keccak256(Buffer.concat([derivedKey.slice(16, 32), ciphertext])).replace('ds', '');
         if (mac !== json.crypto.mac) {
             throw new Error('Key derivation failed - possibly wrong password');
         }
@@ -274,7 +274,7 @@ export default class Account {
             derivedKey.slice(0, 16),
             Buffer.from(json.crypto.cipherparams.iv, 'hex')
         );
-        const seed = `0x${Buffer.concat([decipher.update(ciphertext), decipher.final()]).toString('hex')}`;
+        const seed = `ds${Buffer.concat([decipher.update(ciphertext), decipher.final()]).toString('hex')}`;
 
         return Account.fromPrivateKey(seed, accounts);
     }

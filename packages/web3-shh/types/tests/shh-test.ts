@@ -82,10 +82,10 @@ shh.newKeyPair();
 shh.newKeyPair((error: Error, key: string) => {});
 
 // $ExpectType Promise<string>
-shh.addPrivateKey('0x8bda3abeb454847b515fa9b404cede50b1cc63cfdeddd4999d074284b4c21e15');
+shh.addPrivateKey('ds8bda3abeb454847b515fa9b404cede50b1cc63cfdeddd4999d074284b4c21e15');
 // $ExpectType Promise<string>
 shh.addPrivateKey(
-    '0x8bda3abeb454847b515fa9b404cede50b1cc63cfdeddd4999d074284b4c21e15',
+    'ds8bda3abeb454847b515fa9b404cede50b1cc63cfdeddd4999d074284b4c21e15',
     (error: Error, privateKey: string) => {}
 );
 
@@ -127,9 +127,9 @@ shh.newSymKey();
 shh.newSymKey((error: Error, key: string) => {});
 
 // $ExpectType Promise<string>
-shh.addSymKey('0x5e11b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f');
+shh.addSymKey('ds5e11b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f');
 // $ExpectType Promise<string>
-shh.addSymKey('0x5e11b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f', (error: Error, key: string) => {});
+shh.addSymKey('ds5e11b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f', (error: Error, key: string) => {});
 
 // $ExpectType Promise<string>
 shh.generateSymKeyFromPassword('Never use this password - password!');
@@ -162,8 +162,8 @@ shh.post({
     symKeyID: 'sd3',
     sig: 'sds5',
     ttl: 10,
-    topic: '0xffaadd11',
-    payload: '0xffffffdddddd1122',
+    topic: 'dsffaadd11',
+    payload: 'dsffffffdddddd1122',
     powTime: 3,
     powTarget: 0.5
 });
@@ -173,8 +173,8 @@ shh.post(
         symKeyID: 'sd3',
         sig: 'sds5',
         ttl: 10,
-        topic: '0xffaadd11',
-        payload: '0xffffffdddddd1122',
+        topic: 'dsffaadd11',
+        payload: 'dsffffffdddddd1122',
         powTime: 3,
         powTarget: 0.5
     },
@@ -185,9 +185,9 @@ shh.post(
 shh.subscribe('messages', {
     symKeyID: 'bf31b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f',
     sig:
-        '0x04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6',
+        'ds04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6',
     ttl: 20,
-    topics: ['0xffddaa11'],
+    topics: ['dsffddaa11'],
     minPow: 0.8
 });
 // $ExpectType Subscribe
@@ -196,9 +196,9 @@ shh.subscribe(
     {
         symKeyID: 'bf31b9ffc2387e18636e0a3d0c56b023264c16e78a2adcba1303cefc685e610f',
         sig:
-            '0x04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6',
+            'ds04d1574d4eab8f3dde4d2dc7ed2c4d699d77cbbdd09167b8fffa099652ce4df00c4c6e0263eafe05007a46fdf0c8d32b11aeabcd3abbc7b2bc2bb967368a68e9c6',
         ttl: 20,
-        topics: ['0xffddaa11'],
+        topics: ['dsffddaa11'],
         minPow: 0.8
     },
     (error: Error, message: Notification, subscription: any) => {}

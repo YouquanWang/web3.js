@@ -118,23 +118,23 @@ debug.getBlockTrace("", (error: Error, result: BlockTraceResult) => {});
 debug.getBlockTrace("", {disableStack: true, disableMemory: true, disableStorage: true}, (error: Error, result: BlockTraceResult) => {});
 
 // $ExpectType Promise<BlockTraceResult>
-debug.getBlockTraceByHash("0x07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06");
+debug.getBlockTraceByHash("ds07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06");
 
 // $ExpectType Promise<BlockTraceResult>
 debug.getBlockTraceByHash(
-    "0x07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06",
+    "ds07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06",
     {disableStack: true, disableMemory: true, disableStorage: true}
 );
 
 // $ExpectType Promise<BlockTraceResult>
 debug.getBlockTraceByHash(
-    "0x07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06",
+    "ds07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06",
     (error: Error, result: BlockTraceResult) => {}
 );
 
 // $ExpectType Promise<BlockTraceResult>
 debug.getBlockTraceByHash(
-    "0x07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06",
+    "ds07801257594649d586712d84357b6626d81f33465519ba7994de585f3adf7f06",
     {disableStack: true, disableMemory: true, disableStorage: true},
     (error: Error, result: BlockTraceResult) => {}
 );
@@ -172,23 +172,23 @@ debug.getBlockTraceFromFile(
 );
 
 // $ExpectType Promise<TransactionTrace>
-debug.getTransactionTrace("0xfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f");
+debug.getTransactionTrace("dsfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f");
 
 // $ExpectType Promise<TransactionTrace>
 debug.getTransactionTrace(
-    "0xfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f",
+    "dsfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f",
     {disableStack: true, disableMemory: true, disableStorage: true}
 );
 
 // $ExpectType Promise<TransactionTrace>
 debug.getTransactionTrace(
-    "0xfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f",
+    "dsfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f",
     (error: Error, result: TransactionTrace) => {}
 );
 
 // $ExpectType Promise<TransactionTrace>
 debug.getTransactionTrace(
-    "0xfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f",
+    "dsfc9359e49278b7ba99f59edac0e3de49956e46e530a53c15aa71226b7aa92c6f",
     {disableStack: true, disableMemory: true, disableStorage: true},
     (error: Error, result: TransactionTrace) => {}
 );

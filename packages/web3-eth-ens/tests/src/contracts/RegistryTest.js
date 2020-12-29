@@ -59,10 +59,10 @@ describe('RegistryTest', () => {
 
         const callback = jest.fn();
 
-        registry.address = '0x0';
+        registry.address = 'ds0';
 
         registry.methods.owner = jest.fn((hash) => {
-            expect(hash).toEqual('0x0');
+            expect(hash).toEqual('ds0');
 
             return call;
         });
@@ -70,7 +70,7 @@ describe('RegistryTest', () => {
         namehash.hash = jest.fn((name) => {
             expect(name).toEqual('name');
 
-            return '0x0';
+            return 'ds0';
         });
 
         await expect(registry.owner('name', callback)).resolves.toEqual(true);
@@ -85,10 +85,10 @@ describe('RegistryTest', () => {
 
         const callback = jest.fn();
 
-        registry.address = '0x0';
+        registry.address = 'ds0';
 
         registry.methods.owner = jest.fn((hash) => {
-            expect(hash).toEqual('0x0');
+            expect(hash).toEqual('ds0');
 
             return call;
         });
@@ -96,7 +96,7 @@ describe('RegistryTest', () => {
         namehash.hash = jest.fn((name) => {
             expect(name).toEqual('name');
 
-            return '0x0';
+            return 'ds0';
         });
 
         await expect(registry.owner('name', callback)).rejects.toEqual(new Error('ERROR'));
@@ -110,7 +110,7 @@ describe('RegistryTest', () => {
         });
 
         registry.methods.resolver = jest.fn((hash) => {
-            expect(hash).toEqual('0x0');
+            expect(hash).toEqual('ds0');
 
             return call;
         });
@@ -118,7 +118,7 @@ describe('RegistryTest', () => {
         namehash.hash = jest.fn((name) => {
             expect(name).toEqual('name');
 
-            return '0x0';
+            return 'ds0';
         });
 
         registry.clone = jest.fn(() => {

@@ -34,11 +34,11 @@ describe('AllEventsLogDecoderTest', () => {
         const abiItemModel = AbiItemModel.mock.instances[0];
 
         const response = {
-            topics: ['0x0'],
-            data: '0x0'
+            topics: ['ds0'],
+            data: 'ds0'
         };
 
-        abiCoderMock.decodeLog.mockReturnValueOnce(['0x0']);
+        abiCoderMock.decodeLog.mockReturnValueOnce(['ds0']);
 
         abiModelMock.getEventBySignature.mockReturnValueOnce(abiItemModel);
 
@@ -50,37 +50,37 @@ describe('AllEventsLogDecoderTest', () => {
 
         expect(decodedLog.topics).toEqual(undefined);
 
-        expect(decodedLog.raw.data).toEqual('0x0');
+        expect(decodedLog.raw.data).toEqual('ds0');
 
-        expect(decodedLog.raw.topics).toEqual(['0x0']);
+        expect(decodedLog.raw.topics).toEqual(['ds0']);
 
         expect(decodedLog.signature).toEqual(abiItemModel.signature);
 
         expect(decodedLog.event).toEqual(abiItemModel.name);
 
-        expect(decodedLog.returnValues).toEqual(['0x0']);
+        expect(decodedLog.returnValues).toEqual(['ds0']);
 
-        expect(abiModelMock.getEventBySignature).toHaveBeenCalledWith('0x0');
+        expect(abiModelMock.getEventBySignature).toHaveBeenCalledWith('ds0');
 
-        expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], '0x0', []);
+        expect(abiCoderMock.decodeLog).toHaveBeenCalledWith([], 'ds0', []);
 
         expect(abiItemModel.getInputs).toHaveBeenCalled();
     });
 
     it('calls decode and returns the response without decoding it because there is no event with this name in the ABI', () => {
         const response = {
-            topics: ['0x0'],
-            data: '0x0'
+            topics: ['ds0'],
+            data: 'ds0'
         };
 
         abiModelMock.getEventBySignature.mockReturnValueOnce(false);
 
         const decodedLog = allEventsLogDecoder.decode(abiModelMock, response);
 
-        expect(decodedLog.raw.data).toEqual('0x0');
+        expect(decodedLog.raw.data).toEqual('ds0');
 
-        expect(decodedLog.raw.topics).toEqual(['0x0']);
+        expect(decodedLog.raw.topics).toEqual(['ds0']);
 
-        expect(abiModelMock.getEventBySignature).toHaveBeenCalledWith('0x0');
+        expect(abiModelMock.getEventBySignature).toHaveBeenCalledWith('ds0');
     });
 });

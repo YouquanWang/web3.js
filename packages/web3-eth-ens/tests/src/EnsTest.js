@@ -37,7 +37,7 @@ describe('EnsTest', () => {
         networkMock = Network.mock.instances[0];
 
         namehash.hash = jest.fn(() => {
-            return '0x0';
+            return 'ds0';
         });
 
         ens = new Ens(
@@ -178,7 +178,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setAddr: jest.fn((address) => {
-                    expect(address).toEqual('0x0');
+                    expect(address).toEqual('ds0');
 
                     return {send: send};
                 })
@@ -187,7 +187,7 @@ describe('EnsTest', () => {
 
         registryMock.resolver.mockReturnValueOnce(Promise.resolve(resolver));
 
-        const promiEvent = ens.setAddress('name', '0x0', {}, callback);
+        const promiEvent = ens.setAddress('name', 'ds0', {}, callback);
 
         promiEvent.on('transactionHash', (transactionHash) => {
             expect(transactionHash).toEqual('hash');
@@ -255,7 +255,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setAddr: jest.fn((address) => {
-                    expect(address).toEqual('0x0');
+                    expect(address).toEqual('ds0');
 
                     return {send: send};
                 })
@@ -264,7 +264,7 @@ describe('EnsTest', () => {
 
         registryMock.resolver.mockReturnValueOnce(Promise.resolve(resolver));
 
-        const promiEvent = ens.setAddress('name', '0x0', {}, callback);
+        const promiEvent = ens.setAddress('name', 'ds0', {}, callback);
 
         promiEvent.on('transactionHash', (transactionHash) => {
             expect(transactionHash).toEqual('hash');
@@ -356,7 +356,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setPubkey: jest.fn((node, x, y) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(x).toEqual('x');
 
@@ -437,7 +437,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setPubkey: jest.fn((node, x, y) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(x).toEqual('x');
 
@@ -542,7 +542,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setText: jest.fn((node, x, y) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(x).toEqual('key');
 
@@ -623,7 +623,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setText: jest.fn((node, x, y) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(x).toEqual('key');
 
@@ -728,7 +728,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setContent: jest.fn((node, hash) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(hash).toEqual('hash');
 
@@ -807,7 +807,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setContent: jest.fn((node, hash) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(hash).toEqual('hash');
 
@@ -910,7 +910,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setMultihash: jest.fn((node, hash) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(hash).toEqual('hash');
 
@@ -989,7 +989,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setMultihash: jest.fn((node, hash) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(hash).toEqual('hash');
 
@@ -1092,7 +1092,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setContenthash: jest.fn((node, hash) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(hash).toEqual('hash');
 
@@ -1171,7 +1171,7 @@ describe('EnsTest', () => {
         const resolver = {
             methods: {
                 setContenthash: jest.fn((node, hash) => {
-                    expect(node).toEqual('0x0');
+                    expect(node).toEqual('ds0');
 
                     expect(hash).toEqual('hash');
 

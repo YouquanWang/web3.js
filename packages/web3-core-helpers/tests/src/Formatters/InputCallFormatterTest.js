@@ -8,7 +8,7 @@ describe('InputCallFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
@@ -16,16 +16,16 @@ describe('InputCallFormatterTest', () => {
             value: 100
         };
 
-        expect(inputCallFormatter(tx, {defaultAccount: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'})).toEqual({
+        expect(inputCallFormatter(tx, {defaultAccount: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'})).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: undefined,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64',
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64',
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         });
     });
 
@@ -33,25 +33,25 @@ describe('InputCallFormatterTest', () => {
         const tx = {
             to: undefined,
             input: undefined,
-            data: '0x0',
+            data: 'ds0',
             gas: 100,
             gasLimit: undefined,
             gasPrice: 100,
             nonce: 1,
             value: 100,
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         };
 
         expect(inputCallFormatter(tx, {})).toEqual({
             to: undefined,
             input: undefined,
-            data: '0x0',
-            gas: '0x64',
+            data: 'ds0',
+            gas: 'ds64',
             gasLimit: undefined,
-            gasPrice: '0x64',
-            nonce: '0x1',
-            value: '0x64',
-            from: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+            gasPrice: 'ds64',
+            nonce: 'ds1',
+            value: 'ds64',
+            from: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         });
     });
 });

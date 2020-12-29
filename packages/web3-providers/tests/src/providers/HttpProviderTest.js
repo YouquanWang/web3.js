@@ -108,7 +108,7 @@ describe('HttpProviderTest', () => {
 
     it('calls send and returns with a resolved promise', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(true);
@@ -142,14 +142,14 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
 
         expect(httpProvider.connected).toEqual(true);
     });
 
     it('calls send and returns with a rejected promise because of an invalid JSON-RPC response', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(new Error('invalid'));
@@ -181,7 +181,7 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendBatch and returns with a resolved promise', async () => {
@@ -194,7 +194,7 @@ describe('HttpProviderTest', () => {
         abstractMethodMock.parameters = [];
 
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         new XHR();
         const xhrMock = XHR.mock.instances[0];
@@ -223,7 +223,7 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('[{"id":"0x0"}]');
+        expect(xhrMock.send).toHaveBeenCalledWith('[{"id":"ds0"}]');
 
         expect(abstractMethodMock.beforeExecution).toHaveBeenCalled();
 
@@ -244,7 +244,7 @@ describe('HttpProviderTest', () => {
             xhrMock.onreadystatechange();
         }, 1);
 
-        await expect(httpProvider.sendPayload({id: '0x0'})).rejects.toThrow('Invalid JSON as response: {,}');
+        await expect(httpProvider.sendPayload({id: 'ds0'})).rejects.toThrow('Invalid JSON as response: {,}');
 
         expect(providersModuleFactoryMock.createXMLHttpRequest).toHaveBeenCalledWith(
             httpProvider.host,
@@ -254,7 +254,7 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendPayload and returns with a rejected promise because of an not existing http endpoint', async () => {
@@ -271,7 +271,7 @@ describe('HttpProviderTest', () => {
             xhrMock.onreadystatechange();
         }, 1);
 
-        await expect(httpProvider.sendPayload({id: '0x0'})).rejects.toThrow(
+        await expect(httpProvider.sendPayload({id: 'ds0'})).rejects.toThrow(
             `Connection refused or URL couldn't be resolved: ${httpProvider.host}`
         );
 
@@ -283,7 +283,7 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendPayload and returns with a rejected promise because of the exceeded timeout', async () => {
@@ -296,7 +296,7 @@ describe('HttpProviderTest', () => {
             xhrMock.ontimeout();
         }, 1);
 
-        await expect(httpProvider.sendPayload({id: '0x0'})).rejects.toThrow(
+        await expect(httpProvider.sendPayload({id: 'ds0'})).rejects.toThrow(
             'Connection error: Timeout exceeded after 1ms'
         );
 
@@ -310,7 +310,7 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendPayload and returns with a rejected promise because the request status is between 400 and 499', async () => {
@@ -327,7 +327,7 @@ describe('HttpProviderTest', () => {
             xhrMock.onreadystatechange();
         }, 1);
 
-        await expect(httpProvider.sendPayload({id: '0x0'})).rejects.toThrow('HttpProvider ERROR: NOPE (code: 450)');
+        await expect(httpProvider.sendPayload({id: 'ds0'})).rejects.toThrow('HttpProvider ERROR: NOPE (code: 450)');
 
         expect(providersModuleFactoryMock.createXMLHttpRequest).toHaveBeenCalledWith(
             httpProvider.host,
@@ -337,7 +337,7 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendPayload and returns with a rejected promise because the request.send() method throws an error', async () => {
@@ -350,7 +350,7 @@ describe('HttpProviderTest', () => {
 
         providersModuleFactoryMock.createXMLHttpRequest.mockReturnValueOnce(xhrMock);
 
-        await expect(httpProvider.sendPayload({id: '0x0'})).rejects.toThrow('ERROR');
+        await expect(httpProvider.sendPayload({id: 'ds0'})).rejects.toThrow('ERROR');
 
         expect(httpProvider.connected).toEqual(false);
 
@@ -362,6 +362,6 @@ describe('HttpProviderTest', () => {
             httpProvider.withCredentials
         );
 
-        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(xhrMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 });

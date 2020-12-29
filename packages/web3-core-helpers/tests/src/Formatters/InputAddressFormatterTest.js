@@ -5,8 +5,8 @@ import {inputAddressFormatter} from '../../../src/Formatters';
  */
 describe('InputAddressFormatterTest', () => {
     it('inputAddressFormatter returns formatted address', () => {
-        expect(inputAddressFormatter('0x03c9a938ff7f54090d0d99e2c6f80380510ea078')).toEqual(
-            '0x03c9a938ff7f54090d0d99e2c6f80380510ea078'
+        expect(inputAddressFormatter('ds03c9a938ff7f54090d0d99e2c6f80380510ea078')).toEqual(
+            'ds03c9a938ff7f54090d0d99e2c6f80380510ea078'
         );
     });
 
@@ -28,7 +28,7 @@ describe('InputAddressFormatterTest', () => {
 
     it('inputAddressFormatter gets valid IBAN and returns formatted address', () => {
         expect(inputAddressFormatter('XE1222Q908LN1QBBU6XUQSO1OHWJIOS46OO')).toEqual(
-            '0x11c5496aee77c1ba1f0854206a26dda82a81d6d8'
+            'ds11c5496aee77c1ba1f0854206a26dda82a81d6d8'
         );
     });
 });

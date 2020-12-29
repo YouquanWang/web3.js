@@ -121,7 +121,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.ens.supportsInterface('ethereum.eth', '0xbc1c58d1').then((supportsInterface) => {
+    web3.eth.ens.supportsInterface('ethereum.eth', 'dsbc1c58d1').then((supportsInterface) => {
         console.log(supportsInterface);
     })
     > true
@@ -159,7 +159,7 @@ Example
     web3.eth.ens.getAddress('ethereum.eth').then((address) => {
         console.log(address);
     })
-    > 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359
+    > dsfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359
 
 ------------------------------------------------------------------------------
 
@@ -194,9 +194,9 @@ Example
 
     web3.eth.ens.setAddress(
         'ethereum.eth',
-        '0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
+        'dsfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     ).then((result) => {
              console.log(result.events);
@@ -207,9 +207,9 @@ Example
 
     web3.eth.ens.setAddress(
         'ethereum.eth',
-        '0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
+        'dsfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     )
     .on('transactionHash', (hash) => {
@@ -275,10 +275,10 @@ Example
         console.log(result)
     });
     > {
-        "0": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "1": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "x": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "y": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        "0": "ds0000000000000000000000000000000000000000000000000000000000000000",
+        "1": "ds0000000000000000000000000000000000000000000000000000000000000000",
+        "x": "ds0000000000000000000000000000000000000000000000000000000000000000",
+        "y": "ds0000000000000000000000000000000000000000000000000000000000000000"
     }
 
 ------------------------------------------------------------------------------
@@ -316,10 +316,10 @@ Example
 
     web3.eth.ens.setPubkey(
         'ethereum.eth',
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
+        'ds0000000000000000000000000000000000000000000000000000000000000000',
+        'ds0000000000000000000000000000000000000000000000000000000000000000',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     ).then((result) => {
         console.log(result.events);
@@ -330,10 +330,10 @@ Example
 
     web3.eth.ens.setPubkey(
         'ethereum.eth',
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
+        'ds0000000000000000000000000000000000000000000000000000000000000000',
+        'ds0000000000000000000000000000000000000000000000000000000000000000',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     )
     .on('transactionHash', (hash) => {
@@ -439,7 +439,7 @@ Example
         'key',
         'value',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     ).then((result) => {
              console.log(result.events);
@@ -453,7 +453,7 @@ Example
         'key',
         'value',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     )
     .on('transactionHash', (hash) => {
@@ -518,7 +518,7 @@ Example
     web3.eth.ens.getContent('ethereum.eth').then((result) => {
         console.log(result);
     });
-    > "0x0000000000000000000000000000000000000000000000000000000000000000"
+    > "ds0000000000000000000000000000000000000000000000000000000000000000"
 
 ------------------------------------------------------------------------------
 
@@ -554,9 +554,9 @@ Example
 
     web3.eth.ens.setContent(
         'ethereum.eth',
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
+        'ds0000000000000000000000000000000000000000000000000000000000000000',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     ).then((result) => {
              console.log(result.events);
@@ -567,9 +567,9 @@ Example
 
     web3.eth.ens.setContent(
         'ethereum.eth',
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
+        'ds0000000000000000000000000000000000000000000000000000000000000000',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     )
     .on('transactionHash', (hash) => {
@@ -672,7 +672,7 @@ Example
         'ethereum.eth',
         'QmXpSwxdmgWaYrgMUzuDWCnjsZo5RxphE3oW7VhTMSCoKK',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     ).then((result) => {
         console.log(result.events);
@@ -685,7 +685,7 @@ Example
         'ethereum.eth',
         'QmXpSwxdmgWaYrgMUzuDWCnjsZo5RxphE3oW7VhTMSCoKK',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     )
     .on('transactionHash', (hash) => {
@@ -735,7 +735,7 @@ Example
     web3.eth.ens.getContenthash('pac-txt.eth').then((result) => {
         console.log(result);
     });
-    > '0xe30101701220e08ea2458249e8f26aee72b95b39c33849a992a3eff40bd06d26c12197adef16'
+    > 'dse30101701220e08ea2458249e8f26aee72b95b39c33849a992a3eff40bd06d26c12197adef16'
 
 ------------------------------------------------------------------------------
 
@@ -771,9 +771,9 @@ Example
 
     web3.eth.ens.setContenthash(
         'ethereum.eth',
-        '0xe301017012208cd82588c4e08268fa0b824caa93847ac843410076eeedc41d65fb52eccbb9e6',
+        'dse301017012208cd82588c4e08268fa0b824caa93847ac843410076eeedc41d65fb52eccbb9e6',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     ).then((result) => {
         console.log(result.events);
@@ -784,9 +784,9 @@ Example
 
     web3.eth.ens.setContenthash(
         'ethereum.eth',
-        '0xe301017012208cd82588c4e08268fa0b824caa93847ac843410076eeedc41d65fb52eccbb9e6',
+        'dse301017012208cd82588c4e08268fa0b824caa93847ac843410076eeedc41d65fb52eccbb9e6',
         {
-            from: '0x9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
+            from: 'ds9CC9a2c777605Af16872E0997b3Aeb91d96D5D8c'
         }
     )
     .on('transactionHash', (hash) => {
@@ -842,24 +842,24 @@ Example
     });
     > {
         returnValues: {
-            node: '0x123456789...',
-            a: '0x123456789...',
+            node: 'ds123456789...',
+            a: 'ds123456789...',
         },
         raw: {
-            data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+            data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
             topics: [
-                '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
-                '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385'
+                'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+                'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385'
             ]
         },
         event: 'AddrChanged',
-        signature: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        signature: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         logIndex: 0,
         transactionIndex: 0,
-        transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         blockNumber: 1234,
-        address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+        address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
     }
 
 ------------
@@ -891,24 +891,24 @@ Example
     });
     > {
         returnValues: {
-            node: '0x123456789...',
-            owner: '0x123456789...',
+            node: 'ds123456789...',
+            owner: 'ds123456789...',
         },
         raw: {
-            data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+            data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
             topics: [
-                '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
-                '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385'
+                'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+                'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385'
             ]
         },
         event: 'Transfer',
-        signature: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        signature: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         logIndex: 0,
         transactionIndex: 0,
-        transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         blockNumber: 1234,
-        address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+        address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
     }
 
 For further information on the handling of contract events please see here contract-events_.

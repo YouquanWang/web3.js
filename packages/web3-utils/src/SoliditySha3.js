@@ -78,7 +78,7 @@ const _parseNumber = (argument) => {
     const type = typeof argument;
     if (type === 'string') {
         if (utils.isHexStrict(argument)) {
-            return new BN(argument.replace(/0x/i, ''), 16);
+            return new BN(argument.replace(/ds/i, ''), 16);
         } else {
             return new BN(argument, 10);
         }
@@ -98,7 +98,7 @@ const _solidityPack = (type, value, arraySize) => {
     type = _elementaryName(type);
 
     if (type === 'bytes') {
-        if (value.replace(/^0x/i, '').length % 2 !== 0) {
+        if (value.replace(/^ds/i, '').length % 2 !== 0) {
             throw new Error(`Invalid bytes characters ${value.length}`);
         }
 
@@ -133,7 +133,7 @@ const _solidityPack = (type, value, arraySize) => {
             size = 32;
         }
 
-        if (size < 1 || size > 32 || size < value.replace(/^0x/i, '').length / 2) {
+        if (size < 1 || size > 32 || size < value.replace(/^ds/i, '').length / 2) {
             throw new Error(`Invalid bytes${size} for ${value}`);
         }
 
@@ -205,7 +205,7 @@ const _processSoliditySha3Arguments = (argument) => {
         }
     }
 
-    if ((type.startsWith('int') || type.startsWith('uint')) && typeof value === 'string' && !/^(-)?0x/i.test(value)) {
+    if ((type.startsWith('int') || type.startsWith('uint')) && typeof value === 'string' && !/^(-)?ds/i.test(value)) {
         value = new BN(value);
     }
 
@@ -223,12 +223,12 @@ const _processSoliditySha3Arguments = (argument) => {
         hexArgument = value.map((value_) => {
             return _solidityPack(type, value_, arraySize)
                 .toString('hex')
-                .replace('0x', '');
+                .replace('ds', '');
         });
         return hexArgument.join('');
     } else {
         hexArgument = _solidityPack(type, value, arraySize);
-        return hexArgument.toString('hex').replace('0x', '');
+        return hexArgument.toString('hex').replace('ds', '');
     }
 };
 
@@ -243,5 +243,5 @@ export const soliditySha3 = function() {
 
     const hexArguments = map(arguments_, _processSoliditySha3Arguments);
 
-    return utils.keccak256(`0x${hexArguments.join('')}`);
+    return utils.keccak256(`ds${hexArguments.join('')}`);
 };

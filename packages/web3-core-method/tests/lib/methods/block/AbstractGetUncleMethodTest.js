@@ -32,18 +32,18 @@ describe('AbstractGetUncleMethodTest', () => {
     });
 
     it('calls beforeExecution with a block hash as parameter and calls the inputBlockNumberFormatter', () => {
-        method.parameters = ['0x0', 100];
+        method.parameters = ['ds0', 100];
 
-        formatters.inputBlockNumberFormatter.mockReturnValueOnce('0x0');
+        formatters.inputBlockNumberFormatter.mockReturnValueOnce('ds0');
 
-        Utils.numberToHex.mockReturnValueOnce('0x0');
+        Utils.numberToHex.mockReturnValueOnce('ds0');
 
         method.beforeExecution({});
 
-        expect(method.parameters[0]).toEqual('0x0');
-        expect(method.parameters[1]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
+        expect(method.parameters[1]).toEqual('ds0');
 
-        expect(formatters.inputBlockNumberFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputBlockNumberFormatter).toHaveBeenCalledWith('ds0');
 
         expect(Utils.numberToHex).toHaveBeenCalledWith(100);
     });

@@ -30,7 +30,7 @@ describe('MethodEncoderTest', () => {
     });
 
     it('calls encode and returns the expected value', () => {
-        abiCoderMock.encodeParameters.mockReturnValueOnce('0x0');
+        abiCoderMock.encodeParameters.mockReturnValueOnce('ds0');
 
         abiItemModelMock.getInputs.mockReturnValueOnce([]);
 
@@ -50,7 +50,7 @@ describe('MethodEncoderTest', () => {
     });
 
     it('calls encode with "constructor" as type and a error is thrown because of the missing data argument', () => {
-        abiCoderMock.encodeParameters.mockReturnValueOnce('0x0');
+        abiCoderMock.encodeParameters.mockReturnValueOnce('ds0');
 
         abiItemModelMock.getInputs.mockReturnValueOnce([]);
 
@@ -70,7 +70,7 @@ describe('MethodEncoderTest', () => {
     });
 
     it('calls encode with "constructor" as type and returns the expected value', () => {
-        abiCoderMock.encodeParameters.mockReturnValueOnce('0x0');
+        abiCoderMock.encodeParameters.mockReturnValueOnce('ds0');
 
         abiItemModelMock.getInputs.mockReturnValueOnce([]);
 
@@ -88,7 +88,7 @@ describe('MethodEncoderTest', () => {
     });
 
     it('calls encode with "function" as type and returns the expected value', () => {
-        abiCoderMock.encodeParameters.mockReturnValueOnce('0x0');
+        abiCoderMock.encodeParameters.mockReturnValueOnce('ds0');
 
         abiItemModelMock.getInputs.mockReturnValueOnce([]);
 

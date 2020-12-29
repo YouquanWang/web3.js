@@ -81,7 +81,7 @@ describe('AccountsTest', () => {
             chainId: 1
         };
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         transactionSignerMock.sign = jest.fn(() => {
@@ -122,7 +122,7 @@ describe('AccountsTest', () => {
             chainId: 1
         };
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         transactionSignerMock.sign = jest.fn(() => {
@@ -171,7 +171,7 @@ describe('AccountsTest', () => {
             return Promise.resolve('signed-transaction');
         });
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         accounts.getGasPrice = jest.fn(() => {
@@ -216,7 +216,7 @@ describe('AccountsTest', () => {
             return Promise.resolve('signed-transaction');
         });
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         formatters.inputCallFormatter.mockReturnValueOnce(transaction);
@@ -255,7 +255,7 @@ describe('AccountsTest', () => {
             return Promise.resolve('signed-transaction');
         });
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         accounts.getTransactionCount = jest.fn(() => {
@@ -274,7 +274,7 @@ describe('AccountsTest', () => {
 
         expect(formatters.inputCallFormatter).toHaveBeenCalledWith(transaction, accounts);
 
-        expect(accounts.getTransactionCount).toHaveBeenCalledWith('0x0');
+        expect(accounts.getTransactionCount).toHaveBeenCalledWith('ds0');
     });
 
     it('calls signTransaction and rejects with a promise', async () => {
@@ -286,7 +286,7 @@ describe('AccountsTest', () => {
             chainId: 1
         };
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         transactionSignerMock.sign = jest.fn(() => {
@@ -313,7 +313,7 @@ describe('AccountsTest', () => {
             chainId: 1
         };
 
-        const account = {privateKey: 'pk', address: '0x0'};
+        const account = {privateKey: 'pk', address: 'ds0'};
         Account.fromPrivateKey.mockReturnValueOnce(account);
 
         transactionSignerMock.sign = jest.fn(() => {
@@ -356,7 +356,7 @@ describe('AccountsTest', () => {
 
         expect(Hash.keccak256).toHaveBeenCalledWith('encoded');
 
-        expect(RLP.encode).toHaveBeenCalledWith([0, 1, 2, 3, 4, 5, 1, '0x', '0x']);
+        expect(RLP.encode).toHaveBeenCalledWith([0, 1, 2, 3, 4, 5, 1, 'ds', 'ds']);
 
         expect(Bytes.fromNumber).toHaveBeenCalledWith(2);
 

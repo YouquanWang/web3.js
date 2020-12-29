@@ -120,8 +120,8 @@ describe('AbstractSocketProviderTest', () => {
         const callback = jest.fn();
         abstractSocketProvider.on('connect', callback);
 
-        abstractSocketProvider.subscriptions['0x0'] = {
-            id: '0x0',
+        abstractSocketProvider.subscriptions['ds0'] = {
+            id: 'ds0',
             subscribeMethod: 'eth_subscribe',
             parameters: ['logs', {}]
         };
@@ -131,14 +131,14 @@ describe('AbstractSocketProviderTest', () => {
 
             expect(parameters).toEqual(['logs', {}]);
 
-            return Promise.resolve('0x1');
+            return Promise.resolve('ds1');
         });
 
         await abstractSocketProvider.onConnect();
 
         expect(callback).toHaveBeenCalled();
 
-        expect(abstractSocketProvider.subscriptions['0x0'].id).toEqual('0x1');
+        expect(abstractSocketProvider.subscriptions['ds0'].id).toEqual('ds1');
 
         expect(abstractSocketProvider.send).toHaveBeenCalled();
     });
@@ -164,15 +164,15 @@ describe('AbstractSocketProviderTest', () => {
     });
 
     it('calls onMessage and the subscription id will be used as event name', (done) => {
-        abstractSocketProvider.subscriptions['0x0'] = {subscription: '0x0'};
+        abstractSocketProvider.subscriptions['ds0'] = {subscription: 'ds0'};
 
-        abstractSocketProvider.on('0x0', (response) => {
-            expect(response).toEqual({subscription: '0x0'});
+        abstractSocketProvider.on('ds0', (response) => {
+            expect(response).toEqual({subscription: 'ds0'});
 
             done();
         });
 
-        abstractSocketProvider.onMessage('{"params": {"subscription": "0x0"}}');
+        abstractSocketProvider.onMessage('{"params": {"subscription": "ds0"}}');
     });
 
     it('calls onMessage and the id of the first batch response item will be used as event name', (done) => {
@@ -202,14 +202,14 @@ describe('AbstractSocketProviderTest', () => {
 
             expect(parameters).toEqual(['messages']);
 
-            return Promise.resolve('0x1');
+            return Promise.resolve('ds1');
         });
 
         const response = await abstractSocketProvider.subscribe('shh_subscribe', 'messages', []);
 
-        expect(response).toEqual('0x1');
+        expect(response).toEqual('ds1');
 
-        expect(abstractSocketProvider.subscriptions['0x1'].id).toEqual('0x1');
+        expect(abstractSocketProvider.subscriptions['ds1'].id).toEqual('ds1');
 
         expect(abstractSocketProvider.send).toHaveBeenCalled();
     });
@@ -235,34 +235,34 @@ describe('AbstractSocketProviderTest', () => {
     });
 
     it('calls unsubscribe and resolves to a promise', async () => {
-        abstractSocketProvider.subscriptions['0x0'] = true;
+        abstractSocketProvider.subscriptions['ds0'] = true;
         abstractSocketProvider.removeAllListeners = jest.fn();
 
         abstractSocketProvider.send = jest.fn((subscribeMethod, parameters) => {
             expect(subscribeMethod).toEqual('eth_unsubscribe');
 
-            expect(parameters).toEqual(['0x0']);
+            expect(parameters).toEqual(['ds0']);
 
             return Promise.resolve(true);
         });
 
-        const reaponse = await abstractSocketProvider.unsubscribe('0x0', 'eth_unsubscribe');
+        const reaponse = await abstractSocketProvider.unsubscribe('ds0', 'eth_unsubscribe');
 
         expect(reaponse).toEqual(true);
 
-        expect(abstractSocketProvider.removeAllListeners).toHaveBeenCalledWith('0x0');
+        expect(abstractSocketProvider.removeAllListeners).toHaveBeenCalledWith('ds0');
 
-        expect(abstractSocketProvider.subscriptions['0x0']).toBeUndefined();
+        expect(abstractSocketProvider.subscriptions['ds0']).toBeUndefined();
     });
 
     it('calls clearSubscriptions and one unsubscribe call returns false', async () => {
-        abstractSocketProvider.subscriptions['0x0'] = {id: '0x0'};
+        abstractSocketProvider.subscriptions['ds0'] = {id: 'ds0'};
         abstractSocketProvider.removeAllListeners = jest.fn();
 
         abstractSocketProvider.send = jest.fn((subscribeMethod, parameters) => {
             expect(subscribeMethod).toEqual('eth_unsubscribe');
 
-            expect(parameters).toEqual(['0x0']);
+            expect(parameters).toEqual(['ds0']);
 
             return Promise.resolve(false);
         });
@@ -271,17 +271,17 @@ describe('AbstractSocketProviderTest', () => {
             `Could not unsubscribe all subscriptions: ${JSON.stringify([false])}`
         );
 
-        expect(abstractSocketProvider.removeAllListeners).toHaveBeenCalledWith('0x0');
+        expect(abstractSocketProvider.removeAllListeners).toHaveBeenCalledWith('ds0');
     });
 
     it('calls clearSubscriptions and all unsubscribe calls are returning true', async () => {
-        abstractSocketProvider.subscriptions['0x0'] = {id: '0x0'};
+        abstractSocketProvider.subscriptions['ds0'] = {id: 'ds0'};
         abstractSocketProvider.removeAllListeners = jest.fn();
 
         abstractSocketProvider.send = jest.fn((subscribeMethod, parameters) => {
             expect(subscribeMethod).toEqual('eth_unsubscribe');
 
-            expect(parameters).toEqual(['0x0']);
+            expect(parameters).toEqual(['ds0']);
 
             return Promise.resolve(true);
         });
@@ -290,20 +290,20 @@ describe('AbstractSocketProviderTest', () => {
 
         expect(response).toEqual(true);
 
-        expect(abstractSocketProvider.removeAllListeners).toHaveBeenCalledWith('0x0');
+        expect(abstractSocketProvider.removeAllListeners).toHaveBeenCalledWith('ds0');
 
         expect(abstractSocketProvider.subscriptions).toEqual({});
     });
 
     it('calls getSubscriptionEvent and has to iterate over all items', () => {
-        abstractSocketProvider.subscriptions['ID'] = {id: '0x0'};
+        abstractSocketProvider.subscriptions['ID'] = {id: 'ds0'};
 
-        expect(abstractSocketProvider.getSubscriptionEvent('0x0')).toEqual('ID');
+        expect(abstractSocketProvider.getSubscriptionEvent('ds0')).toEqual('ID');
     });
 
     it('calls send and returns a resolved promise', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(true);
@@ -319,12 +319,12 @@ describe('AbstractSocketProviderTest', () => {
 
         expect(JsonRpcResponseValidator.validate).toHaveBeenCalledWith({result: true});
 
-        expect(abstractSocketProvider.sendPayload).toHaveBeenCalledWith({id: '0x0'});
+        expect(abstractSocketProvider.sendPayload).toHaveBeenCalledWith({id: 'ds0'});
     });
 
     it('calls send and returns a rejected promise because of an invalid rpc response', async () => {
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         JsonRpcResponseValidator.validate = jest.fn();
         JsonRpcResponseValidator.validate.mockReturnValueOnce(new Error('invalid'));
@@ -338,7 +338,7 @@ describe('AbstractSocketProviderTest', () => {
 
         expect(JsonRpcResponseValidator.validate).toHaveBeenCalledWith({result: true});
 
-        expect(abstractSocketProvider.sendPayload).toHaveBeenCalledWith({id: '0x0'});
+        expect(abstractSocketProvider.sendPayload).toHaveBeenCalledWith({id: 'ds0'});
     });
 
     it('calls sendBatch and returns a resolved promise', async () => {
@@ -351,7 +351,7 @@ describe('AbstractSocketProviderTest', () => {
         abstractMethodMock.parameters = [];
 
         JsonRpcMapper.toPayload = jest.fn();
-        JsonRpcMapper.toPayload.mockReturnValueOnce({id: '0x0'});
+        JsonRpcMapper.toPayload.mockReturnValueOnce({id: 'ds0'});
 
         abstractSocketProvider.sendPayload = jest.fn();
         abstractSocketProvider.sendPayload.mockReturnValueOnce(Promise.resolve({result: true}));
@@ -364,6 +364,6 @@ describe('AbstractSocketProviderTest', () => {
 
         expect(abstractMethodMock.beforeExecution).toHaveBeenCalled();
 
-        expect(abstractSocketProvider.sendPayload).toHaveBeenCalledWith([{id: '0x0'}]);
+        expect(abstractSocketProvider.sendPayload).toHaveBeenCalledWith([{id: 'ds0'}]);
     });
 });

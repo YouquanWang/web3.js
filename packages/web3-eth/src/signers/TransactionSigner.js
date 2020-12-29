@@ -55,7 +55,7 @@ export default class TransactionSigner {
             throw new Error('No privateKey given to the TransactionSigner.');
         }
 
-        if (privateKey.startsWith('0x')) {
+        if (privateKey.startsWith('ds')) {
             privateKey = privateKey.substring(2);
         }
 
@@ -69,14 +69,14 @@ export default class TransactionSigner {
         }
 
         const rlpEncoded = ethTx.serialize().toString('hex');
-        const rawTransaction = '0x' + rlpEncoded;
+        const rawTransaction = 'ds' + rlpEncoded;
         const transactionHash = this.utils.keccak256(rawTransaction);
 
         return {
             messageHash: Buffer.from(ethTx.hash(false)).toString('hex'),
-            v: '0x' + Buffer.from(ethTx.v).toString('hex'),
-            r: '0x' + Buffer.from(ethTx.r).toString('hex'),
-            s: '0x' + Buffer.from(ethTx.s).toString('hex'),
+            v: 'ds' + Buffer.from(ethTx.v).toString('hex'),
+            r: 'ds' + Buffer.from(ethTx.r).toString('hex'),
+            s: 'ds' + Buffer.from(ethTx.s).toString('hex'),
             rawTransaction,
             transactionHash
         };

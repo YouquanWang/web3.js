@@ -22,9 +22,9 @@ import {Miner} from 'web3-eth-miner';
 const miner = new Miner('http://localhost:7545');
 
 // $ExpectType Promise<boolean>
-miner.setEtherbase('0x3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc');
+miner.setEtherbase('ds3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc');
 // $ExpectType Promise<boolean>
-miner.setEtherbase('0x3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc', (error: Error, address: boolean) => {});
+miner.setEtherbase('ds3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc', (error: Error, address: boolean) => {});
 
 // $ExpectType Promise<boolean>
 miner.setExtra('Hello world');
@@ -32,14 +32,14 @@ miner.setExtra('Hello world');
 miner.setExtra('Hello world', (error: Error, result: boolean) => {});
 
 // $ExpectType Promise<boolean>
-miner.setGasPrice('0x4a817c800');
+miner.setGasPrice('ds4a817c800');
 // $ExpectType Promise<boolean>
-miner.setGasPrice('0x4a817c800', (error: Error, result: boolean) => {});
+miner.setGasPrice('ds4a817c800', (error: Error, result: boolean) => {});
 
 // $ExpectType Promise<boolean>
-miner.startMining('0x1');
+miner.startMining('ds1');
 // $ExpectType Promise<boolean>
-miner.startMining('0x1', (error: Error, result: boolean) => {});
+miner.startMining('ds1', (error: Error, result: boolean) => {});
 
 // $ExpectType Promise<boolean>
 miner.stopMining();

@@ -42,7 +42,7 @@ Example
 .. code-block:: javascript
 
     web3.eth.getAccounts(console.log);
-    > ["0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe" ,"0x85F43D8a49eeB85d32Cf465507DD71d507100C1d"]
+    > ["ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe" ,"ds85F43D8a49eeB85d32Cf465507DD71d507100C1d"]
 
 
 ------------------------------------------------------------------------------
@@ -217,7 +217,7 @@ Example
 .. code-block:: javascript
 
     web3.eth.getCoinbase().then(console.log);
-    > "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe"
+    > "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe"
 
 
 ------------------------------------------------------------------------------
@@ -343,7 +343,7 @@ Example
 .. code-block:: javascript
 
     web3.eth.getAccounts().then(console.log);
-    > ["0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "0xDCc6960376d6C6dEa93647383FfB245CfCed97Cf"]
+    > ["ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "dsDCc6960376d6C6dEa93647383FfB245CfCed97Cf"]
 
 
 ------------------------------------------------------------------------------
@@ -411,7 +411,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(console.log);
+    web3.eth.getBalance("ds407d73d8a49eeb85d32cf465507dd71d507100c1").then(console.log);
     > "1000000000000"
 
 
@@ -451,8 +451,8 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0).then(console.log);
-    > "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
+    web3.eth.getStorageAt("ds407d73d8a49eeb85d32cf465507dd71d507100c1", 0).then(console.log);
+    > "ds033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
 
 
 ------------------------------------------------------------------------------
@@ -490,8 +490,8 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.getCode("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(console.log);
-    > "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+    web3.eth.getCode("dsd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(console.log);
+    > "ds600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 
 
 ------------------------------------------------------------------------------
@@ -551,24 +551,24 @@ Example
     web3.eth.getBlock(3150).then(console.log);
     > {
         "number": 3,
-        "hash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
-        "parentHash": "0x2302e1c0b972d00932deb5dab9eb2982f570597d9d42504c05d9c2147eaf9c88",
-        "nonce": "0xfb6e1a62d119228b",
-        "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-        "transactionsRoot": "0x3a1b03875115b79539e5bd33fb00d8f7b7cd61929d5a3c574f507b8acf415bee",
-        "stateRoot": "0xf1133199d44695dfa8fd1bcfe424d82854b5cebef75bddd7e40ea94cda515bcb",
-        "receiptsRoot: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421',
-        "miner": "0x8888f1f195afa192cfee860698584c030f4c9db1",
+        "hash": "dsef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+        "parentHash": "ds2302e1c0b972d00932deb5dab9eb2982f570597d9d42504c05d9c2147eaf9c88",
+        "nonce": "dsfb6e1a62d119228b",
+        "sha3Uncles": "ds1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+        "logsBloom": "ds00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "transactionsRoot": "ds3a1b03875115b79539e5bd33fb00d8f7b7cd61929d5a3c574f507b8acf415bee",
+        "stateRoot": "dsf1133199d44695dfa8fd1bcfe424d82854b5cebef75bddd7e40ea94cda515bcb",
+        "receiptsRoot: 'ds56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421',
+        "miner": "ds8888f1f195afa192cfee860698584c030f4c9db1",
         "difficulty": '21345678965432',
         "totalDifficulty": '324567845321',
         "size": 616,
-        "extraData": "0x",
+        "extraData": "ds",
         "gasLimit": 3141592,
         "gasUsed": 21662,
         "timestamp": 1429287689,
         "transactions": [
-            "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b"
+            "ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b"
         ],
         "uncles": []
     }
@@ -607,7 +607,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(console.log);
+    web3.eth.getBlockTransactionCount("ds407d73d8a49eeb85d32cf465507dd71d507100c1").then(console.log);
     > 1
 
 
@@ -697,19 +697,19 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.getTransaction('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b§234').then(console.log);
+    web3.eth.getTransaction('ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b§234').then(console.log);
     > {
-        "hash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
+        "hash": "ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
         "nonce": 2,
-        "blockHash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+        "blockHash": "dsef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
         "blockNumber": 3,
         "transactionIndex": 0,
-        "from": "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-        "to": "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f",
+        "from": "dsa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+        "to": "ds6295ee1b4f6dd65047762f924ecd367c17eabf8f",
         "value": '123450000000000000',
         "gas": 314159,
         "gasPrice": '2000000000000',
-        "input": "0x57cb2fc4"
+        "input": "ds57cb2fc4"
     }
 
 ------------------------------------------------------------------------------
@@ -764,35 +764,35 @@ Example
     web3.eth.getPendingTransactions().then(console.log);
     >  [
         {
-            hash: '0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b',
+            hash: 'ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b',
             nonce: 2,
-            blockHash: '0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46',
+            blockHash: 'dsef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46',
             blockNumber: 3,
             transactionIndex: 0,
-            from: '0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b',
-            to: '0x6295ee1b4f6dd65047762f924ecd367c17eabf8f',
+            from: 'dsa94f5374fce5edbc8e2a8697c15331677e6ebf0b',
+            to: 'ds6295ee1b4f6dd65047762f924ecd367c17eabf8f',
             value: '123450000000000000',
             gas: 314159,
             gasPrice: '2000000000000',
-            input: '0x57cb2fc4'
-            v: '0x3d',
-            r: '0xaabc9ddafffb2ae0bac4107697547d22d9383667d9e97f5409dd6881ce08f13f',
-            s: '0x69e43116be8f842dcd4a0b2f760043737a59534430b762317db21d9ac8c5034'
+            input: 'ds57cb2fc4'
+            v: 'ds3d',
+            r: 'dsaabc9ddafffb2ae0bac4107697547d22d9383667d9e97f5409dd6881ce08f13f',
+            s: 'ds69e43116be8f842dcd4a0b2f760043737a59534430b762317db21d9ac8c5034'
         },....,{
-            hash: '0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b',
+            hash: 'ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b',
             nonce: 3,
-            blockHash: '0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46',
+            blockHash: 'dsef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46',
             blockNumber: 4,
             transactionIndex: 0,
-            from: '0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b',
-            to: '0x6295ee1b4f6dd65047762f924ecd367c17eabf8f',
+            from: 'dsa94f5374fce5edbc8e2a8697c15331677e6ebf0b',
+            to: 'ds6295ee1b4f6dd65047762f924ecd367c17eabf8f',
             value: '123450000000000000',
             gas: 314159,
             gasPrice: '2000000000000',
-            input: '0x57cb2fc4'
-            v: '0x3d',
-            r: '0xaabc9ddafffb2ae0bac4107697547d22d9383667d9e97f5409dd6881ce08f13f',
-            s: '0x69e43116be8f842dcd4a0b2f760043737a59534430b762317db21d9ac8c5034'
+            input: 'ds57cb2fc4'
+            v: 'ds3d',
+            r: 'dsaabc9ddafffb2ae0bac4107697547d22d9383667d9e97f5409dd6881ce08f13f',
+            s: 'ds69e43116be8f842dcd4a0b2f760043737a59534430b762317db21d9ac8c5034'
         }
    ]
 
@@ -831,7 +831,7 @@ Example
 
 .. code-block:: javascript
 
-    const transaction = web3.eth.getTransactionFromBlock('0x4534534534', 2).then(console.log);
+    const transaction = web3.eth.getTransactionFromBlock('ds4534534534', 2).then(console.log);
     > // see web3.eth.getTransaction
 
 ------------------------------------------------------------------------------
@@ -883,15 +883,15 @@ Example
 
 .. code-block:: javascript
 
-    const receipt = web3.eth.getTransactionReceipt('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b')
+    const receipt = web3.eth.getTransactionReceipt('ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b')
                             .then(console.log);
     > {
       "status": true,
-      "transactionHash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
+      "transactionHash": "ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
       "transactionIndex": 0,
-      "blockHash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+      "blockHash": "dsef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
       "blockNumber": 3,
-      "contractAddress": "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
+      "contractAddress": "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
       "cumulativeGasUsed": 314159,
       "gasUsed": 30234,
       "logs": [{
@@ -935,7 +935,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.getTransactionCount("0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe").then(console.log);
+    web3.eth.getTransactionCount("ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe").then(console.log);
     > 1
 
 ------------------------------------------------------------------------------
@@ -996,7 +996,7 @@ Example
 
     // using the callback
     web3.eth.sendTransaction({
-        from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
+        from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
         data: code // deploying a contract
     }, function(error, hash){
         ...
@@ -1004,8 +1004,8 @@ Example
 
     // using the promise
     web3.eth.sendTransaction({
-        from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+        from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
+        to: 'ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
         value: '1000000000000000'
     })
     .then(function(receipt){
@@ -1015,8 +1015,8 @@ Example
 
     // using the event emitter
     web3.eth.sendTransaction({
-        from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+        from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
+        to: 'ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
         value: '1000000000000000'
     })
     .on('transactionHash', function(hash){
@@ -1068,12 +1068,12 @@ Example
     const privateKey = new Buffer('e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', 'hex')
 
     const rawTx = {
-      nonce: '0x00',
-      gasPrice: '0x09184e72a000',
-      gasLimit: '0x2710',
-      to: '0x0000000000000000000000000000000000000000',
-      value: '0x00',
-      data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057'
+      nonce: 'ds00',
+      gasPrice: 'ds09184e72a000',
+      gasLimit: 'ds2710',
+      to: 'ds0000000000000000000000000000000000000000',
+      value: 'ds00',
+      data: 'ds7f7465737432000000000000000000000000000000000000000000000000000000600057'
     }
 
     const tx = new Tx(rawTx);
@@ -1082,9 +1082,9 @@ Example
     const serializedTx = tx.serialize();
 
     // console.log(serializedTx.toString('hex'));
-    // 0xf889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
+    // dsf889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
 
-    web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+    web3.eth.sendSignedTransaction('ds' + serializedTx.toString('hex'))
     .on('receipt', console.log);
 
     > // see eth.getTransactionReceipt() for details
@@ -1127,14 +1127,14 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.sign("Hello world", "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe")
+    web3.eth.sign("Hello world", "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe")
     .then(console.log);
-    > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
+    > "ds30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 
     // the below is the same
-    web3.eth.sign(web3.utils.utf8ToHex("Hello world"), "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe")
+    web3.eth.sign(web3.utils.utf8ToHex("Hello world"), "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe")
     .then(console.log);
-    > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
+    > "ds30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 
 ------------------------------------------------------------------------------
 
@@ -1174,26 +1174,26 @@ Example
 .. code-block:: javascript
 
     web3.eth.signTransaction({
-        from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+        from: "dsEB014f8c8B418Db6b45774c326A0E64C78914dC0",
         gasPrice: "20000000000",
         gas: "21000",
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: "1000000000000000000",
         data: ""
     }).then(console.log);
     > {
-        raw: '0xf86c808504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008025a04f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88da07e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
+        raw: 'dsf86c808504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008025a04f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88da07e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
         tx: {
-            nonce: '0x0',
-            gasPrice: '0x4a817c800',
-            gas: '0x5208',
-            to: '0x3535353535353535353535353535353535353535',
-            value: '0xde0b6b3a7640000',
-            input: '0x',
-            v: '0x25',
-            r: '0x4f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88d',
-            s: '0x7e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
-            hash: '0xda3be87732110de6c1354c83770aae630ede9ac308d9f7b399ecfba23d923384'
+            nonce: 'ds0',
+            gasPrice: 'ds4a817c800',
+            gas: 'ds5208',
+            to: 'ds3535353535353535353535353535353535353535',
+            value: 'dsde0b6b3a7640000',
+            input: 'ds',
+            v: 'ds25',
+            r: 'ds4f4c17305743700648bc4f6cd3038ec6f6af0df73e31757007b7f59df7bee88d',
+            s: 'ds7e1941b264348e80c78c4027afc65a87b0a5e43e86742b8ca0823584c6788fd0',
+            hash: 'dsda3be87732110de6c1354c83770aae630ede9ac308d9f7b399ecfba23d923384'
         }
     }
 
@@ -1232,10 +1232,10 @@ Example
 .. code-block:: javascript
 
     web3.eth.call({
-        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
-        data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+        to: "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
+        data: "dsc6888fa10000000000000000000000000000000000000000000000000000000000000003"
     }).then(console.log);
-    > "0x000000000000000000000000000000000000000000000000000000000000000a"
+    > "ds000000000000000000000000000000000000000000000000000000000000000a"
 
 ------------------------------------------------------------------------------
 
@@ -1271,10 +1271,10 @@ Example
 .. code-block:: javascript
 
     web3.eth.estimateGas({
-        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
-        data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+        to: "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
+        data: "dsc6888fa10000000000000000000000000000000000000000000000000000000000000003"
     }).then(console.log);
-    > "0x0000000000000000000000000000000000000000000000000000000000000015"
+    > "ds0000000000000000000000000000000000000000000000000000000000000015"
 
 ------------------------------------------------------------------------------
 
@@ -1295,7 +1295,7 @@ Parameters
   - ``fromBlock`` - ``Number|String``: The number of the earliest block (``"latest"`` may be given to mean the most recent and ``"pending"`` currently mining, block). By default ``"latest"``.
   - ``toBlock`` -  ``Number|String``: The number of the latest block (``"latest"`` may be given to mean the most recent and ``"pending"`` currently mining, block). By default ``"latest"``.
   - ``address`` -  ``String|Array``: An address or a list of addresses to only get logs from particular account(s).
-  - ``topics`` - ``Array``: An array of values which must each appear in the log entries. The order is important, if you want to leave topics out use ``null``, e.g. ``[null, '0x12...']``. You can also pass an array for each topic with options for that topic e.g. ``[null, ['option1', 'option2']]``
+  - ``topics`` - ``Array``: An array of values which must each appear in the log entries. The order is important, if you want to leave topics out use ``null``, e.g. ``[null, 'ds12...']``. You can also pass an array for each topic with options for that topic e.g. ``[null, ['option1', 'option2']]``
 
 
 .. _eth-getpastlogs-return:
@@ -1324,18 +1324,18 @@ Example
 .. code-block:: javascript
 
     web3.eth.getPastLogs({
-        address: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
-        topics: ["0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"]
+        address: "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
+        topics: ["ds033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"]
     }).then(console.log);
     > [{
-        data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        topics: ['0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
+        data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        topics: ['dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
         logIndex: 0,
         transactionIndex: 0,
-        transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         blockNumber: 1234,
-        address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+        address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
     },{...}]
 
 
@@ -1375,9 +1375,9 @@ Example
 
     web3.eth.getWork().then(console.log);
     > [
-      "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-      "0x5EED00000000000000000000000000005EED0000000000000000000000000000",
-      "0xd1ff1c01710000000000000000000000d1ff1c01710000000000000000000000"
+      "ds1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+      "ds5EED00000000000000000000000000005EED0000000000000000000000000000",
+      "dsd1ff1c01710000000000000000000000d1ff1c01710000000000000000000000"
     ]
 
 ------------------------------------------------------------------------------
@@ -1414,9 +1414,9 @@ Example
 .. code-block:: javascript
 
     web3.eth.submitWork([
-        "0x0000000000000001",
-        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-        "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+        "ds0000000000000001",
+        "ds1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+        "dsD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
     ])
     .then(console.log);
     > true
@@ -1456,7 +1456,7 @@ Example
 .. code-block:: javascript
 
     web3.eth.requestAccounts().then(console.log);
-    > ['0aae0B295369a9FD31d5F28D9Ec85E40f4cb692BAf', 0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe]
+    > ['0aae0B295369a9FD31d5F28D9Ec85E40f4cb692BAf', dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe]
 
 ------------------------------------------------------------------------------
 
@@ -1543,7 +1543,7 @@ Returns
 ``Promise<Object>`` - A account object.
 
     ``balance`` - The balance of the account. See :ref:`web3.eth.getBalance <eth-getBalance>`.
-    ``codeHash`` -  hash of the code of the account. For a simple Account without code it will return "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+    ``codeHash`` -  hash of the code of the account. For a simple Account without code it will return "dsc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
     ``nonce`` -  Nonce of the account.
     ``storageHash`` - SHA3 of the StorageRoot. All storage will deliver a MerkleProof starting with this rootHash.
     ``accountProof`` - Array of rlp-serialized MerkleTree-Nodes, starting with the stateRoot-Node, following the path of the SHA3 (address) as key.
@@ -1559,30 +1559,30 @@ Example
 .. code-block:: javascript
 
     web3.eth.getProof(
-        "0x1234567890123456789012345678901234567890",
-        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000001"],
+        "ds1234567890123456789012345678901234567890",
+        ["ds0000000000000000000000000000000000000000000000000000000000000000","ds0000000000000000000000000000000000000000000000000000000000000001"],
         "latest"
     ).then(console.log);
     > {
-        "address": "0x1234567890123456789012345678901234567890",
+        "address": "ds1234567890123456789012345678901234567890",
         "accountProof": [
-            "0xf90211a090dcaf88c40c7bbc95a912cbdde67c175767b31173df9ee4b0d733bfdd511c43a0babe369f6b12092f49181ae04ca173fb68d1a5456f18d20fa32cba73954052bda0473ecf8a7e36a829e75039a3b055e51b8332cbf03324ab4af2066bbd6fbf0021a0bbda34753d7aa6c38e603f360244e8f59611921d9e1f128372fec0d586d4f9e0a04e44caecff45c9891f74f6a2156735886eedf6f1a733628ebc802ec79d844648a0a5f3f2f7542148c973977c8a1e154c4300fec92f755f7846f1b734d3ab1d90e7a0e823850f50bf72baae9d1733a36a444ab65d0a6faaba404f0583ce0ca4dad92da0f7a00cbe7d4b30b11faea3ae61b7f1f2b315b61d9f6bd68bfe587ad0eeceb721a07117ef9fc932f1a88e908eaead8565c19b5645dc9e5b1b6e841c5edbdfd71681a069eb2de283f32c11f859d7bcf93da23990d3e662935ed4d6b39ce3673ec84472a0203d26456312bbc4da5cd293b75b840fc5045e493d6f904d180823ec22bfed8ea09287b5c21f2254af4e64fca76acc5cd87399c7f1ede818db4326c98ce2dc2208a06fc2d754e304c48ce6a517753c62b1a9c1d5925b89707486d7fc08919e0a94eca07b1c54f15e299bd58bdfef9741538c7828b5d7d11a489f9c20d052b3471df475a051f9dd3739a927c89e357580a4c97b40234aa01ed3d5e0390dc982a7975880a0a089d613f26159af43616fd9455bb461f4869bfede26f2130835ed067a8b967bfb80",
-            "0xf90211a0395d87a95873cd98c21cf1df9421af03f7247880a2554e20738eec2c7507a494a0bcf6546339a1e7e14eb8fb572a968d217d2a0d1f3bc4257b22ef5333e9e4433ca012ae12498af8b2752c99efce07f3feef8ec910493be749acd63822c3558e6671a0dbf51303afdc36fc0c2d68a9bb05dab4f4917e7531e4a37ab0a153472d1b86e2a0ae90b50f067d9a2244e3d975233c0a0558c39ee152969f6678790abf773a9621a01d65cd682cc1be7c5e38d8da5c942e0a73eeaef10f387340a40a106699d494c3a06163b53d956c55544390c13634ea9aa75309f4fd866f312586942daf0f60fb37a058a52c1e858b1382a8893eb9c1f111f266eb9e21e6137aff0dddea243a567000a037b4b100761e02de63ea5f1fcfcf43e81a372dafb4419d126342136d329b7a7ba032472415864b08f808ba4374092003c8d7c40a9f7f9fe9cc8291f62538e1cc14a074e238ff5ec96b810364515551344100138916594d6af966170ff326a092fab0a0d31ac4eef14a79845200a496662e92186ca8b55e29ed0f9f59dbc6b521b116fea090607784fe738458b63c1942bba7c0321ae77e18df4961b2bc66727ea996464ea078f757653c1b63f72aff3dcc3f2a2e4c8cb4a9d36d1117c742833c84e20de994a0f78407de07f4b4cb4f899dfb95eedeb4049aeb5fc1635d65cf2f2f4dfd25d1d7a0862037513ba9d45354dd3e36264aceb2b862ac79d2050f14c95657e43a51b85c80",
-            "0xf90171a04ad705ea7bf04339fa36b124fa221379bd5a38ffe9a6112cb2d94be3a437b879a08e45b5f72e8149c01efcb71429841d6a8879d4bbe27335604a5bff8dfdf85dcea00313d9b2f7c03733d6549ea3b810e5262ed844ea12f70993d87d3e0f04e3979ea0b59e3cdd6750fa8b15164612a5cb6567cdfb386d4e0137fccee5f35ab55d0efda0fe6db56e42f2057a071c980a778d9a0b61038f269dd74a0e90155b3f40f14364a08538587f2378a0849f9608942cf481da4120c360f8391bbcc225d811823c6432a026eac94e755534e16f9552e73025d6d9c30d1d7682a4cb5bd7741ddabfd48c50a041557da9a74ca68da793e743e81e2029b2835e1cc16e9e25bd0c1e89d4ccad6980a041dda0a40a21ade3a20fcd1a4abb2a42b74e9a32b02424ff8db4ea708a5e0fb9a09aaf8326a51f613607a8685f57458329b41e938bb761131a5747e066b81a0a16808080a022e6cef138e16d2272ef58434ddf49260dc1de1f8ad6dfca3da5d2a92aaaadc58080",
-            "0xf851808080a009833150c367df138f1538689984b8a84fc55692d3d41fe4d1e5720ff5483a6980808080808080808080a0a319c1c415b271afc0adcb664e67738d103ac168e0bc0b7bd2da7966165cb9518080"
+            "dsf90211a090dcaf88c40c7bbc95a912cbdde67c175767b31173df9ee4b0d733bfdd511c43a0babe369f6b12092f49181ae04ca173fb68d1a5456f18d20fa32cba73954052bda0473ecf8a7e36a829e75039a3b055e51b8332cbf03324ab4af2066bbd6fbf0021a0bbda34753d7aa6c38e603f360244e8f59611921d9e1f128372fec0d586d4f9e0a04e44caecff45c9891f74f6a2156735886eedf6f1a733628ebc802ec79d844648a0a5f3f2f7542148c973977c8a1e154c4300fec92f755f7846f1b734d3ab1d90e7a0e823850f50bf72baae9d1733a36a444ab65d0a6faaba404f0583ce0ca4dad92da0f7a00cbe7d4b30b11faea3ae61b7f1f2b315b61d9f6bd68bfe587ad0eeceb721a07117ef9fc932f1a88e908eaead8565c19b5645dc9e5b1b6e841c5edbdfd71681a069eb2de283f32c11f859d7bcf93da23990d3e662935ed4d6b39ce3673ec84472a0203d26456312bbc4da5cd293b75b840fc5045e493d6f904d180823ec22bfed8ea09287b5c21f2254af4e64fca76acc5cd87399c7f1ede818db4326c98ce2dc2208a06fc2d754e304c48ce6a517753c62b1a9c1d5925b89707486d7fc08919e0a94eca07b1c54f15e299bd58bdfef9741538c7828b5d7d11a489f9c20d052b3471df475a051f9dd3739a927c89e357580a4c97b40234aa01ed3d5e0390dc982a7975880a0a089d613f26159af43616fd9455bb461f4869bfede26f2130835ed067a8b967bfb80",
+            "dsf90211a0395d87a95873cd98c21cf1df9421af03f7247880a2554e20738eec2c7507a494a0bcf6546339a1e7e14eb8fb572a968d217d2a0d1f3bc4257b22ef5333e9e4433ca012ae12498af8b2752c99efce07f3feef8ec910493be749acd63822c3558e6671a0dbf51303afdc36fc0c2d68a9bb05dab4f4917e7531e4a37ab0a153472d1b86e2a0ae90b50f067d9a2244e3d975233c0a0558c39ee152969f6678790abf773a9621a01d65cd682cc1be7c5e38d8da5c942e0a73eeaef10f387340a40a106699d494c3a06163b53d956c55544390c13634ea9aa75309f4fd866f312586942daf0f60fb37a058a52c1e858b1382a8893eb9c1f111f266eb9e21e6137aff0dddea243a567000a037b4b100761e02de63ea5f1fcfcf43e81a372dafb4419d126342136d329b7a7ba032472415864b08f808ba4374092003c8d7c40a9f7f9fe9cc8291f62538e1cc14a074e238ff5ec96b810364515551344100138916594d6af966170ff326a092fab0a0d31ac4eef14a79845200a496662e92186ca8b55e29ed0f9f59dbc6b521b116fea090607784fe738458b63c1942bba7c0321ae77e18df4961b2bc66727ea996464ea078f757653c1b63f72aff3dcc3f2a2e4c8cb4a9d36d1117c742833c84e20de994a0f78407de07f4b4cb4f899dfb95eedeb4049aeb5fc1635d65cf2f2f4dfd25d1d7a0862037513ba9d45354dd3e36264aceb2b862ac79d2050f14c95657e43a51b85c80",
+            "dsf90171a04ad705ea7bf04339fa36b124fa221379bd5a38ffe9a6112cb2d94be3a437b879a08e45b5f72e8149c01efcb71429841d6a8879d4bbe27335604a5bff8dfdf85dcea00313d9b2f7c03733d6549ea3b810e5262ed844ea12f70993d87d3e0f04e3979ea0b59e3cdd6750fa8b15164612a5cb6567cdfb386d4e0137fccee5f35ab55d0efda0fe6db56e42f2057a071c980a778d9a0b61038f269dd74a0e90155b3f40f14364a08538587f2378a0849f9608942cf481da4120c360f8391bbcc225d811823c6432a026eac94e755534e16f9552e73025d6d9c30d1d7682a4cb5bd7741ddabfd48c50a041557da9a74ca68da793e743e81e2029b2835e1cc16e9e25bd0c1e89d4ccad6980a041dda0a40a21ade3a20fcd1a4abb2a42b74e9a32b02424ff8db4ea708a5e0fb9a09aaf8326a51f613607a8685f57458329b41e938bb761131a5747e066b81a0a16808080a022e6cef138e16d2272ef58434ddf49260dc1de1f8ad6dfca3da5d2a92aaaadc58080",
+            "dsf851808080a009833150c367df138f1538689984b8a84fc55692d3d41fe4d1e5720ff5483a6980808080808080808080a0a319c1c415b271afc0adcb664e67738d103ac168e0bc0b7bd2da7966165cb9518080"
             ],
             "balance": 0,
-            "codeHash": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+            "codeHash": "dsc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
             "nonce": 0,
-            "storageHash": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "storageHash": "ds56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "storageProof": [
             {
-                "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "key": "ds0000000000000000000000000000000000000000000000000000000000000000",
                 "value": '0',
                 "proof": []
             },
             {
-                "key": "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "key": "ds0000000000000000000000000000000000000000000000000000000000000001",
                 "value": '0',
                 "proof": []
             }

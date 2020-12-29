@@ -351,7 +351,7 @@ describe('BatchRequestTest', () => {
         abstractMethodMock.hasAccounts.mockReturnValueOnce(true);
 
         abstractMethodMock.signTransaction = jest.fn();
-        abstractMethodMock.signTransaction.mockReturnValueOnce(Promise.resolve({rawTransaction: '0x0'}));
+        abstractMethodMock.signTransaction.mockReturnValueOnce(Promise.resolve({rawTransaction: 'ds0'}));
 
         batchRequest.add(abstractMethodMock);
 
@@ -373,10 +373,10 @@ describe('BatchRequestTest', () => {
 
         expect(abstractMethodMock.hasAccounts).toHaveBeenCalled();
 
-        expect(abstractMethodMock.parameters).toEqual(['0x0']);
+        expect(abstractMethodMock.parameters).toEqual(['ds0']);
 
         expect(abstractMethodMock.rpcMethod).toEqual('eth_sendRawTransaction');
 
-        expect(JsonRpcMapper.toPayload).toHaveBeenCalledWith('eth_sendRawTransaction', ['0x0']);
+        expect(JsonRpcMapper.toPayload).toHaveBeenCalledWith('eth_sendRawTransaction', ['ds0']);
     });
 });

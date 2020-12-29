@@ -24,13 +24,13 @@ describe('GetBlockRlpMethodTest', () => {
     });
 
     it('calls beforeExecution and maps the given number to a hex string', () => {
-        Utils.numberToHex.mockReturnValueOnce('0x1');
+        Utils.numberToHex.mockReturnValueOnce('ds1');
 
         method.parameters = [1];
 
         method.beforeExecution();
 
-        expect(method.parameters[0]).toEqual('0x1');
+        expect(method.parameters[0]).toEqual('ds1');
 
         expect(Utils.numberToHex).toHaveBeenCalledWith(1);
     });

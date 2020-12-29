@@ -16,7 +16,7 @@ describe('AbstractWeb3ModuleTest', () => {
         abstractWeb3Module = new AbstractWeb3Module(
             'http://localhost:8545',
             {
-                defaultAccount: '0x03c9a938ff7f54090d0d99e2c6f80380510ea078',
+                defaultAccount: 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078',
                 defaultBlock: 'latest',
                 defaultGasPrice: 100,
                 defaultGas: 100
@@ -27,7 +27,7 @@ describe('AbstractWeb3ModuleTest', () => {
     });
 
     it('constructor check', () => {
-        expect(abstractWeb3Module.defaultAccount).toEqual('0x03C9A938fF7f54090d0d99e2c6f80380510Ea078');
+        expect(abstractWeb3Module.defaultAccount).toEqual('ds03C9A938fF7f54090d0d99e2c6f80380510Ea078');
 
         expect(abstractWeb3Module.defaultBlock).toEqual('latest');
 
@@ -63,8 +63,8 @@ describe('AbstractWeb3ModuleTest', () => {
     });
 
     it('sets the defaultAccount property and validates the address', () => {
-        abstractWeb3Module.defaultAccount = '0x03c9a938ff7f54090d0d99e2c6f80380510ea078';
-        expect(abstractWeb3Module.defaultAccount).toEqual('0x03C9A938fF7f54090d0d99e2c6f80380510Ea078');
+        abstractWeb3Module.defaultAccount = 'ds03c9a938ff7f54090d0d99e2c6f80380510ea078';
+        expect(abstractWeb3Module.defaultAccount).toEqual('ds03C9A938fF7f54090d0d99e2c6f80380510Ea078');
     });
 
     it('sets the defaultBlock property', () => {

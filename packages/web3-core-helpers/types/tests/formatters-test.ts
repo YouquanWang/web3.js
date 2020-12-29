@@ -24,19 +24,19 @@ import {formatters} from 'web3-core-helpers';
 formatters.outputBigNumberFormatter(100);
 
 // $ExpectType string
-formatters.inputSignFormatter('0x0');
+formatters.inputSignFormatter('ds0');
 
 // $ExpectType string
-formatters.inputAddressFormatter('0x0');
+formatters.inputAddressFormatter('ds0');
 
 // $ExpectType boolean
 formatters.isPredefinedBlockNumber('latest');
 
 // $ExpectType string
-formatters.inputDefaultBlockNumberFormatter('0x0', new AbstractWeb3Module('http://localhost:8545'));
+formatters.inputDefaultBlockNumberFormatter('ds0', new AbstractWeb3Module('http://localhost:8545'));
 
 // $ExpectType string | number
-formatters.inputBlockNumberFormatter('0x0');
+formatters.inputBlockNumberFormatter('ds0');
 
 // $ExpectType object
 formatters.outputBlockFormatter({});

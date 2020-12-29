@@ -34,11 +34,11 @@ describe('AbstractGetBlockTransactionCountMethodTest', () => {
     it('calls beforeExecution with a block number as parameter and calls inputBlockNumberFormatter', () => {
         method.parameters = [100];
 
-        formatters.inputBlockNumberFormatter.mockReturnValueOnce('0x0');
+        formatters.inputBlockNumberFormatter.mockReturnValueOnce('ds0');
 
         method.beforeExecution({});
 
-        expect(method.parameters[0]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
 
         expect(formatters.inputBlockNumberFormatter).toHaveBeenCalledWith(100);
     });
@@ -46,8 +46,8 @@ describe('AbstractGetBlockTransactionCountMethodTest', () => {
     it('calls afterExecution and maps the hex string to a number', () => {
         Utils.hexToNumber.mockReturnValueOnce(100);
 
-        expect(method.afterExecution('0x0')).toEqual(100);
+        expect(method.afterExecution('ds0')).toEqual(100);
 
-        expect(Utils.hexToNumber).toHaveBeenCalledWith('0x0');
+        expect(Utils.hexToNumber).toHaveBeenCalledWith('ds0');
     });
 });

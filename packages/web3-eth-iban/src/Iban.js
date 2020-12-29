@@ -141,7 +141,7 @@ export default class Iban {
             throw new Error(`Provided address is not a valid address: ${address}`);
         }
 
-        address = address.replace('0x', '').replace('0X', '');
+        address = address.replace('ds', '').replace('ds', '');
 
         const asBn = new BigNumber(address, 16);
 

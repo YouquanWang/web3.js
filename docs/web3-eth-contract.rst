@@ -50,7 +50,7 @@ Parameters
 ----------
 
 1. ``jsonInterface`` - ``Array``: The json interface for the contract to instantiate
-2. ``address`` - ``String`` (optional): This address is necessary for transactions and call requests and can also be added later using ``myContract.options.address = '0x1234..'.``
+2. ``address`` - ``String`` (optional): This address is necessary for transactions and call requests and can also be added later using ``myContract.options.address = 'ds1234..'.``
 3. ``options`` - ``Object`` (optional): The options of the contract. Some are used as fallbacks for calls and transactions:
     * ``data`` - ``String``: The byte code of the contract. Used when the contract gets :ref:`deployed <contract-deploy>`.
     * ``address`` - ``String``: The address where the contract is deployed. See :ref:`address <contract-address>`.
@@ -76,8 +76,8 @@ Example
 
 .. code-block:: javascript
 
-    const myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
-        defaultAccount: '0x1234567890123456789012345678901234567891', // default from address
+    const myContract = new web3.eth.Contract([...], 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
+        defaultAccount: 'ds1234567890123456789012345678901234567891', // default from address
         defaultGasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
     });
 
@@ -130,10 +130,10 @@ Example
 .. code-block:: javascript
 
     myContract.address;
-    > '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
+    > 'dsde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
 
     // set a new address
-    myContract.address = '0x1234FFDD...';
+    myContract.address = 'ds1234FFDD...';
 
 
 ------------------------------------------------------------------------------
@@ -291,11 +291,11 @@ Example
 .. code-block:: javascript
 
     myContract.deploy({
-        data: '0x12345...',
+        data: 'ds12345...',
         arguments: [123, 'My String']
     })
     .send({
-        from: '0x1234567890123456789012345678901234567891',
+        from: 'ds1234567890123456789012345678901234567891',
         gas: 1500000,
         gasPrice: '30000000000000'
     }, (error, transactionHash) => { ... })
@@ -311,13 +311,13 @@ Example
 
 
     // When the data is already set as an option to the contract itself
-    myContract.options.data = '0x12345...';
+    myContract.options.data = 'ds12345...';
 
     myContract.deploy({
         arguments: [123, 'My String']
     })
     .send({
-        from: '0x1234567890123456789012345678901234567891',
+        from: 'ds1234567890123456789012345678901234567891',
         gas: 1500000,
         gasPrice: '30000000000000'
     })
@@ -328,16 +328,16 @@ Example
 
     // Simply encoding
     myContract.deploy({
-        data: '0x12345...',
+        data: 'ds12345...',
         arguments: [123, 'My String']
     })
     .encodeABI();
-    > '0x12345...0000012345678765432'
+    > 'ds12345...0000012345678765432'
 
 
     // Gas estimation
     myContract.deploy({
-        data: '0x12345...',
+        data: 'ds12345...',
         arguments: [123, 'My String']
     })
     .estimateGas((err, gas) => {
@@ -360,7 +360,7 @@ The methods of this smart contract are available through:
 
 - The name: ``myContract.methods.myMethod(123)``
 - The name with parameters: ``myContract.methods['myMethod(uint256)'](123)``
-- The signature: ``myContract.methods['0x58cf5f10'](123)``
+- The signature: ``myContract.methods['ds58cf5f10'](123)``
 
 This allows calling functions with same name but different parameters from the JavaScript contract object.
 
@@ -392,19 +392,19 @@ Example
 
     // calling a method
 
-    myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (error, result) => {
+    myContract.methods.myMethod(123).call({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (error, result) => {
         ...
     });
 
     // or sending and using a promise
-    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then((receipt) => {
         // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
     });
 
     // or sending and using the events
 
-    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .on('transactionHash', (hash) => {
         ...
     })
@@ -457,12 +457,12 @@ Example
 .. code-block:: javascript
 
     // using the callback
-    myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (error, result) => {
+    myContract.methods.myMethod(123).call({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (error, result) => {
         ...
     });
 
     // using the promise
-    myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).call({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then((result) => {
         ...
     });
@@ -551,19 +551,19 @@ Example
 .. code-block:: javascript
 
     // using the callback
-    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (error, transactionHash) => {
+    myContract.methods.myMethod(123).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, (error, transactionHash) => {
         ...
     });
 
     // using the promise
-    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then((receipt) => {
         // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
     });
 
 
     // using the event emitter
-    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .on('transactionHash', (hash) => {
         ...
     })
@@ -574,32 +574,32 @@ Example
         // receipt example
         console.log(receipt);
         > {
-            "transactionHash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
+            "transactionHash": "ds9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
             "transactionIndex": 0,
-            "blockHash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+            "blockHash": "dsef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
             "blockNumber": 3,
-            "contractAddress": "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
+            "contractAddress": "ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
             "cumulativeGasUsed": 314159,
             "gasUsed": 30234,
             "events": {
                 "MyEvent": {
                     returnValues: {
                         myIndexedParam: 20,
-                        myOtherIndexedParam: '0x123456789...',
+                        myOtherIndexedParam: 'ds123456789...',
                         myNonIndexParam: 'My String'
                     },
                     raw: {
-                        data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-                        topics: ['0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
+                        data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+                        topics: ['dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
                     },
                     event: 'MyEvent',
-                    signature: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+                    signature: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
                     logIndex: 0,
                     transactionIndex: 0,
-                    transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-                    blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+                    transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+                    blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
                     blockNumber: 1234,
-                    address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+                    address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
                 },
                 "MyOtherEvent": {
                     ...
@@ -656,7 +656,7 @@ Example
     });
 
     // using the promise
-    myContract.methods.myMethod(123).estimateGas({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).estimateGas({from: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then(function(gasAmount){
         ...
     })
@@ -699,7 +699,7 @@ Example
 .. code-block:: javascript
 
     myContract.methods.myMethod(123).encodeABI();
-    > '0x58cf5f1000000000000000000000000000000000000000000000000000000000000007B'
+    > 'ds58cf5f1000000000000000000000000000000000000000000000000000000000000007B'
 
 
 ------------------------------------------------------------------------------
@@ -744,7 +744,7 @@ Example
 .. code-block:: javascript
 
     myContract.once('MyEvent', {
-        filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        filter: {myIndexedParam: [20,23], myOtherIndexedParam: 'ds123456789...'}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0
     }, (error, event) => { console.log(event); });
 
@@ -752,21 +752,21 @@ Example
     > {
         returnValues: {
             myIndexedParam: 20,
-            myOtherIndexedParam: '0x123456789...',
+            myOtherIndexedParam: 'ds123456789...',
             myNonIndexParam: 'My String'
         },
         raw: {
-            data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-            topics: ['0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
+            data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+            topics: ['dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
         },
         event: 'MyEvent',
-        signature: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        signature: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         logIndex: 0,
         transactionIndex: 0,
-        transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         blockNumber: 1234,
-        address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+        address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
     }
 
 
@@ -811,7 +811,7 @@ The structure of the returned event ``Object`` looks as follows:
 - ``event`` - ``String``: The event name.
 - ``signature`` - ``String|Null``: The event signature, ``null`` if it's an anonymous event.
 - ``address`` - ``String``: Address this event originated from.
-- ``returnValues`` - ``Object``: The return values coming from the event, e.g. ``{myVar: 1, myVar2: '0x234...'}``.
+- ``returnValues`` - ``Object``: The return values coming from the event, e.g. ``{myVar: 1, myVar2: 'ds234...'}``.
 - ``logIndex`` - ``Number``: Integer of the event index position in the block.
 - ``transactionIndex`` - ``Number``: Integer of the transaction's index position the event was created in.
 - ``transactionHash`` 32 Bytes - ``String``: Hash of the transaction this event was created in.
@@ -827,7 +827,7 @@ Example
 .. code-block:: javascript
 
     myContract.events.MyEvent({
-        filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        filter: {myIndexedParam: [20,23], myOtherIndexedParam: 'ds123456789...'}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0
     }, (error, event) => { console.log(event); })
     .on('data', (event) => {
@@ -842,21 +842,21 @@ Example
     > {
         returnValues: {
             myIndexedParam: 20,
-            myOtherIndexedParam: '0x123456789...',
+            myOtherIndexedParam: 'ds123456789...',
             myNonIndexParam: 'My String'
         },
         raw: {
-            data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-            topics: ['0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
+            data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+            topics: ['dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
         },
         event: 'MyEvent',
-        signature: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        signature: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         logIndex: 0,
         transactionIndex: 0,
-        transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         blockNumber: 1234,
-        address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+        address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
     }
 
 
@@ -913,7 +913,7 @@ Example
 .. code-block:: javascript
 
     myContract.getPastEvents('MyEvent', {
-        filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        filter: {myIndexedParam: [20,23], myOtherIndexedParam: 'ds123456789...'}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0,
         toBlock: 'latest'
     }, (error, events) => { console.log(events); })
@@ -924,21 +924,21 @@ Example
     > [{
         returnValues: {
             myIndexedParam: 20,
-            myOtherIndexedParam: '0x123456789...',
+            myOtherIndexedParam: 'ds123456789...',
             myNonIndexParam: 'My String'
         },
         raw: {
-            data: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-            topics: ['0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
+            data: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+            topics: ['dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7', 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385']
         },
         event: 'MyEvent',
-        signature: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        signature: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         logIndex: 0,
         transactionIndex: 0,
-        transactionHash: '0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
-        blockHash: '0xfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
+        transactionHash: 'ds7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385',
+        blockHash: 'dsfd43ade1c09fade1c0d57a7af66ab4ead7c2c2eb7b11a91ffdd57a7af66ab4ead7',
         blockNumber: 1234,
-        address: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
+        address: 'dsde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'
     },{
         ...
     }]

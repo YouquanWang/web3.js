@@ -26,14 +26,14 @@ describe('NodeInfoMethodTest', () => {
     it('calls afterExecution and calls utils.hexToNumber', () => {
         Utils.hexToNumber.mockReturnValue(1);
 
-        expect(method.afterExecution({ports: {discovery: '0x1', listener: '0x2'}})).toEqual({
+        expect(method.afterExecution({ports: {discovery: 'ds1', listener: 'ds2'}})).toEqual({
             ports: {
                 discovery: 1,
                 listener: 1
             }
         });
 
-        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(1, '0x1');
-        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(2, '0x2');
+        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(1, 'ds1');
+        expect(Utils.hexToNumber).toHaveBeenNthCalledWith(2, 'ds2');
     });
 });

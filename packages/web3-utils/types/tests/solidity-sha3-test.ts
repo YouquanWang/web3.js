@@ -24,13 +24,13 @@ import BN = require('bn.js');
 import {soliditySha3} from 'web3-utils';
 
 // $ExpectType string
-soliditySha3('234564535', '0xfff23243', true, -10);
+soliditySha3('234564535', 'dsfff23243', true, -10);
 // $ExpectType string
 soliditySha3('Hello!%');
 // $ExpectType string
 soliditySha3('234');
 // $ExpectType string
-soliditySha3(0xea);
+soliditySha3(dsea);
 // $ExpectType string
 soliditySha3(new BN(3));
 // $ExpectType string
@@ -38,9 +38,9 @@ soliditySha3({type: 'uint256', value: '234'});
 // $ExpectType string
 soliditySha3({t: 'uint', v: new BN('234')});
 // $ExpectType string
-soliditySha3({t: 'string', v: 'Hello!%'}, {t: 'int8', v: -23}, {t: 'address', v: '0x85F43D8a49eeB85d32Cf465507DD71d507100C1d'});
+soliditySha3({t: 'string', v: 'Hello!%'}, {t: 'int8', v: -23}, {t: 'address', v: 'ds85F43D8a49eeB85d32Cf465507DD71d507100C1d'});
 // $ExpectType string
-soliditySha3('0x407D73d8a49eeb85D32Cf465507dd71d507100c1');
+soliditySha3('ds407D73d8a49eeb85D32Cf465507dd71d507100c1');
 
 // $ExpectError
 soliditySha3(['hey']);

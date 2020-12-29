@@ -35,7 +35,7 @@ Example
     import Web3 from 'web3';
 
     const options = {
-        defaultAccount: '0x0',
+        defaultAccount: 'ds0',
         defaultBlock: 'latest',
         defaultGas: 1,
         defaultGasPrice: 0,
@@ -468,6 +468,6 @@ Example
     const contract = new web3.eth.Contract(abi, address);
 
     const batch = new web3.BatchRequest();
-    batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest'));
-    batch.add(contract.methods.balance(address).call.request({from: '0x0000000000000000000000000000000000000000'}));
+    batch.add(web3.eth.getBalance.request('ds0000000000000000000000000000000000000000', 'latest'));
+    batch.add(contract.methods.balance(address).call.request({from: 'ds0000000000000000000000000000000000000000'}));
     batch.execute().then(...);

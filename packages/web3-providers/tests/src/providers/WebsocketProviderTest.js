@@ -40,10 +40,10 @@ describe('WebsocketProviderTest', () => {
     });
 
     it('calls onMessage with an MessageEvent', (done) => {
-        const messageEvent = {data: '{"id":"0x0"}'};
+        const messageEvent = {data: '{"id":"ds0"}'};
 
-        websocketProvider.on('0x0', (response) => {
-            expect(response).toEqual({id: '0x0'});
+        websocketProvider.on('ds0', (response) => {
+            expect(response).toEqual({id: 'ds0'});
 
             done();
         });
@@ -353,7 +353,7 @@ describe('WebsocketProviderTest', () => {
         socketMock.OPEN = 4;
         socketMock.readyState = 2;
 
-        await expect(websocketProvider.sendPayload({id: '0x0'})).rejects.toThrow(
+        await expect(websocketProvider.sendPayload({id: 'ds0'})).rejects.toThrow(
             'Connection error: Connection is not open on send()'
         );
     });
@@ -365,9 +365,9 @@ describe('WebsocketProviderTest', () => {
         socketMock.send = jest.fn();
         websocketProvider.timeout = 1;
 
-        await expect(websocketProvider.sendPayload({id: '0x0'})).rejects.toThrow('Connection error: Timeout exceeded');
+        await expect(websocketProvider.sendPayload({id: 'ds0'})).rejects.toThrow('Connection error: Timeout exceeded');
 
-        expect(socketMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(socketMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendPayload and returns with a rejected promise because of the connection.send() method', async () => {
@@ -379,9 +379,9 @@ describe('WebsocketProviderTest', () => {
         });
         websocketProvider.timeout = 2;
 
-        await expect(websocketProvider.sendPayload({id: '0x0'})).rejects.toThrow('Nope');
+        await expect(websocketProvider.sendPayload({id: 'ds0'})).rejects.toThrow('Nope');
 
-        expect(socketMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(socketMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
     });
 
     it('calls sendPayload and returns a rejected promise because the underlying WebSocket connection emits an error', async () => {
@@ -391,12 +391,12 @@ describe('WebsocketProviderTest', () => {
         websocketProvider.timeout = 4;
 
         socketMock.send = jest.fn((jsonString) => {
-            expect(jsonString).toEqual('{"id":"0x0"}');
+            expect(jsonString).toEqual('{"id":"ds0"}');
 
             websocketProvider.emit('error', new Error('Error!'));
         });
 
-        await expect(websocketProvider.sendPayload({id: '0x0'})).rejects.toThrow('Error!');
+        await expect(websocketProvider.sendPayload({id: 'ds0'})).rejects.toThrow('Error!');
     });
 
     it('calls sendPayload with a timeout defined and returns with a resolved promise', async () => {
@@ -407,16 +407,16 @@ describe('WebsocketProviderTest', () => {
         websocketProvider.timeout = 4;
 
         setTimeout(() => {
-            websocketProvider.emit('0x0', {result: true});
+            websocketProvider.emit('ds0', {result: true});
         }, 1);
 
-        const response = await websocketProvider.sendPayload({id: '0x0'}, []);
+        const response = await websocketProvider.sendPayload({id: 'ds0'}, []);
 
         expect(response).toEqual({result: true});
 
-        expect(socketMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(socketMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
 
-        expect(websocketProvider.listenerCount('0x0')).toEqual(0);
+        expect(websocketProvider.listenerCount('ds0')).toEqual(0);
     });
 
     it('calls sendPayload and returns with a resolved promise but is waiting until the connection is established', async () => {
@@ -432,16 +432,16 @@ describe('WebsocketProviderTest', () => {
         }, 100);
 
         setTimeout(() => {
-            websocketProvider.emit('0x0', {result: true});
+            websocketProvider.emit('ds0', {result: true});
         }, 200);
 
-        const response = await websocketProvider.sendPayload({id: '0x0'});
+        const response = await websocketProvider.sendPayload({id: 'ds0'});
 
         expect(response).toEqual({result: true});
 
-        expect(socketMock.send).toHaveBeenCalledWith('{"id":"0x0"}');
+        expect(socketMock.send).toHaveBeenCalledWith('{"id":"ds0"}');
 
-        expect(websocketProvider.listenerCount('0x0')).toEqual(0);
+        expect(websocketProvider.listenerCount('ds0')).toEqual(0);
 
         expect(websocketProvider.listenerCount('connect')).toEqual(0);
     });

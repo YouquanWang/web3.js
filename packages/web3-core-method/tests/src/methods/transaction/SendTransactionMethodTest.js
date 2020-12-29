@@ -24,11 +24,11 @@ describe('SendTransactionMethodTest', () => {
     it('beforeExecution should call the inputTransactionFormatter', () => {
         method.parameters = ['tx'];
 
-        formatters.inputTransactionFormatter.mockReturnValueOnce('0x0');
+        formatters.inputTransactionFormatter.mockReturnValueOnce('ds0');
 
         method.beforeExecution({});
 
-        expect(method.parameters[0]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
 
         expect(formatters.inputTransactionFormatter).toHaveBeenCalledWith('tx', {});
     });

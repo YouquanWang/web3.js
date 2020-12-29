@@ -42,7 +42,7 @@ describe('AllEventsFilterEncoderTest', () => {
             }
         ]);
 
-        abiCoderMock.encodeParameter.mockReturnValue('0x0');
+        abiCoderMock.encodeParameter.mockReturnValue('ds0');
 
         const filter = {
             myName: 'theValue',
@@ -51,7 +51,7 @@ describe('AllEventsFilterEncoderTest', () => {
 
         const topics = allEventsFilterEncoder.encode(abiModelMock, filter);
 
-        expect(topics).toEqual([['0x0', ['0x0', '0x0']]]);
+        expect(topics).toEqual([['ds0', ['ds0', 'ds0']]]);
 
         expect(abiCoderMock.encodeParameter).toHaveBeenNthCalledWith(1, 'bytes32', filter.myName);
 

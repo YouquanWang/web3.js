@@ -24,13 +24,13 @@ describe('SetEtherBaseMethodTest', () => {
     });
 
     it('calls beforeExecution and formats the given address', () => {
-        formatters.inputAddressFormatter.mockReturnValueOnce('0x0');
+        formatters.inputAddressFormatter.mockReturnValueOnce('ds0');
 
-        method.parameters = ['0x00'];
+        method.parameters = ['ds00'];
         method.beforeExecution();
 
-        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('0x00');
+        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('ds00');
 
-        expect(method.parameters[0]).toEqual('0x0');
+        expect(method.parameters[0]).toEqual('ds0');
     });
 });

@@ -51,7 +51,7 @@ describe('CallMethodTest', () => {
 
         formatters.inputCallFormatter.mockReturnValueOnce({empty: true});
 
-        formatters.inputDefaultBlockNumberFormatter.mockReturnValueOnce('0x0');
+        formatters.inputDefaultBlockNumberFormatter.mockReturnValueOnce('ds0');
 
         method.beforeExecution({defaultBlock: 'latest'});
 
@@ -59,7 +59,7 @@ describe('CallMethodTest', () => {
 
         expect(method.parameters[0]).toEqual({empty: true});
 
-        expect(method.parameters[1]).toEqual('0x0');
+        expect(method.parameters[1]).toEqual('ds0');
 
         expect(formatters.inputCallFormatter).toHaveBeenCalledWith({}, {defaultBlock: 'latest'});
 

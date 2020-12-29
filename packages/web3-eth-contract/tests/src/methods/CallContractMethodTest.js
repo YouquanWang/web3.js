@@ -38,35 +38,35 @@ describe('CallContractMethodTest', () => {
     it('calls afterExecution and returns the result array', () => {
         abiCoderMock.decodeParameters = jest.fn();
 
-        abiCoderMock.decodeParameters.mockReturnValueOnce(['0x0', '0x0']);
+        abiCoderMock.decodeParameters.mockReturnValueOnce(['ds0', 'ds0']);
 
         abiItemModelMock.getOutputs.mockReturnValueOnce([{name: '', type: 'bytes'}, {name: '', type: 'bytes'}]);
 
-        expect(callContractMethod.afterExecution('0x0')).toEqual(['0x0', '0x0']);
+        expect(callContractMethod.afterExecution('ds0')).toEqual(['ds0', 'ds0']);
 
         expect(abiCoderMock.decodeParameters).toHaveBeenCalledWith(
             [{name: '', type: 'bytes'}, {name: '', type: 'bytes'}],
-            '0x0'
+            'ds0'
         );
     });
 
     it('calls afterExecution and calls decodeParameter', () => {
         abiCoderMock.decodeParameter = jest.fn();
 
-        abiCoderMock.decodeParameter.mockReturnValueOnce('0x0');
+        abiCoderMock.decodeParameter.mockReturnValueOnce('ds0');
 
         abiItemModelMock.getOutputs.mockReturnValueOnce([{name: 'result', type: 'bytes'}]);
 
-        expect(callContractMethod.afterExecution('0x0')).toEqual('0x0');
+        expect(callContractMethod.afterExecution('ds0')).toEqual('ds0');
 
-        expect(abiCoderMock.decodeParameter).toHaveBeenCalledWith({name: 'result', type: 'bytes'}, '0x0');
+        expect(abiCoderMock.decodeParameter).toHaveBeenCalledWith({name: 'result', type: 'bytes'}, 'ds0');
     });
 
     it('calls afterExecution and response is empty', () => {
         expect(callContractMethod.afterExecution()).toEqual(null);
     });
 
-    it('calls afterExecution and response has value "0x" is empty', () => {
-        expect(callContractMethod.afterExecution('0x')).toEqual(null);
+    it('calls afterExecution and response has value "ds" is empty', () => {
+        expect(callContractMethod.afterExecution('ds')).toEqual(null);
     });
 });

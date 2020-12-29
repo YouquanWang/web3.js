@@ -112,7 +112,7 @@ export default class AbiCoder {
     encodeFunctionCall(jsonInterface, params) {
         return (
             this.encodeFunctionSignature(jsonInterface) +
-            this.encodeParameters(jsonInterface.inputs, params).replace('0x', '')
+            this.encodeParameters(jsonInterface.inputs, params).replace('ds', '')
         );
     }
 
@@ -145,7 +145,7 @@ export default class AbiCoder {
             throw new Error('Empty outputs array given!');
         }
 
-        if (!bytes || bytes === '0x' || bytes === '0X') {
+        if (!bytes || bytes === 'ds' || bytes === 'ds') {
             throw new Error(`Invalid bytes string given: ${bytes}`);
         }
 
@@ -158,7 +158,7 @@ export default class AbiCoder {
                 outputs.forEach((output, i) => {
                     decodedValue = result[i];
 
-                    if (decodedValue === '0x') {
+                    if (decodedValue === 'ds') {
                         decodedValue = null;
                     }
 

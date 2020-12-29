@@ -190,8 +190,8 @@ describe('TransactionObserverTest', () => {
         providerMock.supportsSubscriptions.mockReturnValueOnce(false);
 
         const receipt = {blockNumber: 1};
-        const blockOne = {number: 1, hash: '0x0'};
-        const blockTwo = {number: 2, parentHash: '0x0'};
+        const blockOne = {number: 1, hash: 'ds0'};
+        const blockTwo = {number: 2, parentHash: 'ds0'};
 
         getTransactionReceiptMethodMock.execute
             .mockReturnValueOnce(Promise.resolve(receipt))
@@ -236,7 +236,7 @@ describe('TransactionObserverTest', () => {
         providerMock.supportsSubscriptions.mockReturnValueOnce(false);
 
         const receipt = {blockNumber: 1};
-        const blockOne = {number: 1, hash: '0x0'};
+        const blockOne = {number: 1, hash: 'ds0'};
 
         getTransactionReceiptMethodMock.execute.mockReturnValueOnce(Promise.resolve(receipt));
 

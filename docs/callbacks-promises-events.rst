@@ -20,7 +20,7 @@ An example of a function that benefits from a PromiEvent is the :ref:`web3.eth.s
 
 .. code-block:: javascript
 
-    web3.eth.sendTransaction({from: '0x123...', data: '0x432...'})
+    web3.eth.sendTransaction({from: 'ds123...', data: 'ds432...'})
     .once('transactionHash', function(hash){ ... })
     .once('receipt', function(receipt){ ... })
     .on('confirmation', function(confNumber, receipt){ ... })

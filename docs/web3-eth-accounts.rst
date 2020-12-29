@@ -61,8 +61,8 @@ Example
 
     web3.eth.accounts.create();
     > {
-        address: "0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01",
-        privateKey: "0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709",
+        address: "dsb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01",
+        privateKey: "ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709",
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
@@ -70,8 +70,8 @@ Example
 
     web3.eth.accounts.create('2435@#@#@±±±±!!!!678543213456764321§34567543213456785432134567');
     > {
-        address: "0xF2CD2AA0c7926743B1D4310b2BC984a0a453c3d4",
-        privateKey: "0xd7325de5c2c1cf0009fac77d3d04a9c004b038883446b065871bc3e831dcd098",
+        address: "dsF2CD2AA0c7926743B1D4310b2BC984a0a453c3d4",
+        privateKey: "dsd7325de5c2c1cf0009fac77d3d04a9c004b038883446b065871bc3e831dcd098",
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
@@ -79,8 +79,8 @@ Example
 
     web3.eth.accounts.create(web3.utils.randomHex(32));
     > {
-        address: "0xe78150FaCD36E8EB00291e251424a0515AA1FF05",
-        privateKey: "0xcc505ee6067fba3f6fc2050643379e190e087aeffe5d958ab9f2f3ed3800fa4e",
+        address: "dse78150FaCD36E8EB00291e251424a0515AA1FF05",
+        privateKey: "dscc505ee6067fba3f6fc2050643379e190e087aeffe5d958ab9f2f3ed3800fa4e",
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
@@ -101,7 +101,7 @@ Creates an account object from a private key.
 Parameters
 ----------
 
-1. ``privateKey`` - ``String``: The private key hex string beginning with ``0x``.
+1. ``privateKey`` - ``String``: The private key hex string beginning with ``ds``.
 
 -------
 Returns
@@ -115,10 +115,10 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.accounts.privateKeyToAccount('0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709');
+    web3.eth.accounts.privateKeyToAccount('ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709');
     > {
-        address: '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01',
-        privateKey: '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
+        address: 'dsb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01',
+        privateKey: 'ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
@@ -172,36 +172,36 @@ Example
 .. code-block:: javascript
 
     web3.eth.accounts.signTransaction({
-        to: '0xF0109fC8DF283027b6285cc889F5aA624EaC1F55',
+        to: 'dsF0109fC8DF283027b6285cc889F5aA624EaC1F55',
         value: '1000000000',
         gas: 2000000
-    }, '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318')
+    }, 'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318')
     .then(console.log);
     > {
-        messageHash: '0x88cfbd7e51c7a40540b233cf68b62ad1df3e92462f1c6018d6d67eae0f3b08f5',
-        v: '0x25',
-        r: '0xc9cf86333bcb065d140032ecaab5d9281bde80f21b9687b3e94161de42d51895',
-        s: '0x727a108a0b8d101465414033c3f705a9c7b826e596766046ee1183dbc8aeaa68',
-        rawTransaction: '0xf869808504e3b29200831e848094f0109fc8df283027b6285cc889f5aa624eac1f55843b9aca008025a0c9cf86333bcb065d140032ecaab5d9281bde80f21b9687b3e94161de42d51895a0727a108a0b8d101465414033c3f705a9c7b826e596766046ee1183dbc8aeaa68',
-        transactionHash: '0xde8db924885b0803d2edc335f745b2b8750c8848744905684c20b987443a9593'
+        messageHash: 'ds88cfbd7e51c7a40540b233cf68b62ad1df3e92462f1c6018d6d67eae0f3b08f5',
+        v: 'ds25',
+        r: 'dsc9cf86333bcb065d140032ecaab5d9281bde80f21b9687b3e94161de42d51895',
+        s: 'ds727a108a0b8d101465414033c3f705a9c7b826e596766046ee1183dbc8aeaa68',
+        rawTransaction: 'dsf869808504e3b29200831e848094f0109fc8df283027b6285cc889f5aa624eac1f55843b9aca008025a0c9cf86333bcb065d140032ecaab5d9281bde80f21b9687b3e94161de42d51895a0727a108a0b8d101465414033c3f705a9c7b826e596766046ee1183dbc8aeaa68',
+        transactionHash: 'dsde8db924885b0803d2edc335f745b2b8750c8848744905684c20b987443a9593'
     }
 
     web3.eth.accounts.signTransaction({
-        to: '0xF0109fC8DF283027b6285cc889F5aA624EaC1F55',
+        to: 'dsF0109fC8DF283027b6285cc889F5aA624EaC1F55',
         value: '1000000000',
         gas: 2000000,
         gasPrice: '234567897654321',
         nonce: 0,
         chainId: 1
-    }, '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318')
+    }, 'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318')
     .then(console.log);
     > {
-        messageHash: '0x6893a6ee8df79b0f5d64a180cd1ef35d030f3e296a5361cf04d02ce720d32ec5',
-        r: '0x9ebb6ca057a0535d6186462bc0b465b561c94a295bdb0621fc19208ab149a9c',
-        s: '0x440ffd775ce91a833ab410777204d5341a6f9fa91216a6f3ee2c051fea6a0428',
-        v: '0x25',
-        rawTransaction: '0xf86a8086d55698372431831e848094f0109fc8df283027b6285cc889f5aa624eac1f55843b9aca008025a009ebb6ca057a0535d6186462bc0b465b561c94a295bdb0621fc19208ab149a9ca0440ffd775ce91a833ab410777204d5341a6f9fa91216a6f3ee2c051fea6a0428',
-        transactionHash: '0xd8f64a42b57be0d565f385378db2f6bf324ce14a594afc05de90436e9ce01f60'
+        messageHash: 'ds6893a6ee8df79b0f5d64a180cd1ef35d030f3e296a5361cf04d02ce720d32ec5',
+        r: 'ds9ebb6ca057a0535d6186462bc0b465b561c94a295bdb0621fc19208ab149a9c',
+        s: 'ds440ffd775ce91a833ab410777204d5341a6f9fa91216a6f3ee2c051fea6a0428',
+        v: 'ds25',
+        rawTransaction: 'dsf86a8086d55698372431831e848094f0109fc8df283027b6285cc889f5aa624eac1f55843b9aca008025a009ebb6ca057a0535d6186462bc0b465b561c94a295bdb0621fc19208ab149a9ca0440ffd775ce91a833ab410777204d5341a6f9fa91216a6f3ee2c051fea6a0428',
+        transactionHash: 'dsd8f64a42b57be0d565f385378db2f6bf324ce14a594afc05de90436e9ce01f60'
     }
 
 
@@ -236,8 +236,8 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.accounts.recoverTransaction('0xf86180808401ef364594f0109fc8df283027b6285cc889f5aa624eac1f5580801ca031573280d608f75137e33fc14655f097867d691d5c4c44ebe5ae186070ac3d5ea0524410802cdc025034daefcdfa08e7d2ee3f0b9d9ae184b2001fe0aff07603d9');
-    > "0xF0109fC8DF283027b6285cc889F5aA624EaC1F55"
+    web3.eth.accounts.recoverTransaction('dsf86180808401ef364594f0109fc8df283027b6285cc889f5aa624eac1f5580801ca031573280d608f75137e33fc14655f097867d691d5c4c44ebe5ae186070ac3d5ea0524410802cdc025034daefcdfa08e7d2ee3f0b9d9ae184b2001fe0aff07603d9');
+    > "dsF0109fC8DF283027b6285cc889F5aA624EaC1F55"
 
 
 ------------------------------------------------------------------------------
@@ -271,11 +271,11 @@ Example
 .. code-block:: javascript
 
     web3.eth.accounts.hashMessage("Hello World")
-    > "0xa1de988600a42c4b4ab089b619297c17d53cffae5d5120d82d8a92d0bb3b78f2"
+    > "dsa1de988600a42c4b4ab089b619297c17d53cffae5d5120d82d8a92d0bb3b78f2"
 
     // the below results in the same hash
     web3.eth.accounts.hashMessage(web3.utils.utf8ToHex("Hello World"))
-    > "0xa1de988600a42c4b4ab089b619297c17d53cffae5d5120d82d8a92d0bb3b78f2"
+    > "dsa1de988600a42c4b4ab089b619297c17d53cffae5d5120d82d8a92d0bb3b78f2"
 
 
 
@@ -317,14 +317,14 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.accounts.sign('Some data', '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+    web3.eth.accounts.sign('Some data', 'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
     > {
         message: 'Some data',
-        messageHash: '0x1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
-        v: '0x1c',
-        r: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
-        s: '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029',
-        signature: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
+        messageHash: 'ds1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
+        v: 'ds1c',
+        r: 'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
+        s: 'ds6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029',
+        signature: 'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
     }
 
 
@@ -370,20 +370,20 @@ Example
 .. code-block:: javascript
 
     web3.eth.accounts.recover({
-        messageHash: '0x1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
-        v: '0x1c',
-        r: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
-        s: '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029'
+        messageHash: 'ds1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
+        v: 'ds1c',
+        r: 'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
+        s: 'ds6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029'
     })
-    > "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+    > "ds2c7536E3605D9C16a7a3D7b1898e529396a65c23"
 
     // message, signature
-    web3.eth.accounts.recover('Some data', '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c');
-    > "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+    web3.eth.accounts.recover('Some data', 'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c');
+    > "ds2c7536E3605D9C16a7a3D7b1898e529396a65c23"
 
     // message, v, r, s
-    web3.eth.accounts.recover('Some data', '0x1c', '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd', '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029');
-    > "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+    web3.eth.accounts.recover('Some data', 'ds1c', 'dsb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd', 'ds6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029');
+    > "ds2c7536E3605D9C16a7a3D7b1898e529396a65c23"
 
 
 
@@ -419,7 +419,7 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.accounts.encrypt('0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318', 'test!')
+    web3.eth.accounts.encrypt('ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318', 'test!')
     > {
         version: 3,
         id: '04e9bcbb-96fa-497b-94d1-14df4cd20af6',
@@ -493,8 +493,8 @@ Example
         }
     }, 'test!');
     > {
-        address: "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
-        privateKey: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318",
+        address: "ds2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+        privateKey: "ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318",
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
@@ -523,11 +523,11 @@ Example
     web3.eth.accounts.wallet;
     > Wallet {
         0: {...}, // account by index
-        "0xF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},  // same account by address
-        "0xf0109fc8df283027b6285cc889f5aa624eac1f55": {...},  // same account by address lowercase
+        "dsF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},  // same account by address
+        "dsf0109fc8df283027b6285cc889f5aa624eac1f55": {...},  // same account by address lowercase
         1: {...},
-        "0xD0122fC8DF283027b6285cc889F5aA624EaC1d23": {...},
-        "0xd0122fc8df283027b6285cc889f5aa624eac1d23": {...},
+        "dsD0122fC8DF283027b6285cc889F5aA624EaC1d23": {...},
+        "dsd0122fc8df283027b6285cc889f5aa624eac1d23": {...},
 
         add: function(){},
         remove: function(){},
@@ -574,8 +574,8 @@ Example
     web3.eth.accounts.wallet.create(2, '54674321§3456764321§345674321§3453647544±±±§±±±!!!43534534534534');
     > Wallet {
         0: {...},
-        "0xF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},
-        "0xf0109fc8df283027b6285cc889f5aa624eac1f55": {...},
+        "dsF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},
+        "dsf0109fc8df283027b6285cc889f5aa624eac1f55": {...},
         ...
     }
 
@@ -611,24 +611,24 @@ Example
 
 .. code-block:: javascript
 
-    web3.eth.accounts.wallet.add('0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+    web3.eth.accounts.wallet.add('ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
     > {
         index: 0,
-        address: '0x2c7536E3605D9C16a7a3D7b1898e529396a65c23',
-        privateKey: '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318',
+        address: 'ds2c7536E3605D9C16a7a3D7b1898e529396a65c23',
+        privateKey: 'ds4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318',
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
     }
 
     web3.eth.accounts.wallet.add({
-        privateKey: '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
-        address: '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
+        privateKey: 'ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
+        address: 'dsb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01'
     });
     > {
         index: 0,
-        address: '0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01',
-        privateKey: '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
+        address: 'dsb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01',
+        privateKey: 'ds348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709',
         signTransaction: function(tx){...},
         sign: function(data){...},
         encrypt: function(password){...}
@@ -669,13 +669,13 @@ Example
     web3.eth.accounts.wallet;
     > Wallet {
         0: {...},
-        "0xF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...}
+        "dsF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...}
         1: {...},
-        "0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01": {...}
+        "dsb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01": {...}
         ...
     }
 
-    web3.eth.accounts.wallet.remove('0xF0109fC8DF283027b6285cc889F5aA624EaC1F55');
+    web3.eth.accounts.wallet.remove('dsF0109fC8DF283027b6285cc889F5aA624EaC1F55');
     > true
 
     web3.eth.accounts.wallet.remove(3);
@@ -845,8 +845,8 @@ Example
     > Wallet {
         0: {...},
         1: {...},
-        "0xF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},
-        "0xD0122fC8DF283027b6285cc889F5aA624EaC1d23": {...}
+        "dsF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},
+        "dsD0122fC8DF283027b6285cc889F5aA624EaC1d23": {...}
         ...
     }
 
@@ -926,7 +926,7 @@ Example
     > Wallet {
         0: {...},
         1: {...},
-        "0xF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},
-        "0xD0122fC8DF283027b6285cc889F5aA624EaC1d23": {...}
+        "dsF0109fC8DF283027b6285cc889F5aA624EaC1F55": {...},
+        "dsD0122fC8DF283027b6285cc889F5aA624EaC1d23": {...}
         ...
     }

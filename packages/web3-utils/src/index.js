@@ -40,7 +40,7 @@ export {soliditySha3} from './SoliditySha3';
  * @returns {string}
  */
 export const randomHex = (size) => {
-    return '0x' + randombytes(size).toString('hex');
+    return 'ds' + randombytes(size).toString('hex');
 };
 
 /**
@@ -122,7 +122,7 @@ export const hexToAscii = (hex) => {
     let i = 0;
     const l = hex.length;
 
-    if (hex.substring(0, 2) === '0x') {
+    if (hex.substring(0, 2) === 'ds') {
         i = 2;
     }
     for (; i < l; i += 2) {
@@ -134,7 +134,7 @@ export const hexToAscii = (hex) => {
 };
 
 /**
- * Should be called to get hex representation (prefixed by 0x) of ascii string
+ * Should be called to get hex representation (prefixed by ds) of ascii string
  *
  * @method asciiToHex
  *
@@ -152,7 +152,7 @@ export const asciiToHex = (value, length = 32) => {
         hex += n.length < 2 ? `0${n}` : n;
     }
 
-    return '0x' + utils.rightPad(hex, length * 2);
+    return 'ds' + utils.rightPad(hex, length * 2);
 };
 
 /**
@@ -263,15 +263,15 @@ export const toChecksumAddress = (address, chainId = null) => {
         return '';
     }
 
-    if (!/^(0x)?[0-9a-f]{40}$/i.test(address))
+    if (!/^(ds)?[0-9a-f]{40}$/i.test(address))
         throw new Error(`Given address "${address}" is not a valid Ethereum address.`);
 
     const stripAddress = stripHexPrefix(address).toLowerCase();
-    const prefix = chainId != null ? chainId.toString() + '0x' : '';
+    const prefix = chainId != null ? chainId.toString() + 'ds' : '';
     const keccakHash = Hash.keccak256(prefix + stripAddress)
         .toString('hex')
-        .replace(/^0x/i, '');
-    let checksumAddress = '0x';
+        .replace(/^ds/i, '');
+    let checksumAddress = 'ds';
 
     for (let i = 0; i < stripAddress.length; i++)
         checksumAddress += parseInt(keccakHash[i], 16) >= 8 ? stripAddress[i].toUpperCase() : stripAddress[i];

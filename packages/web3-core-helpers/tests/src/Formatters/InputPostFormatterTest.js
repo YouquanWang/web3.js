@@ -9,14 +9,14 @@ describe('InputPostFormatterTest', () => {
             ttl: 100,
             workToProve: 100,
             priority: 100,
-            topics: '0x0'
+            topics: 'ds0'
         };
 
         expect(inputPostFormatter(post)).toEqual({
-            ttl: '0x64',
-            workToProve: '0x64',
-            priority: '0x64',
-            topics: ['0x0']
+            ttl: 'ds64',
+            workToProve: 'ds64',
+            priority: 'ds64',
+            topics: ['ds0']
         });
     });
 
@@ -25,14 +25,14 @@ describe('InputPostFormatterTest', () => {
             ttl: 100,
             workToProve: 100,
             priority: 100,
-            topics: ['0x0']
+            topics: ['ds0']
         };
 
         expect(inputPostFormatter(post)).toEqual({
-            ttl: '0x64',
-            workToProve: '0x64',
-            priority: '0x64',
-            topics: ['0x0']
+            ttl: 'ds64',
+            workToProve: 'ds64',
+            priority: 'ds64',
+            topics: ['ds0']
         });
     });
 
@@ -45,10 +45,10 @@ describe('InputPostFormatterTest', () => {
         };
 
         expect(inputPostFormatter(post)).toEqual({
-            ttl: '0x64',
-            workToProve: '0x64',
-            priority: '0x64',
-            topics: ['0x61736466']
+            ttl: 'ds64',
+            workToProve: 'ds64',
+            priority: 'ds64',
+            topics: ['ds61736466']
         });
     });
 });

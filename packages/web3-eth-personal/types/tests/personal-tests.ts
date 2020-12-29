@@ -31,27 +31,27 @@ personal.newAccount('test password');
 personal.newAccount('test password', (error: Error, address: string) => {});
 
 // $ExpectType Promise<string>
-personal.sign('Hello world', '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', 'test password!');
+personal.sign('Hello world', 'ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', 'test password!');
 // $ExpectType Promise<string>
 personal.sign(
     'Hello world',
-    '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+    'ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
     'test password!',
     (error: Error, signature: string) => {}
 );
 
 // $ExpectType Promise<string>
-personal.ecRecover('Hello world', '0x30755ed65396facf86c53e6217c52b4daebe72aa');
+personal.ecRecover('Hello world', 'ds30755ed65396facf86c53e6217c52b4daebe72aa');
 // $ExpectType Promise<string>
-personal.ecRecover('Hello world', '0x30755ed65396facf86c53e6217c52b4daebe72aa', (error: Error, address: string) => {});
+personal.ecRecover('Hello world', 'ds30755ed65396facf86c53e6217c52b4daebe72aa', (error: Error, address: string) => {});
 
 // $ExpectType Promise<RLPEncodedTransaction>
 personal.signTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
+        from: 'dsEB014f8c8B418Db6b45774c326A0E64C78914dC0',
         gasPrice: '20000000000',
         gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: '1000000000000000000',
         data: ''
     },
@@ -60,10 +60,10 @@ personal.signTransaction(
 // $ExpectType Promise<RLPEncodedTransaction>
 personal.signTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
+        from: 'dsEB014f8c8B418Db6b45774c326A0E64C78914dC0',
         gasPrice: '20000000000',
         gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: '1000000000000000000',
         data: ''
     },
@@ -74,10 +74,10 @@ personal.signTransaction(
 // $ExpectType Promise<string>
 personal.sendTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
+        from: 'dsEB014f8c8B418Db6b45774c326A0E64C78914dC0',
         gasPrice: '20000000000',
         gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: '1000000000000000000',
         data: ''
     },
@@ -87,10 +87,10 @@ personal.sendTransaction(
 // $ExpectType Promise<string>
 personal.sendTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
+        from: 'dsEB014f8c8B418Db6b45774c326A0E64C78914dC0',
         gasPrice: '20000000000',
         gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
+        to: 'ds3535353535353535353535353535353535353535',
         value: '1000000000000000000',
         data: ''
     },
@@ -99,14 +99,14 @@ personal.sendTransaction(
 );
 
 // $ExpectType Promise<boolean>
-personal.unlockAccount('0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', 'test password!', 600);
+personal.unlockAccount('ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', 'test password!', 600);
 // $ExpectType Promise<boolean>
-personal.unlockAccount('0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', 'test password!', 600, (error: Error) => {});
+personal.unlockAccount('ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', 'test password!', 600, (error: Error) => {});
 
 // $ExpectType Promise<boolean>
-personal.lockAccount('0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe');
+personal.lockAccount('ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe');
 // $ExpectType Promise<boolean>
-personal.lockAccount('0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', (error: Error, sucess: boolean) => {});
+personal.lockAccount('ds11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', (error: Error, sucess: boolean) => {});
 
 // $ExpectType Promise<string[]>
 personal.getAccounts();

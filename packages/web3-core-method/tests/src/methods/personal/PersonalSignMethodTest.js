@@ -28,30 +28,30 @@ describe('PersonalSignMethodTest', () => {
     });
 
     it('beforeExecution should call inputSignFormatter and inputAddressFormatter', () => {
-        method.parameters = ['sign', '0x0'];
+        method.parameters = ['sign', 'ds0'];
 
         formatters.inputSignFormatter.mockReturnValueOnce('signed');
 
-        formatters.inputAddressFormatter.mockReturnValueOnce('0x00');
+        formatters.inputAddressFormatter.mockReturnValueOnce('ds00');
 
         method.beforeExecution();
 
         expect(method.parameters[0]).toEqual('signed');
 
-        expect(method.parameters[1]).toEqual('0x00');
+        expect(method.parameters[1]).toEqual('ds00');
 
         expect(formatters.inputSignFormatter).toHaveBeenCalledWith('sign');
 
-        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('ds0');
     });
 
     it('calls beforeExecution with a callback instead of the optional paramter and it calls the inputSignFormatter and inputAddressFormatter', () => {
         const callback = jest.fn();
-        method.parameters = ['sign', '0x0', callback];
+        method.parameters = ['sign', 'ds0', callback];
 
         formatters.inputSignFormatter.mockReturnValueOnce('signed');
 
-        formatters.inputAddressFormatter.mockReturnValueOnce('0x00');
+        formatters.inputAddressFormatter.mockReturnValueOnce('ds00');
 
         method.beforeExecution({defaultBlock: 'latest'});
 
@@ -59,12 +59,12 @@ describe('PersonalSignMethodTest', () => {
 
         expect(method.parameters[0]).toEqual('signed');
 
-        expect(method.parameters[1]).toEqual('0x00');
+        expect(method.parameters[1]).toEqual('ds00');
 
         expect(method.parameters[2]).toEqual(undefined);
 
         expect(formatters.inputSignFormatter).toHaveBeenCalledWith('sign');
 
-        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('0x0');
+        expect(formatters.inputAddressFormatter).toHaveBeenCalledWith('ds0');
     });
 });

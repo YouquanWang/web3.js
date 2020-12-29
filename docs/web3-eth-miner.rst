@@ -96,7 +96,7 @@ Example
 
 .. code-block:: javascript
 
-    miner.setGasPrice("0x4a817c800").then(console.log);
+    miner.setGasPrice("ds4a817c800").then(console.log);
     > true
 
     miner.setGasPrice(20000000000).then(console.log);
@@ -140,7 +140,7 @@ Example
 
 .. code-block:: javascript
 
-    miner.setEtherBase("0x3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc").then(console.log);
+    miner.setEtherBase("ds3d80b31a78c30fc628f20b2c89d7ddbf6e53cedc").then(console.log);
     > true
 
 ------------------------------------------------------------------------------
@@ -180,7 +180,7 @@ Example
 
 .. code-block:: javascript
 
-    miner.startMining('0x1').then(console.log);
+    miner.startMining('ds1').then(console.log);
     > true
 
     miner.startMining(1).then(console.log);

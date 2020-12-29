@@ -42,7 +42,7 @@ Example
 
     contract Test {
         uint a;
-        address d = 0x12345678901234567890123456789012;
+        address d = ds12345678901234567890123456789012;
 
         function Test(uint testInt)  { a = testInt;}
 

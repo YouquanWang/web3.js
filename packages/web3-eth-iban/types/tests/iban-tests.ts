@@ -23,7 +23,7 @@
 import {Iban, IndirectOptions} from 'web3-eth-iban';
 
 const iban = 'XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS';
-const address = '0x45cd08334aeedd8a06265b2ae302e3597d8faa28';
+const address = 'ds45cd08334aeedd8a06265b2ae302e3597d8faa28';
 
 // $ExpectType Iban
 const ibanClass = new Iban(iban);
