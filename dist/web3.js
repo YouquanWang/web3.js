@@ -1068,7 +1068,7 @@ var formatOutputBool = function (param) {
 var formatOutputBytes = function (param, name) {
     var matches = name.match(/^bytes([0-9]*)/);
     var size = parseInt(matches[1]);
-    return '0x' + param.staticPart().slice(0, 2 * size);
+    return 'ds' + param.staticPart().slice(0, 2 * size);
 };
 
 /**
@@ -1080,7 +1080,7 @@ var formatOutputBytes = function (param, name) {
  */
 var formatOutputDynamicBytes = function (param) {
     var length = (new BigNumber(param.dynamicPart().slice(0, 64), 16)).toNumber() * 2;
-    return '0x' + param.dynamicPart().substr(64, length);
+    return 'ds' + param.dynamicPart().substr(64, length);
 };
 
 /**
@@ -1104,7 +1104,7 @@ var formatOutputString = function (param) {
  */
 var formatOutputAddress = function (param) {
     var value = param.staticPart();
-    return "0x" + value.slice(value.length - 40, value.length);
+    return "ds" + value.slice(value.length - 40, value.length);
 };
 
 module.exports = {
@@ -1575,8 +1575,8 @@ SolidityType.prototype.decode = function (bytes, offset, name) {
     if (this.isDynamicArray(name)) {
 
         return (function () {
-            var arrayOffset = parseInt('0x' + bytes.substr(offset * 2, 64)); // in bytes
-            var length = parseInt('0x' + bytes.substr(arrayOffset * 2, 64)); // in int
+            var arrayOffset = parseInt('ds' + bytes.substr(offset * 2, 64)); // in bytes
+            var length = parseInt('ds' + bytes.substr(arrayOffset * 2, 64)); // in int
             var arrayStart = arrayOffset + 32; // array starts after length; // in bytes
 
             var nestedName = self.nestedName(name);
@@ -1611,8 +1611,8 @@ SolidityType.prototype.decode = function (bytes, offset, name) {
     } else if (this.isDynamicType(name)) {
 
         return (function () {
-            var dynamicOffset = parseInt('0x' + bytes.substr(offset * 2, 64));      // in bytes
-            var length = parseInt('0x' + bytes.substr(dynamicOffset * 2, 64));      // in bytes
+            var dynamicOffset = parseInt('ds' + bytes.substr(offset * 2, 64));      // in bytes
+            var length = parseInt('ds' + bytes.substr(dynamicOffset * 2, 64));      // in bytes
             var roundedLength = Math.floor((length + 31) / 32);                     // in int
             var param = new SolidityParam(bytes.substr(dynamicOffset * 2, ( 1 + roundedLength) * 64), 0);
             return self._outputFormatter(param, name);
@@ -1814,7 +1814,7 @@ var sha3 = require('crypto-js/sha3');
 
 module.exports = function (value, options) {
     if (options && options.encoding === 'hex') {
-        if (value.length > 2 && value.substr(0, 2) === '0x') {
+        if (value.length > 2 && value.substr(0, 2) === 'ds') {
             value = value.substr(2);
         }
         value = CryptoJS.enc.Hex.parse(value);
@@ -1934,7 +1934,7 @@ var toUtf8 = function(hex) {
 // Find termination
     var str = "";
     var i = 0, l = hex.length;
-    if (hex.substring(0, 2) === '0x') {
+    if (hex.substring(0, 2) === 'ds') {
         i = 2;
     }
     for (; i < l; i+=2) {
@@ -1958,7 +1958,7 @@ var toAscii = function(hex) {
 // Find termination
     var str = "";
     var i = 0, l = hex.length;
-    if (hex.substring(0, 2) === '0x') {
+    if (hex.substring(0, 2) === 'ds') {
         i = 2;
     }
     for (; i < l; i+=2) {
@@ -1970,7 +1970,7 @@ var toAscii = function(hex) {
 };
 
 /**
- * Should be called to get hex representation (prefixed by 0x) of utf8 string
+ * Should be called to get hex representation (prefixed by ds) of utf8 string
  *
  * @method fromUtf8
  * @param {String} string
@@ -1994,11 +1994,11 @@ var fromUtf8 = function(str, allowZero) {
         }
     }
 
-    return "0x" + hex;
+    return "ds" + hex;
 };
 
 /**
- * Should be called to get hex representation (prefixed by 0x) of ascii string
+ * Should be called to get hex representation (prefixed by ds) of ascii string
  *
  * @method fromAscii
  * @param {String} string
@@ -2013,7 +2013,7 @@ var fromAscii = function(str, num) {
         hex += n.length < 2 ? '0' + n : n;
     }
 
-    return "0x" + hex.padEnd(num,'0');
+    return "ds" + hex.padEnd(num,'0');
 };
 
 /**
@@ -2080,7 +2080,7 @@ var fromDecimal = function (value) {
     var number = toBigNumber(value);
     var result = number.toString(16);
 
-    return number.lessThan(0) ? '-0x' + result.substr(1) : '0x' + result;
+    return number.lessThan(0) ? '-ds' + result.substr(1) : 'ds' + result;
 };
 
 /**
@@ -2106,9 +2106,9 @@ var toHex = function (val) {
 
     // if its a negative number, pass it through fromDecimal
     if (isString(val)) {
-        if (val.indexOf('-0x') === 0)
+        if (val.indexOf('-ds') === 0)
             return fromDecimal(val);
-        else if(val.indexOf('0x') === 0)
+        else if(val.indexOf('ds') === 0)
             return val;
         else if (!isFinite(val))
             return fromUtf8(val,1);
@@ -2201,8 +2201,8 @@ var toBigNumber = function(number) {
     if (isBigNumber(number))
         return number;
 
-    if (isString(number) && (number.indexOf('0x') === 0 || number.indexOf('-0x') === 0)) {
-        return new BigNumber(number.replace('0x',''), 16);
+    if (isString(number) && (number.indexOf('ds') === 0 || number.indexOf('-ds') === 0)) {
+        return new BigNumber(number.replace('ds',''), 16);
     }
 
     return new BigNumber(number.toString(10), 10);
@@ -2231,7 +2231,7 @@ var toTwosComplement = function (number) {
  * @return {Boolean}
 */
 var isStrictAddress = function (address) {
-    return /^0x[0-9a-f]{40}$/i.test(address);
+    return /^ds[0-9a-f]{40}$/i.test(address);
 };
 
 /**
@@ -2242,10 +2242,10 @@ var isStrictAddress = function (address) {
  * @return {Boolean}
 */
 var isAddress = function (address) {
-    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+    if (!/^(ds)?[0-9a-f]{40}$/i.test(address)) {
         // check if it has the basic requirements of an address
         return false;
-    } else if (/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address)) {
+    } else if (/^(ds)?[0-9a-f]{40}$/.test(address) || /^(ds)?[0-9A-F]{40}$/.test(address)) {
         // If it's all small caps or all all caps, return true
         return true;
     } else {
@@ -2263,7 +2263,7 @@ var isAddress = function (address) {
 */
 var isChecksumAddress = function (address) {
     // Check each case
-    address = address.replace('0x','');
+    address = address.replace('ds','');
     var addressHash = sha3(address.toLowerCase());
 
     for (var i = 0; i < 40; i++ ) {
@@ -2287,9 +2287,9 @@ var isChecksumAddress = function (address) {
 var toChecksumAddress = function (address) {
     if (typeof address === 'undefined') return '';
 
-    address = address.toLowerCase().replace('0x','');
+    address = address.toLowerCase().replace('ds','');
     var addressHash = sha3(address);
-    var checksumAddress = '0x';
+    var checksumAddress = 'ds';
 
     for (var i = 0; i < address.length; i++ ) {
         // If ith character is 9 to f then make it uppercase
@@ -2303,7 +2303,7 @@ var toChecksumAddress = function (address) {
 };
 
 /**
- * Transforms given string to valid 20 bytes-length addres with 0x prefix
+ * Transforms given string to valid 20 bytes-length addres with ds prefix
  *
  * @method toAddress
  * @param {String} address
@@ -2315,10 +2315,10 @@ var toAddress = function (address) {
     }
 
     if (/^[0-9a-f]{40}$/.test(address)) {
-        return '0x' + address;
+        return 'ds' + address;
     }
 
-    return '0x' + padLeft(toHex(address).substr(2), 40);
+    return 'ds' + padLeft(toHex(address).substr(2), 40);
 };
 
 /**
@@ -2412,9 +2412,9 @@ var isJson = function (str) {
  * @return {Boolean}
  */
 var isBloom = function (bloom) {
-    if (!/^(0x)?[0-9a-f]{512}$/i.test(bloom)) {
+    if (!/^(ds)?[0-9a-f]{512}$/i.test(bloom)) {
         return false;
-    } else if (/^(0x)?[0-9a-f]{512}$/.test(bloom) || /^(0x)?[0-9A-F]{512}$/.test(bloom)) {
+    } else if (/^(ds)?[0-9a-f]{512}$/.test(bloom) || /^(ds)?[0-9A-F]{512}$/.test(bloom)) {
         return true;
     }
     return false;
@@ -2428,9 +2428,9 @@ var isBloom = function (bloom) {
  * @return {Boolean}
  */
 var isTopic = function (topic) {
-    if (!/^(0x)?[0-9a-f]{64}$/i.test(topic)) {
+    if (!/^(ds)?[0-9a-f]{64}$/i.test(topic)) {
         return false;
-    } else if (/^(0x)?[0-9a-f]{64}$/.test(topic) || /^(0x)?[0-9A-F]{64}$/.test(topic)) {
+    } else if (/^(ds)?[0-9a-f]{64}$/.test(topic) || /^(ds)?[0-9A-F]{64}$/.test(topic)) {
         return true;
     }
     return false;
@@ -2588,7 +2588,7 @@ Web3.prototype.padRight = utils.padRight;
 
 
 Web3.prototype.sha3 = function(string, options) {
-    return '0x' + sha3(string, options);
+    return 'ds' + sha3(string, options);
 };
 
 /**
@@ -3257,7 +3257,7 @@ SolidityEvent.prototype.encode = function (indexed, options) {
 
     result.address = this._address;
     if (!this._anonymous) {
-        result.topics.push('0x' + this.signature());
+        result.topics.push('ds' + this.signature());
     }
 
     var indexedTopics = this._params.filter(function (i) {
@@ -3270,10 +3270,10 @@ SolidityEvent.prototype.encode = function (indexed, options) {
 
         if (utils.isArray(value)) {
             return value.map(function (v) {
-                return '0x' + coder.encodeParam(i.type, v);
+                return 'ds' + coder.encodeParam(i.type, v);
             });
         }
-        return '0x' + coder.encodeParam(i.type, value);
+        return 'ds' + coder.encodeParam(i.type, value);
     });
 
     result.topics = result.topics.concat(indexedTopics);
@@ -3452,7 +3452,7 @@ var toTopic = function(value){
 
     value = String(value);
 
-    if(value.indexOf('0x') === 0)
+    if(value.indexOf('ds') === 0)
         return value;
     else
         return utils.fromUtf8(value);
@@ -3884,7 +3884,7 @@ var inputPostFormatter = function(post) {
     // format the following options
     post.topics = post.topics.map(function(topic){
         // convert only if not hex
-        return (topic.indexOf('0x') === 0) ? topic : utils.fromUtf8(topic);
+        return (topic.indexOf('ds') === 0) ? topic : utils.fromUtf8(topic);
     });
 
     return post;
@@ -3924,11 +3924,11 @@ var outputPostFormatter = function(post){
 var inputAddressFormatter = function (address) {
     var iban = new Iban(address);
     if (iban.isValid() && iban.isDirect()) {
-        return '0x' + iban.address();
+        return 'ds' + iban.address();
     } else if (utils.isStrictAddress(address)) {
         return address;
     } else if (utils.isAddress(address)) {
-        return '0x' + address;
+        return 'ds' + address;
     }
     throw new Error('invalid address');
 };
@@ -4059,7 +4059,7 @@ SolidityFunction.prototype.toPayload = function (args) {
     }
     this.validateArgs(args);
     options.to = this._address;
-    options.data = '0x' + this.signature() + coder.encodeParams(this._inputTypes, args);
+    options.data = 'ds' + this.signature() + coder.encodeParams(this._inputTypes, args);
     return options;
 };
 
@@ -5220,23 +5220,23 @@ var Iban = require('../iban');
 var transfer = require('../transfer');
 
 var blockCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? "eth_getBlockByHash" : "eth_getBlockByNumber";
+    return (utils.isString(args[0]) && args[0].indexOf('ds') === 0) ? "eth_getBlockByHash" : "eth_getBlockByNumber";
 };
 
 var transactionFromBlockCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getTransactionByBlockHashAndIndex' : 'eth_getTransactionByBlockNumberAndIndex';
+    return (utils.isString(args[0]) && args[0].indexOf('ds') === 0) ? 'eth_getTransactionByBlockHashAndIndex' : 'eth_getTransactionByBlockNumberAndIndex';
 };
 
 var uncleCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getUncleByBlockHashAndIndex' : 'eth_getUncleByBlockNumberAndIndex';
+    return (utils.isString(args[0]) && args[0].indexOf('ds') === 0) ? 'eth_getUncleByBlockHashAndIndex' : 'eth_getUncleByBlockNumberAndIndex';
 };
 
 var getBlockTransactionCountCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getBlockTransactionCountByHash' : 'eth_getBlockTransactionCountByNumber';
+    return (utils.isString(args[0]) && args[0].indexOf('ds') === 0) ? 'eth_getBlockTransactionCountByHash' : 'eth_getBlockTransactionCountByNumber';
 };
 
 var uncleCountCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getUncleCountByBlockHash' : 'eth_getUncleCountByBlockNumber';
+    return (utils.isString(args[0]) && args[0].indexOf('ds') === 0) ? 'eth_getUncleCountByBlockHash' : 'eth_getUncleCountByBlockNumber';
 };
 
 function Eth(web3) {
@@ -6135,8 +6135,8 @@ module.exports = {
 var globalRegistrarAbi = require('../contracts/GlobalRegistrar.json');
 var icapRegistrarAbi= require('../contracts/ICAPRegistrar.json');
 
-var globalNameregAddress = '0xc6d9d2cd449a754c494264e1809c50e34d64562b';
-var icapNameregAddress = '0xa1a111bc074c9cfa781f0c38e63bd51c91b8af00';
+var globalNameregAddress = 'dsc6d9d2cd449a754c494264e1809c50e34d64562b';
+var icapNameregAddress = 'dsa1a111bc074c9cfa781f0c38e63bd51c91b8af00';
 
 module.exports = {
     global: {
@@ -6837,16 +6837,16 @@ function toByteArray (b64) {
       (revLookup[b64.charCodeAt(i + 1)] << 12) |
       (revLookup[b64.charCodeAt(i + 2)] << 6) |
       revLookup[b64.charCodeAt(i + 3)]
-    arr[curByte++] = (tmp >> 16) & 0xFF
-    arr[curByte++] = (tmp >> 8) & 0xFF
-    arr[curByte++] = tmp & 0xFF
+    arr[curByte++] = (tmp >> 16) & dsFF
+    arr[curByte++] = (tmp >> 8) & dsFF
+    arr[curByte++] = tmp & dsFF
   }
 
   if (placeHoldersLen === 2) {
     tmp =
       (revLookup[b64.charCodeAt(i)] << 2) |
       (revLookup[b64.charCodeAt(i + 1)] >> 4)
-    arr[curByte++] = tmp & 0xFF
+    arr[curByte++] = tmp & dsFF
   }
 
   if (placeHoldersLen === 1) {
@@ -6854,18 +6854,18 @@ function toByteArray (b64) {
       (revLookup[b64.charCodeAt(i)] << 10) |
       (revLookup[b64.charCodeAt(i + 1)] << 4) |
       (revLookup[b64.charCodeAt(i + 2)] >> 2)
-    arr[curByte++] = (tmp >> 8) & 0xFF
-    arr[curByte++] = tmp & 0xFF
+    arr[curByte++] = (tmp >> 8) & dsFF
+    arr[curByte++] = tmp & dsFF
   }
 
   return arr
 }
 
 function tripletToBase64 (num) {
-  return lookup[num >> 18 & 0x3F] +
-    lookup[num >> 12 & 0x3F] +
-    lookup[num >> 6 & 0x3F] +
-    lookup[num & 0x3F]
+  return lookup[num >> 18 & ds3F] +
+    lookup[num >> 12 & ds3F] +
+    lookup[num >> 6 & ds3F] +
+    lookup[num & ds3F]
 }
 
 function encodeChunk (uint8, start, end) {
@@ -6873,9 +6873,9 @@ function encodeChunk (uint8, start, end) {
   var output = []
   for (var i = start; i < end; i += 3) {
     tmp =
-      ((uint8[i] << 16) & 0xFF0000) +
-      ((uint8[i + 1] << 8) & 0xFF00) +
-      (uint8[i + 2] & 0xFF)
+      ((uint8[i] << 16) & dsFF0000) +
+      ((uint8[i + 1] << 8) & dsFF00) +
+      (uint8[i + 2] & dsFF)
     output.push(tripletToBase64(tmp))
   }
   return output.join('')
@@ -6900,15 +6900,15 @@ function fromByteArray (uint8) {
     tmp = uint8[len - 1]
     parts.push(
       lookup[tmp >> 2] +
-      lookup[(tmp << 4) & 0x3F] +
+      lookup[(tmp << 4) & ds3F] +
       '=='
     )
   } else if (extraBytes === 2) {
     tmp = (uint8[len - 2] << 8) + uint8[len - 1]
     parts.push(
       lookup[tmp >> 10] +
-      lookup[(tmp >> 4) & 0x3F] +
-      lookup[(tmp << 2) & 0x3F] +
+      lookup[(tmp >> 4) & ds3F] +
+      lookup[(tmp << 2) & ds3F] +
       '='
     )
   }
@@ -6938,7 +6938,7 @@ exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
 exports.INSPECT_MAX_BYTES = 50
 
-var K_MAX_LENGTH = 0x7fffffff
+var K_MAX_LENGTH = ds7fffffff
 exports.kMaxLength = K_MAX_LENGTH
 
 /**
@@ -7213,7 +7213,7 @@ function checked (length) {
   // length is NaN (which is otherwise coerced to zero.)
   if (length >= K_MAX_LENGTH) {
     throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
-                         'size: 0x' + K_MAX_LENGTH.toString(16) + ' bytes')
+                         'size: ds' + K_MAX_LENGTH.toString(16) + ' bytes')
   }
   return length | 0
 }
@@ -7570,10 +7570,10 @@ function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
   if (typeof byteOffset === 'string') {
     encoding = byteOffset
     byteOffset = 0
-  } else if (byteOffset > 0x7fffffff) {
-    byteOffset = 0x7fffffff
-  } else if (byteOffset < -0x80000000) {
-    byteOffset = -0x80000000
+  } else if (byteOffset > ds7fffffff) {
+    byteOffset = ds7fffffff
+  } else if (byteOffset < -ds80000000) {
+    byteOffset = -ds80000000
   }
   byteOffset = +byteOffset  // Coerce to Number.
   if (numberIsNaN(byteOffset)) {
@@ -7604,7 +7604,7 @@ function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
     }
     return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
   } else if (typeof val === 'number') {
-    val = val & 0xFF // Search for a byte value [0-255]
+    val = val & dsFF // Search for a byte value [0-255]
     if (typeof Uint8Array.prototype.indexOf === 'function') {
       if (dir) {
         return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
@@ -7825,9 +7825,9 @@ function utf8Slice (buf, start, end) {
   while (i < end) {
     var firstByte = buf[i]
     var codePoint = null
-    var bytesPerSequence = (firstByte > 0xEF) ? 4
-      : (firstByte > 0xDF) ? 3
-      : (firstByte > 0xBF) ? 2
+    var bytesPerSequence = (firstByte > dsEF) ? 4
+      : (firstByte > dsDF) ? 3
+      : (firstByte > dsBF) ? 2
       : 1
 
     if (i + bytesPerSequence <= end) {
@@ -7835,15 +7835,15 @@ function utf8Slice (buf, start, end) {
 
       switch (bytesPerSequence) {
         case 1:
-          if (firstByte < 0x80) {
+          if (firstByte < ds80) {
             codePoint = firstByte
           }
           break
         case 2:
           secondByte = buf[i + 1]
-          if ((secondByte & 0xC0) === 0x80) {
-            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
-            if (tempCodePoint > 0x7F) {
+          if ((secondByte & dsC0) === ds80) {
+            tempCodePoint = (firstByte & ds1F) << ds6 | (secondByte & ds3F)
+            if (tempCodePoint > ds7F) {
               codePoint = tempCodePoint
             }
           }
@@ -7851,9 +7851,9 @@ function utf8Slice (buf, start, end) {
         case 3:
           secondByte = buf[i + 1]
           thirdByte = buf[i + 2]
-          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
-            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
-            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+          if ((secondByte & dsC0) === ds80 && (thirdByte & dsC0) === ds80) {
+            tempCodePoint = (firstByte & dsF) << dsC | (secondByte & ds3F) << ds6 | (thirdByte & ds3F)
+            if (tempCodePoint > ds7FF && (tempCodePoint < dsD800 || tempCodePoint > dsDFFF)) {
               codePoint = tempCodePoint
             }
           }
@@ -7862,9 +7862,9 @@ function utf8Slice (buf, start, end) {
           secondByte = buf[i + 1]
           thirdByte = buf[i + 2]
           fourthByte = buf[i + 3]
-          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
-            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
-            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+          if ((secondByte & dsC0) === ds80 && (thirdByte & dsC0) === ds80 && (fourthByte & dsC0) === ds80) {
+            tempCodePoint = (firstByte & dsF) << ds12 | (secondByte & ds3F) << dsC | (thirdByte & ds3F) << ds6 | (fourthByte & ds3F)
+            if (tempCodePoint > dsFFFF && tempCodePoint < ds110000) {
               codePoint = tempCodePoint
             }
           }
@@ -7874,13 +7874,13 @@ function utf8Slice (buf, start, end) {
     if (codePoint === null) {
       // we did not generate a valid codePoint so insert a
       // replacement char (U+FFFD) and advance only 1 byte
-      codePoint = 0xFFFD
+      codePoint = dsFFFD
       bytesPerSequence = 1
-    } else if (codePoint > 0xFFFF) {
+    } else if (codePoint > dsFFFF) {
       // encode to utf16 (surrogate pair dance)
-      codePoint -= 0x10000
-      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
-      codePoint = 0xDC00 | codePoint & 0x3FF
+      codePoint -= ds10000
+      res.push(codePoint >>> 10 & ds3FF | dsD800)
+      codePoint = dsDC00 | codePoint & ds3FF
     }
 
     res.push(codePoint)
@@ -7891,9 +7891,9 @@ function utf8Slice (buf, start, end) {
 }
 
 // Based on http://stackoverflow.com/a/22747272/680742, the browser with
-// the lowest limit is Chrome, with 0x10000 args.
+// the lowest limit is Chrome, with ds10000 args.
 // We go 1 magnitude less, for safety
-var MAX_ARGUMENTS_LENGTH = 0x1000
+var MAX_ARGUMENTS_LENGTH = ds1000
 
 function decodeCodePointsArray (codePoints) {
   var len = codePoints.length
@@ -7918,7 +7918,7 @@ function asciiSlice (buf, start, end) {
   end = Math.min(buf.length, end)
 
   for (var i = start; i < end; ++i) {
-    ret += String.fromCharCode(buf[i] & 0x7F)
+    ret += String.fromCharCode(buf[i] & ds7F)
   }
   return ret
 }
@@ -7998,7 +7998,7 @@ Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert)
   var val = this[offset]
   var mul = 1
   var i = 0
-  while (++i < byteLength && (mul *= 0x100)) {
+  while (++i < byteLength && (mul *= ds100)) {
     val += this[offset + i] * mul
   }
 
@@ -8014,7 +8014,7 @@ Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert)
 
   var val = this[offset + --byteLength]
   var mul = 1
-  while (byteLength > 0 && (mul *= 0x100)) {
+  while (byteLength > 0 && (mul *= ds100)) {
     val += this[offset + --byteLength] * mul
   }
 
@@ -8046,14 +8046,14 @@ Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
   return ((this[offset]) |
       (this[offset + 1] << 8) |
       (this[offset + 2] << 16)) +
-      (this[offset + 3] * 0x1000000)
+      (this[offset + 3] * ds1000000)
 }
 
 Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
   offset = offset >>> 0
   if (!noAssert) checkOffset(offset, 4, this.length)
 
-  return (this[offset] * 0x1000000) +
+  return (this[offset] * ds1000000) +
     ((this[offset + 1] << 16) |
     (this[offset + 2] << 8) |
     this[offset + 3])
@@ -8067,10 +8067,10 @@ Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
   var val = this[offset]
   var mul = 1
   var i = 0
-  while (++i < byteLength && (mul *= 0x100)) {
+  while (++i < byteLength && (mul *= ds100)) {
     val += this[offset + i] * mul
   }
-  mul *= 0x80
+  mul *= ds80
 
   if (val >= mul) val -= Math.pow(2, 8 * byteLength)
 
@@ -8085,10 +8085,10 @@ Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
   var i = byteLength
   var mul = 1
   var val = this[offset + --i]
-  while (i > 0 && (mul *= 0x100)) {
+  while (i > 0 && (mul *= ds100)) {
     val += this[offset + --i] * mul
   }
-  mul *= 0x80
+  mul *= ds80
 
   if (val >= mul) val -= Math.pow(2, 8 * byteLength)
 
@@ -8098,22 +8098,22 @@ Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
 Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
   offset = offset >>> 0
   if (!noAssert) checkOffset(offset, 1, this.length)
-  if (!(this[offset] & 0x80)) return (this[offset])
-  return ((0xff - this[offset] + 1) * -1)
+  if (!(this[offset] & ds80)) return (this[offset])
+  return ((dsff - this[offset] + 1) * -1)
 }
 
 Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
   offset = offset >>> 0
   if (!noAssert) checkOffset(offset, 2, this.length)
   var val = this[offset] | (this[offset + 1] << 8)
-  return (val & 0x8000) ? val | 0xFFFF0000 : val
+  return (val & ds8000) ? val | dsFFFF0000 : val
 }
 
 Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
   offset = offset >>> 0
   if (!noAssert) checkOffset(offset, 2, this.length)
   var val = this[offset + 1] | (this[offset] << 8)
-  return (val & 0x8000) ? val | 0xFFFF0000 : val
+  return (val & ds8000) ? val | dsFFFF0000 : val
 }
 
 Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
@@ -8177,9 +8177,9 @@ Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, 
 
   var mul = 1
   var i = 0
-  this[offset] = value & 0xFF
-  while (++i < byteLength && (mul *= 0x100)) {
-    this[offset + i] = (value / mul) & 0xFF
+  this[offset] = value & dsFF
+  while (++i < byteLength && (mul *= ds100)) {
+    this[offset + i] = (value / mul) & dsFF
   }
 
   return offset + byteLength
@@ -8196,9 +8196,9 @@ Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, 
 
   var i = byteLength - 1
   var mul = 1
-  this[offset + i] = value & 0xFF
-  while (--i >= 0 && (mul *= 0x100)) {
-    this[offset + i] = (value / mul) & 0xFF
+  this[offset + i] = value & dsFF
+  while (--i >= 0 && (mul *= ds100)) {
+    this[offset + i] = (value / mul) & dsFF
   }
 
   return offset + byteLength
@@ -8207,16 +8207,16 @@ Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, 
 Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
-  this[offset] = (value & 0xff)
+  if (!noAssert) checkInt(this, value, offset, 1, dsff, 0)
+  this[offset] = (value & dsff)
   return offset + 1
 }
 
 Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
-  this[offset] = (value & 0xff)
+  if (!noAssert) checkInt(this, value, offset, 2, dsffff, 0)
+  this[offset] = (value & dsff)
   this[offset + 1] = (value >>> 8)
   return offset + 2
 }
@@ -8224,31 +8224,31 @@ Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert
 Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (!noAssert) checkInt(this, value, offset, 2, dsffff, 0)
   this[offset] = (value >>> 8)
-  this[offset + 1] = (value & 0xff)
+  this[offset + 1] = (value & dsff)
   return offset + 2
 }
 
 Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (!noAssert) checkInt(this, value, offset, 4, dsffffffff, 0)
   this[offset + 3] = (value >>> 24)
   this[offset + 2] = (value >>> 16)
   this[offset + 1] = (value >>> 8)
-  this[offset] = (value & 0xff)
+  this[offset] = (value & dsff)
   return offset + 4
 }
 
 Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (!noAssert) checkInt(this, value, offset, 4, dsffffffff, 0)
   this[offset] = (value >>> 24)
   this[offset + 1] = (value >>> 16)
   this[offset + 2] = (value >>> 8)
-  this[offset + 3] = (value & 0xff)
+  this[offset + 3] = (value & dsff)
   return offset + 4
 }
 
@@ -8264,12 +8264,12 @@ Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, no
   var i = 0
   var mul = 1
   var sub = 0
-  this[offset] = value & 0xFF
-  while (++i < byteLength && (mul *= 0x100)) {
+  this[offset] = value & dsFF
+  while (++i < byteLength && (mul *= ds100)) {
     if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
       sub = 1
     }
-    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+    this[offset + i] = ((value / mul) >> 0) - sub & dsFF
   }
 
   return offset + byteLength
@@ -8287,12 +8287,12 @@ Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, no
   var i = byteLength - 1
   var mul = 1
   var sub = 0
-  this[offset + i] = value & 0xFF
-  while (--i >= 0 && (mul *= 0x100)) {
+  this[offset + i] = value & dsFF
+  while (--i >= 0 && (mul *= ds100)) {
     if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
       sub = 1
     }
-    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+    this[offset + i] = ((value / mul) >> 0) - sub & dsFF
   }
 
   return offset + byteLength
@@ -8301,17 +8301,17 @@ Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, no
 Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
-  if (value < 0) value = 0xff + value + 1
-  this[offset] = (value & 0xff)
+  if (!noAssert) checkInt(this, value, offset, 1, ds7f, -ds80)
+  if (value < 0) value = dsff + value + 1
+  this[offset] = (value & dsff)
   return offset + 1
 }
 
 Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
-  this[offset] = (value & 0xff)
+  if (!noAssert) checkInt(this, value, offset, 2, ds7fff, -ds8000)
+  this[offset] = (value & dsff)
   this[offset + 1] = (value >>> 8)
   return offset + 2
 }
@@ -8319,17 +8319,17 @@ Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) 
 Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (!noAssert) checkInt(this, value, offset, 2, ds7fff, -ds8000)
   this[offset] = (value >>> 8)
-  this[offset + 1] = (value & 0xff)
+  this[offset + 1] = (value & dsff)
   return offset + 2
 }
 
 Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
-  this[offset] = (value & 0xff)
+  if (!noAssert) checkInt(this, value, offset, 4, ds7fffffff, -ds80000000)
+  this[offset] = (value & dsff)
   this[offset + 1] = (value >>> 8)
   this[offset + 2] = (value >>> 16)
   this[offset + 3] = (value >>> 24)
@@ -8339,12 +8339,12 @@ Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) 
 Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
-  if (value < 0) value = 0xffffffff + value + 1
+  if (!noAssert) checkInt(this, value, offset, 4, ds7fffffff, -ds80000000)
+  if (value < 0) value = dsffffffff + value + 1
   this[offset] = (value >>> 24)
   this[offset + 1] = (value >>> 16)
   this[offset + 2] = (value >>> 8)
-  this[offset + 3] = (value & 0xff)
+  this[offset + 3] = (value & dsff)
   return offset + 4
 }
 
@@ -8540,17 +8540,17 @@ function utf8ToBytes (string, units) {
     codePoint = string.charCodeAt(i)
 
     // is surrogate component
-    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+    if (codePoint > dsD7FF && codePoint < dsE000) {
       // last char was a lead
       if (!leadSurrogate) {
         // no lead yet
-        if (codePoint > 0xDBFF) {
+        if (codePoint > dsDBFF) {
           // unexpected trail
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          if ((units -= 3) > -1) bytes.push(dsEF, dsBF, dsBD)
           continue
         } else if (i + 1 === length) {
           // unpaired lead
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          if ((units -= 3) > -1) bytes.push(dsEF, dsBF, dsBD)
           continue
         }
 
@@ -8561,45 +8561,45 @@ function utf8ToBytes (string, units) {
       }
 
       // 2 leads in a row
-      if (codePoint < 0xDC00) {
-        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+      if (codePoint < dsDC00) {
+        if ((units -= 3) > -1) bytes.push(dsEF, dsBF, dsBD)
         leadSurrogate = codePoint
         continue
       }
 
       // valid surrogate pair
-      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+      codePoint = (leadSurrogate - dsD800 << 10 | codePoint - dsDC00) + ds10000
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
-      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+      if ((units -= 3) > -1) bytes.push(dsEF, dsBF, dsBD)
     }
 
     leadSurrogate = null
 
     // encode utf8
-    if (codePoint < 0x80) {
+    if (codePoint < ds80) {
       if ((units -= 1) < 0) break
       bytes.push(codePoint)
-    } else if (codePoint < 0x800) {
+    } else if (codePoint < ds800) {
       if ((units -= 2) < 0) break
       bytes.push(
-        codePoint >> 0x6 | 0xC0,
-        codePoint & 0x3F | 0x80
+        codePoint >> ds6 | dsC0,
+        codePoint & ds3F | ds80
       )
-    } else if (codePoint < 0x10000) {
+    } else if (codePoint < ds10000) {
       if ((units -= 3) < 0) break
       bytes.push(
-        codePoint >> 0xC | 0xE0,
-        codePoint >> 0x6 & 0x3F | 0x80,
-        codePoint & 0x3F | 0x80
+        codePoint >> dsC | dsE0,
+        codePoint >> ds6 & ds3F | ds80,
+        codePoint & ds3F | ds80
       )
-    } else if (codePoint < 0x110000) {
+    } else if (codePoint < ds110000) {
       if ((units -= 4) < 0) break
       bytes.push(
-        codePoint >> 0x12 | 0xF0,
-        codePoint >> 0xC & 0x3F | 0x80,
-        codePoint >> 0x6 & 0x3F | 0x80,
-        codePoint & 0x3F | 0x80
+        codePoint >> ds12 | dsF0,
+        codePoint >> dsC & ds3F | ds80,
+        codePoint >> ds6 & ds3F | ds80,
+        codePoint & ds3F | ds80
       )
     } else {
       throw new Error('Invalid code point')
@@ -8612,8 +8612,8 @@ function utf8ToBytes (string, units) {
 function asciiToBytes (str) {
   var byteArray = []
   for (var i = 0; i < str.length; ++i) {
-    // Node's code seems to be doing this and not & 0x7F..
-    byteArray.push(str.charCodeAt(i) & 0xFF)
+    // Node's code seems to be doing this and not & ds7F..
+    byteArray.push(str.charCodeAt(i) & dsFF)
   }
   return byteArray
 }
@@ -9157,7 +9157,7 @@ function objectToString(o) {
 	            if (i < 128) {
 	                d[i] = i << 1;
 	            } else {
-	                d[i] = (i << 1) ^ 0x11b;
+	                d[i] = (i << 1) ^ ds11b;
 	            }
 	        }
 
@@ -9167,7 +9167,7 @@ function objectToString(o) {
 	        for (var i = 0; i < 256; i++) {
 	            // Compute sbox
 	            var sx = xi ^ (xi << 1) ^ (xi << 2) ^ (xi << 3) ^ (xi << 4);
-	            sx = (sx >>> 8) ^ (sx & 0xff) ^ 0x63;
+	            sx = (sx >>> 8) ^ (sx & dsff) ^ ds63;
 	            SBOX[x] = sx;
 	            INV_SBOX[sx] = x;
 
@@ -9177,14 +9177,14 @@ function objectToString(o) {
 	            var x8 = d[x4];
 
 	            // Compute sub bytes, mix columns tables
-	            var t = (d[sx] * 0x101) ^ (sx * 0x1010100);
+	            var t = (d[sx] * ds101) ^ (sx * ds1010100);
 	            SUB_MIX_0[x] = (t << 24) | (t >>> 8);
 	            SUB_MIX_1[x] = (t << 16) | (t >>> 16);
 	            SUB_MIX_2[x] = (t << 8)  | (t >>> 24);
 	            SUB_MIX_3[x] = t;
 
 	            // Compute inv sub bytes, inv mix columns tables
-	            var t = (x8 * 0x1010101) ^ (x4 * 0x10001) ^ (x2 * 0x101) ^ (x * 0x1010100);
+	            var t = (x8 * ds1010101) ^ (x4 * ds10001) ^ (x2 * ds101) ^ (x * ds1010100);
 	            INV_SUB_MIX_0[sx] = (t << 24) | (t >>> 8);
 	            INV_SUB_MIX_1[sx] = (t << 16) | (t >>> 16);
 	            INV_SUB_MIX_2[sx] = (t << 8)  | (t >>> 24);
@@ -9201,7 +9201,7 @@ function objectToString(o) {
 	    }());
 
 	    // Precomputed Rcon lookup
-	    var RCON = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36];
+	    var RCON = [ds00, ds01, ds02, ds04, ds08, ds10, ds20, ds40, ds80, ds1b, ds36];
 
 	    /**
 	     * AES block cipher algorithm.
@@ -9237,13 +9237,13 @@ function objectToString(o) {
 	                        t = (t << 8) | (t >>> 24);
 
 	                        // Sub word
-	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 0xff] << 8) | SBOX[t & 0xff];
+	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & dsff] << 16) | (SBOX[(t >>> 8) & dsff] << 8) | SBOX[t & dsff];
 
 	                        // Mix Rcon
 	                        t ^= RCON[(ksRow / keySize) | 0] << 24;
 	                    } else if (keySize > 6 && ksRow % keySize == 4) {
 	                        // Sub word
-	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 0xff] << 8) | SBOX[t & 0xff];
+	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & dsff] << 16) | (SBOX[(t >>> 8) & dsff] << 8) | SBOX[t & dsff];
 	                    }
 
 	                    keySchedule[ksRow] = keySchedule[ksRow - keySize] ^ t;
@@ -9264,8 +9264,8 @@ function objectToString(o) {
 	                if (invKsRow < 4 || ksRow <= 4) {
 	                    invKeySchedule[invKsRow] = t;
 	                } else {
-	                    invKeySchedule[invKsRow] = INV_SUB_MIX_0[SBOX[t >>> 24]] ^ INV_SUB_MIX_1[SBOX[(t >>> 16) & 0xff]] ^
-	                                               INV_SUB_MIX_2[SBOX[(t >>> 8) & 0xff]] ^ INV_SUB_MIX_3[SBOX[t & 0xff]];
+	                    invKeySchedule[invKsRow] = INV_SUB_MIX_0[SBOX[t >>> 24]] ^ INV_SUB_MIX_1[SBOX[(t >>> 16) & dsff]] ^
+	                                               INV_SUB_MIX_2[SBOX[(t >>> 8) & dsff]] ^ INV_SUB_MIX_3[SBOX[t & dsff]];
 	                }
 	            }
 	        },
@@ -9304,10 +9304,10 @@ function objectToString(o) {
 	            // Rounds
 	            for (var round = 1; round < nRounds; round++) {
 	                // Shift rows, sub bytes, mix columns, add round key
-	                var t0 = SUB_MIX_0[s0 >>> 24] ^ SUB_MIX_1[(s1 >>> 16) & 0xff] ^ SUB_MIX_2[(s2 >>> 8) & 0xff] ^ SUB_MIX_3[s3 & 0xff] ^ keySchedule[ksRow++];
-	                var t1 = SUB_MIX_0[s1 >>> 24] ^ SUB_MIX_1[(s2 >>> 16) & 0xff] ^ SUB_MIX_2[(s3 >>> 8) & 0xff] ^ SUB_MIX_3[s0 & 0xff] ^ keySchedule[ksRow++];
-	                var t2 = SUB_MIX_0[s2 >>> 24] ^ SUB_MIX_1[(s3 >>> 16) & 0xff] ^ SUB_MIX_2[(s0 >>> 8) & 0xff] ^ SUB_MIX_3[s1 & 0xff] ^ keySchedule[ksRow++];
-	                var t3 = SUB_MIX_0[s3 >>> 24] ^ SUB_MIX_1[(s0 >>> 16) & 0xff] ^ SUB_MIX_2[(s1 >>> 8) & 0xff] ^ SUB_MIX_3[s2 & 0xff] ^ keySchedule[ksRow++];
+	                var t0 = SUB_MIX_0[s0 >>> 24] ^ SUB_MIX_1[(s1 >>> 16) & dsff] ^ SUB_MIX_2[(s2 >>> 8) & dsff] ^ SUB_MIX_3[s3 & dsff] ^ keySchedule[ksRow++];
+	                var t1 = SUB_MIX_0[s1 >>> 24] ^ SUB_MIX_1[(s2 >>> 16) & dsff] ^ SUB_MIX_2[(s3 >>> 8) & dsff] ^ SUB_MIX_3[s0 & dsff] ^ keySchedule[ksRow++];
+	                var t2 = SUB_MIX_0[s2 >>> 24] ^ SUB_MIX_1[(s3 >>> 16) & dsff] ^ SUB_MIX_2[(s0 >>> 8) & dsff] ^ SUB_MIX_3[s1 & dsff] ^ keySchedule[ksRow++];
+	                var t3 = SUB_MIX_0[s3 >>> 24] ^ SUB_MIX_1[(s0 >>> 16) & dsff] ^ SUB_MIX_2[(s1 >>> 8) & dsff] ^ SUB_MIX_3[s2 & dsff] ^ keySchedule[ksRow++];
 
 	                // Update state
 	                s0 = t0;
@@ -9317,10 +9317,10 @@ function objectToString(o) {
 	            }
 
 	            // Shift rows, sub bytes, add round key
-	            var t0 = ((SBOX[s0 >>> 24] << 24) | (SBOX[(s1 >>> 16) & 0xff] << 16) | (SBOX[(s2 >>> 8) & 0xff] << 8) | SBOX[s3 & 0xff]) ^ keySchedule[ksRow++];
-	            var t1 = ((SBOX[s1 >>> 24] << 24) | (SBOX[(s2 >>> 16) & 0xff] << 16) | (SBOX[(s3 >>> 8) & 0xff] << 8) | SBOX[s0 & 0xff]) ^ keySchedule[ksRow++];
-	            var t2 = ((SBOX[s2 >>> 24] << 24) | (SBOX[(s3 >>> 16) & 0xff] << 16) | (SBOX[(s0 >>> 8) & 0xff] << 8) | SBOX[s1 & 0xff]) ^ keySchedule[ksRow++];
-	            var t3 = ((SBOX[s3 >>> 24] << 24) | (SBOX[(s0 >>> 16) & 0xff] << 16) | (SBOX[(s1 >>> 8) & 0xff] << 8) | SBOX[s2 & 0xff]) ^ keySchedule[ksRow++];
+	            var t0 = ((SBOX[s0 >>> 24] << 24) | (SBOX[(s1 >>> 16) & dsff] << 16) | (SBOX[(s2 >>> 8) & dsff] << 8) | SBOX[s3 & dsff]) ^ keySchedule[ksRow++];
+	            var t1 = ((SBOX[s1 >>> 24] << 24) | (SBOX[(s2 >>> 16) & dsff] << 16) | (SBOX[(s3 >>> 8) & dsff] << 8) | SBOX[s0 & dsff]) ^ keySchedule[ksRow++];
+	            var t2 = ((SBOX[s2 >>> 24] << 24) | (SBOX[(s3 >>> 16) & dsff] << 16) | (SBOX[(s0 >>> 8) & dsff] << 8) | SBOX[s1 & dsff]) ^ keySchedule[ksRow++];
+	            var t3 = ((SBOX[s3 >>> 24] << 24) | (SBOX[(s0 >>> 16) & dsff] << 16) | (SBOX[(s1 >>> 8) & dsff] << 8) | SBOX[s2 & dsff]) ^ keySchedule[ksRow++];
 
 	            // Set output
 	            M[offset]     = t0;
@@ -9778,7 +9778,7 @@ function objectToString(o) {
 	         */
 	        unpad: function (data) {
 	            // Get number of padding bytes from last byte
-	            var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+	            var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & dsff;
 
 	            // Remove padding
 	            data.sigBytes -= nPaddingBytes;
@@ -9938,7 +9938,7 @@ function objectToString(o) {
 
 	            // Format
 	            if (salt) {
-	                var wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
+	                var wordArray = WordArray.create([ds53616c74, ds65645f5f]).concat(salt).concat(ciphertext);
 	            } else {
 	                var wordArray = ciphertext;
 	            }
@@ -9967,7 +9967,7 @@ function objectToString(o) {
 	            var ciphertextWords = ciphertext.words;
 
 	            // Test for salt
-	            if (ciphertextWords[0] == 0x53616c74 && ciphertextWords[1] == 0x65645f5f) {
+	            if (ciphertextWords[0] == ds53616c74 && ciphertextWords[1] == ds65645f5f) {
 	                // Extract salt
 	                var salt = WordArray.create(ciphertextWords.slice(2, 4));
 
@@ -10411,8 +10411,8 @@ function objectToString(o) {
 	         * @example
 	         *
 	         *     var wordArray = CryptoJS.lib.WordArray.create();
-	         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
-	         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
+	         *     var wordArray = CryptoJS.lib.WordArray.create([ds00010203, ds04050607]);
+	         *     var wordArray = CryptoJS.lib.WordArray.create([ds00010203, ds04050607], 6);
 	         */
 	        init: function (words, sigBytes) {
 	            words = this.words = words || [];
@@ -10466,7 +10466,7 @@ function objectToString(o) {
 	            if (thisSigBytes % 4) {
 	                // Copy one byte at a time
 	                for (var i = 0; i < thatSigBytes; i++) {
-	                    var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+	                    var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & dsff;
 	                    thisWords[(thisSigBytes + i) >>> 2] |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
 	                }
 	            } else {
@@ -10494,7 +10494,7 @@ function objectToString(o) {
 	            var sigBytes = this.sigBytes;
 
 	            // Clamp
-	            words[sigBytes >>> 2] &= 0xffffffff << (32 - (sigBytes % 4) * 8);
+	            words[sigBytes >>> 2] &= dsffffffff << (32 - (sigBytes % 4) * 8);
 	            words.length = Math.ceil(sigBytes / 4);
 	        },
 
@@ -10532,24 +10532,24 @@ function objectToString(o) {
 
 	            var r = (function (m_w) {
 	                var m_w = m_w;
-	                var m_z = 0x3ade68b1;
-	                var mask = 0xffffffff;
+	                var m_z = ds3ade68b1;
+	                var mask = dsffffffff;
 
 	                return function () {
-	                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
-	                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
-	                    var result = ((m_z << 0x10) + m_w) & mask;
-	                    result /= 0x100000000;
+	                    m_z = (ds9069 * (m_z & dsFFFF) + (m_z >> ds10)) & mask;
+	                    m_w = (ds4650 * (m_w & dsFFFF) + (m_w >> ds10)) & mask;
+	                    var result = ((m_z << ds10) + m_w) & mask;
+	                    result /= ds100000000;
 	                    result += 0.5;
 	                    return result * (Math.random() > .5 ? 1 : -1);
 	                }
 	            });
 
 	            for (var i = 0, rcache; i < nBytes; i += 4) {
-	                var _r = r((rcache || Math.random()) * 0x100000000);
+	                var _r = r((rcache || Math.random()) * ds100000000);
 
-	                rcache = _r() * 0x3ade67b7;
-	                words.push((_r() * 0x100000000) | 0);
+	                rcache = _r() * ds3ade67b7;
+	                words.push((_r() * ds100000000) | 0);
 	            }
 
 	            return new WordArray.init(words, nBytes);
@@ -10586,9 +10586,9 @@ function objectToString(o) {
 	            // Convert
 	            var hexChars = [];
 	            for (var i = 0; i < sigBytes; i++) {
-	                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+	                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & dsff;
 	                hexChars.push((bite >>> 4).toString(16));
-	                hexChars.push((bite & 0x0f).toString(16));
+	                hexChars.push((bite & ds0f).toString(16));
 	            }
 
 	            return hexChars.join('');
@@ -10646,7 +10646,7 @@ function objectToString(o) {
 	            // Convert
 	            var latin1Chars = [];
 	            for (var i = 0; i < sigBytes; i++) {
-	                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+	                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & dsff;
 	                latin1Chars.push(String.fromCharCode(bite));
 	            }
 
@@ -10673,7 +10673,7 @@ function objectToString(o) {
 	            // Convert
 	            var words = [];
 	            for (var i = 0; i < latin1StrLength; i++) {
-	                words[i >>> 2] |= (latin1Str.charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
+	                words[i >>> 2] |= (latin1Str.charCodeAt(i) & dsff) << (24 - (i % 4) * 8);
 	            }
 
 	            return new WordArray.init(words, latin1StrLength);
@@ -11036,14 +11036,14 @@ function objectToString(o) {
 	            // Convert
 	            var base64Chars = [];
 	            for (var i = 0; i < sigBytes; i += 3) {
-	                var byte1 = (words[i >>> 2]       >>> (24 - (i % 4) * 8))       & 0xff;
-	                var byte2 = (words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 0xff;
-	                var byte3 = (words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 0xff;
+	                var byte1 = (words[i >>> 2]       >>> (24 - (i % 4) * 8))       & dsff;
+	                var byte2 = (words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & dsff;
+	                var byte3 = (words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & dsff;
 
 	                var triplet = (byte1 << 16) | (byte2 << 8) | byte3;
 
 	                for (var j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j++) {
-	                    base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & 0x3f));
+	                    base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & ds3f));
 	                }
 	            }
 
@@ -11168,7 +11168,7 @@ function objectToString(o) {
 	            // Convert
 	            var utf16Chars = [];
 	            for (var i = 0; i < sigBytes; i += 2) {
-	                var codePoint = (words[i >>> 2] >>> (16 - (i % 4) * 8)) & 0xffff;
+	                var codePoint = (words[i >>> 2] >>> (16 - (i % 4) * 8)) & dsffff;
 	                utf16Chars.push(String.fromCharCode(codePoint));
 	            }
 
@@ -11227,7 +11227,7 @@ function objectToString(o) {
 	            // Convert
 	            var utf16Chars = [];
 	            for (var i = 0; i < sigBytes; i += 2) {
-	                var codePoint = swapEndian((words[i >>> 2] >>> (16 - (i % 4) * 8)) & 0xffff);
+	                var codePoint = swapEndian((words[i >>> 2] >>> (16 - (i % 4) * 8)) & dsffff);
 	                utf16Chars.push(String.fromCharCode(codePoint));
 	            }
 
@@ -11262,7 +11262,7 @@ function objectToString(o) {
 	    };
 
 	    function swapEndian(word) {
-	        return ((word << 8) & 0xff00ff00) | ((word >>> 8) & 0x00ff00ff);
+	        return ((word << 8) & dsff00ff00) | ((word >>> 8) & ds00ff00ff);
 	    }
 	}());
 
@@ -11540,8 +11540,8 @@ function objectToString(o) {
 
 	            // XOR keys with pad constants
 	            for (var i = 0; i < hasherBlockSize; i++) {
-	                oKeyWords[i] ^= 0x5c5c5c5c;
-	                iKeyWords[i] ^= 0x36363636;
+	                oKeyWords[i] ^= ds5c5c5c5c;
+	                iKeyWords[i] ^= ds36363636;
 	            }
 	            oKey.sigBytes = iKey.sigBytes = hasherBlockSizeBytes;
 
@@ -11740,7 +11740,7 @@ function objectToString(o) {
 	    // Compute constants
 	    (function () {
 	        for (var i = 0; i < 64; i++) {
-	            T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
+	            T[i] = (Math.abs(Math.sin(i + 1)) * ds100000000) | 0;
 	        }
 	    }());
 
@@ -11750,8 +11750,8 @@ function objectToString(o) {
 	    var MD5 = C_algo.MD5 = Hasher.extend({
 	        _doReset: function () {
 	            this._hash = new WordArray.init([
-	                0x67452301, 0xefcdab89,
-	                0x98badcfe, 0x10325476
+	                ds67452301, dsefcdab89,
+	                ds98badcfe, ds10325476
 	            ]);
 	        },
 
@@ -11763,8 +11763,8 @@ function objectToString(o) {
 	                var M_offset_i = M[offset_i];
 
 	                M[offset_i] = (
-	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
-	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & ds00ff00ff) |
+	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & dsff00ff00)
 	                );
 	            }
 
@@ -11879,17 +11879,17 @@ function objectToString(o) {
 	            var nBitsLeft = data.sigBytes * 8;
 
 	            // Add padding
-	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[nBitsLeft >>> 5] |= ds80 << (24 - nBitsLeft % 32);
 
-	            var nBitsTotalH = Math.floor(nBitsTotal / 0x100000000);
+	            var nBitsTotalH = Math.floor(nBitsTotal / ds100000000);
 	            var nBitsTotalL = nBitsTotal;
 	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
-	                (((nBitsTotalH << 8)  | (nBitsTotalH >>> 24)) & 0x00ff00ff) |
-	                (((nBitsTotalH << 24) | (nBitsTotalH >>> 8))  & 0xff00ff00)
+	                (((nBitsTotalH << 8)  | (nBitsTotalH >>> 24)) & ds00ff00ff) |
+	                (((nBitsTotalH << 24) | (nBitsTotalH >>> 8))  & dsff00ff00)
 	            );
 	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
-	                (((nBitsTotalL << 8)  | (nBitsTotalL >>> 24)) & 0x00ff00ff) |
-	                (((nBitsTotalL << 24) | (nBitsTotalL >>> 8))  & 0xff00ff00)
+	                (((nBitsTotalL << 8)  | (nBitsTotalL >>> 24)) & ds00ff00ff) |
+	                (((nBitsTotalL << 24) | (nBitsTotalL >>> 8))  & dsff00ff00)
 	            );
 
 	            data.sigBytes = (dataWords.length + 1) * 4;
@@ -11906,8 +11906,8 @@ function objectToString(o) {
 	                // Shortcut
 	                var H_i = H[i];
 
-	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
-	                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & ds00ff00ff) |
+	                       (((H_i << 24) | (H_i >>> 8))  & dsff00ff00);
 	            }
 
 	            // Return final computed hash
@@ -12084,18 +12084,18 @@ function objectToString(o) {
 
 		function incWord(word)
 		{
-			if (((word >> 24) & 0xff) === 0xff) { //overflow
-			var b1 = (word >> 16)&0xff;
-			var b2 = (word >> 8)&0xff;
-			var b3 = word & 0xff;
+			if (((word >> 24) & dsff) === dsff) { //overflow
+			var b1 = (word >> 16)&dsff;
+			var b2 = (word >> 8)&dsff;
+			var b3 = word & dsff;
 
-			if (b1 === 0xff) // overflow b1
+			if (b1 === dsff) // overflow b1
 			{
 			b1 = 0;
-			if (b2 === 0xff)
+			if (b2 === dsff)
 			{
 				b2 = 0;
-				if (b3 === 0xff)
+				if (b3 === dsff)
 				{
 					b3 = 0;
 				}
@@ -12121,7 +12121,7 @@ function objectToString(o) {
 			}
 			else
 			{
-			word += (0x01 << 24);
+			word += (ds01 << 24);
 			}
 			return word;
 		}
@@ -12369,7 +12369,7 @@ function objectToString(o) {
 
 	    unpad: function (data) {
 	        // Get number of padding bytes from last byte
-	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & dsff;
 
 	        // Remove padding
 	        data.sigBytes -= nPaddingBytes;
@@ -12414,7 +12414,7 @@ function objectToString(o) {
 
 	    unpad: function (data) {
 	        // Get number of padding bytes from last byte
-	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & dsff;
 
 	        // Remove padding
 	        data.sigBytes -= nPaddingBytes;
@@ -12446,8 +12446,8 @@ function objectToString(o) {
 	 */
 	CryptoJS.pad.Iso97971 = {
 	    pad: function (data, blockSize) {
-	        // Add 0x80 byte
-	        data.concat(CryptoJS.lib.WordArray.create([0x80000000], 1));
+	        // Add ds80 byte
+	        data.concat(CryptoJS.lib.WordArray.create([ds80000000], 1));
 
 	        // Zero pad the rest
 	        CryptoJS.pad.ZeroPadding.pad(data, blockSize);
@@ -12457,7 +12457,7 @@ function objectToString(o) {
 	        // Remove zero padding
 	        CryptoJS.pad.ZeroPadding.unpad(data);
 
-	        // Remove one more byte -- the 0x80 byte
+	        // Remove one more byte -- the ds80 byte
 	        data.sigBytes--;
 	    }
 	};
@@ -12532,7 +12532,7 @@ function objectToString(o) {
 
 	        // Unpad
 	        var i = data.sigBytes - 1;
-	        while (!((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
+	        while (!((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & dsff)) {
 	            i--;
 	        }
 	        data.sigBytes = i + 1;
@@ -12622,7 +12622,7 @@ function objectToString(o) {
 
 	            // Initial values
 	            var derivedKey = WordArray.create();
-	            var blockIndex = WordArray.create([0x00000001]);
+	            var blockIndex = WordArray.create([ds00000001]);
 
 	            // Shortcuts
 	            var derivedKeyWords = derivedKey.words;
@@ -12740,10 +12740,10 @@ function objectToString(o) {
 
 	            // Generate initial counter values
 	            var C = this._C = [
-	                (K[2] << 16) | (K[2] >>> 16), (K[0] & 0xffff0000) | (K[1] & 0x0000ffff),
-	                (K[3] << 16) | (K[3] >>> 16), (K[1] & 0xffff0000) | (K[2] & 0x0000ffff),
-	                (K[0] << 16) | (K[0] >>> 16), (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
-	                (K[1] << 16) | (K[1] >>> 16), (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
+	                (K[2] << 16) | (K[2] >>> 16), (K[0] & dsffff0000) | (K[1] & ds0000ffff),
+	                (K[3] << 16) | (K[3] >>> 16), (K[1] & dsffff0000) | (K[2] & ds0000ffff),
+	                (K[0] << 16) | (K[0] >>> 16), (K[2] & dsffff0000) | (K[3] & ds0000ffff),
+	                (K[1] << 16) | (K[1] >>> 16), (K[3] & dsffff0000) | (K[0] & ds0000ffff)
 	            ];
 
 	            // Carry bit
@@ -12767,10 +12767,10 @@ function objectToString(o) {
 	                var IV_1 = IV[1];
 
 	                // Generate four subvectors
-	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & 0x00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & 0xff00ff00);
-	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & 0x00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & 0xff00ff00);
-	                var i1 = (i0 >>> 16) | (i2 & 0xffff0000);
-	                var i3 = (i2 << 16)  | (i0 & 0x0000ffff);
+	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & ds00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & dsff00ff00);
+	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & ds00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & dsff00ff00);
+	                var i1 = (i0 >>> 16) | (i2 & dsffff0000);
+	                var i3 = (i2 << 16)  | (i0 & ds0000ffff);
 
 	                // Modify counter values
 	                C[0] ^= i0;
@@ -12804,8 +12804,8 @@ function objectToString(o) {
 
 	            for (var i = 0; i < 4; i++) {
 	                // Swap endian
-	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & 0x00ff00ff) |
-	                       (((S[i] << 24) | (S[i] >>> 8))  & 0xff00ff00);
+	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & ds00ff00ff) |
+	                       (((S[i] << 24) | (S[i] >>> 8))  & dsff00ff00);
 
 	                // Encrypt
 	                M[offset + i] ^= S[i];
@@ -12828,14 +12828,14 @@ function objectToString(o) {
 	        }
 
 	        // Calculate new counter values
-	        C[0] = (C[0] + 0x4d34d34d + this._b) | 0;
-	        C[1] = (C[1] + 0xd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
-	        C[2] = (C[2] + 0x34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
-	        C[3] = (C[3] + 0x4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
-	        C[4] = (C[4] + 0xd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
-	        C[5] = (C[5] + 0x34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
-	        C[6] = (C[6] + 0x4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
-	        C[7] = (C[7] + 0xd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
+	        C[0] = (C[0] + ds4d34d34d + this._b) | 0;
+	        C[1] = (C[1] + dsd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
+	        C[2] = (C[2] + ds34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
+	        C[3] = (C[3] + ds4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
+	        C[4] = (C[4] + dsd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
+	        C[5] = (C[5] + ds34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
+	        C[6] = (C[6] + ds4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
+	        C[7] = (C[7] + dsd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
 	        this._b = (C[7] >>> 0) < (C_[7] >>> 0) ? 1 : 0;
 
 	        // Calculate the g-values
@@ -12843,12 +12843,12 @@ function objectToString(o) {
 	            var gx = X[i] + C[i];
 
 	            // Construct high and low argument for squaring
-	            var ga = gx & 0xffff;
+	            var ga = gx & dsffff;
 	            var gb = gx >>> 16;
 
 	            // Calculate high and low result of squaring
 	            var gh = ((((ga * ga) >>> 17) + ga * gb) >>> 15) + gb * gb;
-	            var gl = (((gx & 0xffff0000) * gx) | 0) + (((gx & 0x0000ffff) * gx) | 0);
+	            var gl = (((gx & dsffff0000) * gx) | 0) + (((gx & ds0000ffff) * gx) | 0);
 
 	            // High XOR low
 	            G[i] = gh ^ gl;
@@ -12919,8 +12919,8 @@ function objectToString(o) {
 
 	            // Swap endian
 	            for (var i = 0; i < 4; i++) {
-	                K[i] = (((K[i] << 8)  | (K[i] >>> 24)) & 0x00ff00ff) |
-	                       (((K[i] << 24) | (K[i] >>> 8))  & 0xff00ff00);
+	                K[i] = (((K[i] << 8)  | (K[i] >>> 24)) & ds00ff00ff) |
+	                       (((K[i] << 24) | (K[i] >>> 8))  & dsff00ff00);
 	            }
 
 	            // Generate initial state values
@@ -12933,10 +12933,10 @@ function objectToString(o) {
 
 	            // Generate initial counter values
 	            var C = this._C = [
-	                (K[2] << 16) | (K[2] >>> 16), (K[0] & 0xffff0000) | (K[1] & 0x0000ffff),
-	                (K[3] << 16) | (K[3] >>> 16), (K[1] & 0xffff0000) | (K[2] & 0x0000ffff),
-	                (K[0] << 16) | (K[0] >>> 16), (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
-	                (K[1] << 16) | (K[1] >>> 16), (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
+	                (K[2] << 16) | (K[2] >>> 16), (K[0] & dsffff0000) | (K[1] & ds0000ffff),
+	                (K[3] << 16) | (K[3] >>> 16), (K[1] & dsffff0000) | (K[2] & ds0000ffff),
+	                (K[0] << 16) | (K[0] >>> 16), (K[2] & dsffff0000) | (K[3] & ds0000ffff),
+	                (K[1] << 16) | (K[1] >>> 16), (K[3] & dsffff0000) | (K[0] & ds0000ffff)
 	            ];
 
 	            // Carry bit
@@ -12960,10 +12960,10 @@ function objectToString(o) {
 	                var IV_1 = IV[1];
 
 	                // Generate four subvectors
-	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & 0x00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & 0xff00ff00);
-	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & 0x00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & 0xff00ff00);
-	                var i1 = (i0 >>> 16) | (i2 & 0xffff0000);
-	                var i3 = (i2 << 16)  | (i0 & 0x0000ffff);
+	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & ds00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & dsff00ff00);
+	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & ds00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & dsff00ff00);
+	                var i1 = (i0 >>> 16) | (i2 & dsffff0000);
+	                var i3 = (i2 << 16)  | (i0 & ds0000ffff);
 
 	                // Modify counter values
 	                C[0] ^= i0;
@@ -12997,8 +12997,8 @@ function objectToString(o) {
 
 	            for (var i = 0; i < 4; i++) {
 	                // Swap endian
-	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & 0x00ff00ff) |
-	                       (((S[i] << 24) | (S[i] >>> 8))  & 0xff00ff00);
+	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & ds00ff00ff) |
+	                       (((S[i] << 24) | (S[i] >>> 8))  & dsff00ff00);
 
 	                // Encrypt
 	                M[offset + i] ^= S[i];
@@ -13021,14 +13021,14 @@ function objectToString(o) {
 	        }
 
 	        // Calculate new counter values
-	        C[0] = (C[0] + 0x4d34d34d + this._b) | 0;
-	        C[1] = (C[1] + 0xd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
-	        C[2] = (C[2] + 0x34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
-	        C[3] = (C[3] + 0x4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
-	        C[4] = (C[4] + 0xd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
-	        C[5] = (C[5] + 0x34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
-	        C[6] = (C[6] + 0x4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
-	        C[7] = (C[7] + 0xd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
+	        C[0] = (C[0] + ds4d34d34d + this._b) | 0;
+	        C[1] = (C[1] + dsd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
+	        C[2] = (C[2] + ds34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
+	        C[3] = (C[3] + ds4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
+	        C[4] = (C[4] + dsd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
+	        C[5] = (C[5] + ds34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
+	        C[6] = (C[6] + ds4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
+	        C[7] = (C[7] + dsd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
 	        this._b = (C[7] >>> 0) < (C_[7] >>> 0) ? 1 : 0;
 
 	        // Calculate the g-values
@@ -13036,12 +13036,12 @@ function objectToString(o) {
 	            var gx = X[i] + C[i];
 
 	            // Construct high and low argument for squaring
-	            var ga = gx & 0xffff;
+	            var ga = gx & dsffff;
 	            var gb = gx >>> 16;
 
 	            // Calculate high and low result of squaring
 	            var gh = ((((ga * ga) >>> 17) + ga * gb) >>> 15) + gb * gb;
-	            var gl = (((gx & 0xffff0000) * gx) | 0) + (((gx & 0x0000ffff) * gx) | 0);
+	            var gl = (((gx & dsffff0000) * gx) | 0) + (((gx & ds0000ffff) * gx) | 0);
 
 	            // High XOR low
 	            G[i] = gh ^ gl;
@@ -13115,7 +13115,7 @@ function objectToString(o) {
 	            // Key setup
 	            for (var i = 0, j = 0; i < 256; i++) {
 	                var keyByteIndex = i % keySigBytes;
-	                var keyByte = (keyWords[keyByteIndex >>> 2] >>> (24 - (keyByteIndex % 4) * 8)) & 0xff;
+	                var keyByte = (keyWords[keyByteIndex >>> 2] >>> (24 - (keyByteIndex % 4) * 8)) & dsff;
 
 	                j = (j + S[i] + keyByte) % 256;
 
@@ -13274,15 +13274,15 @@ function objectToString(o) {
 	        15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
 	        8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11 ]);
 
-	    var _hl =  WordArray.create([ 0x00000000, 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xA953FD4E]);
-	    var _hr =  WordArray.create([ 0x50A28BE6, 0x5C4DD124, 0x6D703EF3, 0x7A6D76E9, 0x00000000]);
+	    var _hl =  WordArray.create([ ds00000000, ds5A827999, ds6ED9EBA1, ds8F1BBCDC, dsA953FD4E]);
+	    var _hr =  WordArray.create([ ds50A28BE6, ds5C4DD124, ds6D703EF3, ds7A6D76E9, ds00000000]);
 
 	    /**
 	     * RIPEMD160 hash algorithm.
 	     */
 	    var RIPEMD160 = C_algo.RIPEMD160 = Hasher.extend({
 	        _doReset: function () {
-	            this._hash  = WordArray.create([0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]);
+	            this._hash  = WordArray.create([ds67452301, dsEFCDAB89, ds98BADCFE, ds10325476, dsC3D2E1F0]);
 	        },
 
 	        _doProcessBlock: function (M, offset) {
@@ -13295,8 +13295,8 @@ function objectToString(o) {
 
 	                // Swap
 	                M[offset_i] = (
-	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
-	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & ds00ff00ff) |
+	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & dsff00ff00)
 	                );
 	            }
 	            // Shortcut
@@ -13380,10 +13380,10 @@ function objectToString(o) {
 	            var nBitsLeft = data.sigBytes * 8;
 
 	            // Add padding
-	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[nBitsLeft >>> 5] |= ds80 << (24 - nBitsLeft % 32);
 	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
-	                (((nBitsTotal << 8)  | (nBitsTotal >>> 24)) & 0x00ff00ff) |
-	                (((nBitsTotal << 24) | (nBitsTotal >>> 8))  & 0xff00ff00)
+	                (((nBitsTotal << 8)  | (nBitsTotal >>> 24)) & ds00ff00ff) |
+	                (((nBitsTotal << 24) | (nBitsTotal >>> 8))  & dsff00ff00)
 	            );
 	            data.sigBytes = (dataWords.length + 1) * 4;
 
@@ -13400,8 +13400,8 @@ function objectToString(o) {
 	                var H_i = H[i];
 
 	                // Swap
-	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
-	                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & ds00ff00ff) |
+	                       (((H_i << 24) | (H_i >>> 8))  & dsff00ff00);
 	            }
 
 	            // Return final computed hash
@@ -13514,9 +13514,9 @@ function objectToString(o) {
 	    var SHA1 = C_algo.SHA1 = Hasher.extend({
 	        _doReset: function () {
 	            this._hash = new WordArray.init([
-	                0x67452301, 0xefcdab89,
-	                0x98badcfe, 0x10325476,
-	                0xc3d2e1f0
+	                ds67452301, dsefcdab89,
+	                ds98badcfe, ds10325476,
+	                dsc3d2e1f0
 	            ]);
 	        },
 
@@ -13542,13 +13542,13 @@ function objectToString(o) {
 
 	                var t = ((a << 5) | (a >>> 27)) + e + W[i];
 	                if (i < 20) {
-	                    t += ((b & c) | (~b & d)) + 0x5a827999;
+	                    t += ((b & c) | (~b & d)) + ds5a827999;
 	                } else if (i < 40) {
-	                    t += (b ^ c ^ d) + 0x6ed9eba1;
+	                    t += (b ^ c ^ d) + ds6ed9eba1;
 	                } else if (i < 60) {
-	                    t += ((b & c) | (b & d) | (c & d)) - 0x70e44324;
+	                    t += ((b & c) | (b & d) | (c & d)) - ds70e44324;
 	                } else /* if (i < 80) */ {
-	                    t += (b ^ c ^ d) - 0x359d3e2a;
+	                    t += (b ^ c ^ d) - ds359d3e2a;
 	                }
 
 	                e = d;
@@ -13575,8 +13575,8 @@ function objectToString(o) {
 	            var nBitsLeft = data.sigBytes * 8;
 
 	            // Add padding
-	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[nBitsLeft >>> 5] |= ds80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / ds100000000);
 	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
 	            data.sigBytes = dataWords.length * 4;
 
@@ -13662,8 +13662,8 @@ function objectToString(o) {
 	    var SHA224 = C_algo.SHA224 = SHA256.extend({
 	        _doReset: function () {
 	            this._hash = new WordArray.init([
-	                0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
-	                0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
+	                dsc1059ed8, ds367cd507, ds3070dd17, dsf70e5939,
+	                dsffc00b31, ds68581511, ds64f98fa7, dsbefa4fa4
 	            ]);
 	        },
 
@@ -13755,7 +13755,7 @@ function objectToString(o) {
 	        }
 
 	        function getFractionalBits(n) {
-	            return ((n - (n | 0)) * 0x100000000) | 0;
+	            return ((n - (n | 0)) * ds100000000) | 0;
 	        }
 
 	        var n = 2;
@@ -13804,10 +13804,10 @@ function objectToString(o) {
 	                if (i < 16) {
 	                    W[i] = M[offset + i] | 0;
 	                } else {
-	                    var gamma0x = W[i - 15];
-	                    var gamma0  = ((gamma0x << 25) | (gamma0x >>> 7))  ^
-	                                  ((gamma0x << 14) | (gamma0x >>> 18)) ^
-	                                   (gamma0x >>> 3);
+	                    var gammads = W[i - 15];
+	                    var gamma0  = ((gammads << 25) | (gammads >>> 7))  ^
+	                                  ((gammads << 14) | (gammads >>> 18)) ^
+	                                   (gammads >>> 3);
 
 	                    var gamma1x = W[i - 2];
 	                    var gamma1  = ((gamma1x << 15) | (gamma1x >>> 17)) ^
@@ -13856,8 +13856,8 @@ function objectToString(o) {
 	            var nBitsLeft = data.sigBytes * 8;
 
 	            // Add padding
-	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[nBitsLeft >>> 5] |= ds80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / ds100000000);
 	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
 	            data.sigBytes = dataWords.length * 4;
 
@@ -13965,13 +13965,13 @@ function objectToString(o) {
 	        }
 
 	        // Compute round constants
-	        var LFSR = 0x01;
+	        var LFSR = ds01;
 	        for (var i = 0; i < 24; i++) {
 	            var roundConstantMsw = 0;
 	            var roundConstantLsw = 0;
 
 	            for (var j = 0; j < 7; j++) {
-	                if (LFSR & 0x01) {
+	                if (LFSR & ds01) {
 	                    var bitPosition = (1 << j) - 1;
 	                    if (bitPosition < 32) {
 	                        roundConstantLsw ^= 1 << bitPosition;
@@ -13981,9 +13981,9 @@ function objectToString(o) {
 	                }
 
 	                // Compute next LFSR
-	                if (LFSR & 0x80) {
+	                if (LFSR & ds80) {
 	                    // Primitive polynomial over GF(2): x^8 + x^6 + x^5 + x^4 + 1
-	                    LFSR = (LFSR << 1) ^ 0x71;
+	                    LFSR = (LFSR << 1) ^ ds71;
 	                } else {
 	                    LFSR <<= 1;
 	                }
@@ -14039,12 +14039,12 @@ function objectToString(o) {
 
 	                // Swap endian
 	                M2i = (
-	                    (((M2i << 8)  | (M2i >>> 24)) & 0x00ff00ff) |
-	                    (((M2i << 24) | (M2i >>> 8))  & 0xff00ff00)
+	                    (((M2i << 8)  | (M2i >>> 24)) & ds00ff00ff) |
+	                    (((M2i << 24) | (M2i >>> 8))  & dsff00ff00)
 	                );
 	                M2i1 = (
-	                    (((M2i1 << 8)  | (M2i1 >>> 24)) & 0x00ff00ff) |
-	                    (((M2i1 << 24) | (M2i1 >>> 8))  & 0xff00ff00)
+	                    (((M2i1 << 8)  | (M2i1 >>> 24)) & ds00ff00ff) |
+	                    (((M2i1 << 24) | (M2i1 >>> 8))  & dsff00ff00)
 	                );
 
 	                // Absorb message into state
@@ -14149,8 +14149,8 @@ function objectToString(o) {
 	            var blockSizeBits = this.blockSize * 32;
 
 	            // Add padding
-	            dataWords[nBitsLeft >>> 5] |= 0x1 << (24 - nBitsLeft % 32);
-	            dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= 0x80;
+	            dataWords[nBitsLeft >>> 5] |= ds1 << (24 - nBitsLeft % 32);
+	            dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= ds80;
 	            data.sigBytes = dataWords.length * 4;
 
 	            // Hash final blocks
@@ -14171,12 +14171,12 @@ function objectToString(o) {
 
 	                // Swap endian
 	                laneMsw = (
-	                    (((laneMsw << 8)  | (laneMsw >>> 24)) & 0x00ff00ff) |
-	                    (((laneMsw << 24) | (laneMsw >>> 8))  & 0xff00ff00)
+	                    (((laneMsw << 8)  | (laneMsw >>> 24)) & ds00ff00ff) |
+	                    (((laneMsw << 24) | (laneMsw >>> 8))  & dsff00ff00)
 	                );
 	                laneLsw = (
-	                    (((laneLsw << 8)  | (laneLsw >>> 24)) & 0x00ff00ff) |
-	                    (((laneLsw << 24) | (laneLsw >>> 8))  & 0xff00ff00)
+	                    (((laneLsw << 8)  | (laneLsw >>> 24)) & ds00ff00ff) |
+	                    (((laneLsw << 24) | (laneLsw >>> 8))  & dsff00ff00)
 	                );
 
 	                // Squeeze state to retrieve hash
@@ -14268,10 +14268,10 @@ function objectToString(o) {
 	    var SHA384 = C_algo.SHA384 = SHA512.extend({
 	        _doReset: function () {
 	            this._hash = new X64WordArray.init([
-	                new X64Word.init(0xcbbb9d5d, 0xc1059ed8), new X64Word.init(0x629a292a, 0x367cd507),
-	                new X64Word.init(0x9159015a, 0x3070dd17), new X64Word.init(0x152fecd8, 0xf70e5939),
-	                new X64Word.init(0x67332667, 0xffc00b31), new X64Word.init(0x8eb44a87, 0x68581511),
-	                new X64Word.init(0xdb0c2e0d, 0x64f98fa7), new X64Word.init(0x47b5481d, 0xbefa4fa4)
+	                new X64Word.init(dscbbb9d5d, dsc1059ed8), new X64Word.init(ds629a292a, ds367cd507),
+	                new X64Word.init(ds9159015a, ds3070dd17), new X64Word.init(ds152fecd8, dsf70e5939),
+	                new X64Word.init(ds67332667, dsffc00b31), new X64Word.init(ds8eb44a87, ds68581511),
+	                new X64Word.init(dsdb0c2e0d, ds64f98fa7), new X64Word.init(ds47b5481d, dsbefa4fa4)
 	            ]);
 	        },
 
@@ -14353,46 +14353,46 @@ function objectToString(o) {
 
 	    // Constants
 	    var K = [
-	        X64Word_create(0x428a2f98, 0xd728ae22), X64Word_create(0x71374491, 0x23ef65cd),
-	        X64Word_create(0xb5c0fbcf, 0xec4d3b2f), X64Word_create(0xe9b5dba5, 0x8189dbbc),
-	        X64Word_create(0x3956c25b, 0xf348b538), X64Word_create(0x59f111f1, 0xb605d019),
-	        X64Word_create(0x923f82a4, 0xaf194f9b), X64Word_create(0xab1c5ed5, 0xda6d8118),
-	        X64Word_create(0xd807aa98, 0xa3030242), X64Word_create(0x12835b01, 0x45706fbe),
-	        X64Word_create(0x243185be, 0x4ee4b28c), X64Word_create(0x550c7dc3, 0xd5ffb4e2),
-	        X64Word_create(0x72be5d74, 0xf27b896f), X64Word_create(0x80deb1fe, 0x3b1696b1),
-	        X64Word_create(0x9bdc06a7, 0x25c71235), X64Word_create(0xc19bf174, 0xcf692694),
-	        X64Word_create(0xe49b69c1, 0x9ef14ad2), X64Word_create(0xefbe4786, 0x384f25e3),
-	        X64Word_create(0x0fc19dc6, 0x8b8cd5b5), X64Word_create(0x240ca1cc, 0x77ac9c65),
-	        X64Word_create(0x2de92c6f, 0x592b0275), X64Word_create(0x4a7484aa, 0x6ea6e483),
-	        X64Word_create(0x5cb0a9dc, 0xbd41fbd4), X64Word_create(0x76f988da, 0x831153b5),
-	        X64Word_create(0x983e5152, 0xee66dfab), X64Word_create(0xa831c66d, 0x2db43210),
-	        X64Word_create(0xb00327c8, 0x98fb213f), X64Word_create(0xbf597fc7, 0xbeef0ee4),
-	        X64Word_create(0xc6e00bf3, 0x3da88fc2), X64Word_create(0xd5a79147, 0x930aa725),
-	        X64Word_create(0x06ca6351, 0xe003826f), X64Word_create(0x14292967, 0x0a0e6e70),
-	        X64Word_create(0x27b70a85, 0x46d22ffc), X64Word_create(0x2e1b2138, 0x5c26c926),
-	        X64Word_create(0x4d2c6dfc, 0x5ac42aed), X64Word_create(0x53380d13, 0x9d95b3df),
-	        X64Word_create(0x650a7354, 0x8baf63de), X64Word_create(0x766a0abb, 0x3c77b2a8),
-	        X64Word_create(0x81c2c92e, 0x47edaee6), X64Word_create(0x92722c85, 0x1482353b),
-	        X64Word_create(0xa2bfe8a1, 0x4cf10364), X64Word_create(0xa81a664b, 0xbc423001),
-	        X64Word_create(0xc24b8b70, 0xd0f89791), X64Word_create(0xc76c51a3, 0x0654be30),
-	        X64Word_create(0xd192e819, 0xd6ef5218), X64Word_create(0xd6990624, 0x5565a910),
-	        X64Word_create(0xf40e3585, 0x5771202a), X64Word_create(0x106aa070, 0x32bbd1b8),
-	        X64Word_create(0x19a4c116, 0xb8d2d0c8), X64Word_create(0x1e376c08, 0x5141ab53),
-	        X64Word_create(0x2748774c, 0xdf8eeb99), X64Word_create(0x34b0bcb5, 0xe19b48a8),
-	        X64Word_create(0x391c0cb3, 0xc5c95a63), X64Word_create(0x4ed8aa4a, 0xe3418acb),
-	        X64Word_create(0x5b9cca4f, 0x7763e373), X64Word_create(0x682e6ff3, 0xd6b2b8a3),
-	        X64Word_create(0x748f82ee, 0x5defb2fc), X64Word_create(0x78a5636f, 0x43172f60),
-	        X64Word_create(0x84c87814, 0xa1f0ab72), X64Word_create(0x8cc70208, 0x1a6439ec),
-	        X64Word_create(0x90befffa, 0x23631e28), X64Word_create(0xa4506ceb, 0xde82bde9),
-	        X64Word_create(0xbef9a3f7, 0xb2c67915), X64Word_create(0xc67178f2, 0xe372532b),
-	        X64Word_create(0xca273ece, 0xea26619c), X64Word_create(0xd186b8c7, 0x21c0c207),
-	        X64Word_create(0xeada7dd6, 0xcde0eb1e), X64Word_create(0xf57d4f7f, 0xee6ed178),
-	        X64Word_create(0x06f067aa, 0x72176fba), X64Word_create(0x0a637dc5, 0xa2c898a6),
-	        X64Word_create(0x113f9804, 0xbef90dae), X64Word_create(0x1b710b35, 0x131c471b),
-	        X64Word_create(0x28db77f5, 0x23047d84), X64Word_create(0x32caab7b, 0x40c72493),
-	        X64Word_create(0x3c9ebe0a, 0x15c9bebc), X64Word_create(0x431d67c4, 0x9c100d4c),
-	        X64Word_create(0x4cc5d4be, 0xcb3e42b6), X64Word_create(0x597f299c, 0xfc657e2a),
-	        X64Word_create(0x5fcb6fab, 0x3ad6faec), X64Word_create(0x6c44198c, 0x4a475817)
+	        X64Word_create(ds428a2f98, dsd728ae22), X64Word_create(ds71374491, ds23ef65cd),
+	        X64Word_create(dsb5c0fbcf, dsec4d3b2f), X64Word_create(dse9b5dba5, ds8189dbbc),
+	        X64Word_create(ds3956c25b, dsf348b538), X64Word_create(ds59f111f1, dsb605d019),
+	        X64Word_create(ds923f82a4, dsaf194f9b), X64Word_create(dsab1c5ed5, dsda6d8118),
+	        X64Word_create(dsd807aa98, dsa3030242), X64Word_create(ds12835b01, ds45706fbe),
+	        X64Word_create(ds243185be, ds4ee4b28c), X64Word_create(ds550c7dc3, dsd5ffb4e2),
+	        X64Word_create(ds72be5d74, dsf27b896f), X64Word_create(ds80deb1fe, ds3b1696b1),
+	        X64Word_create(ds9bdc06a7, ds25c71235), X64Word_create(dsc19bf174, dscf692694),
+	        X64Word_create(dse49b69c1, ds9ef14ad2), X64Word_create(dsefbe4786, ds384f25e3),
+	        X64Word_create(ds0fc19dc6, ds8b8cd5b5), X64Word_create(ds240ca1cc, ds77ac9c65),
+	        X64Word_create(ds2de92c6f, ds592b0275), X64Word_create(ds4a7484aa, ds6ea6e483),
+	        X64Word_create(ds5cb0a9dc, dsbd41fbd4), X64Word_create(ds76f988da, ds831153b5),
+	        X64Word_create(ds983e5152, dsee66dfab), X64Word_create(dsa831c66d, ds2db43210),
+	        X64Word_create(dsb00327c8, ds98fb213f), X64Word_create(dsbf597fc7, dsbeef0ee4),
+	        X64Word_create(dsc6e00bf3, ds3da88fc2), X64Word_create(dsd5a79147, ds930aa725),
+	        X64Word_create(ds06ca6351, dse003826f), X64Word_create(ds14292967, ds0a0e6e70),
+	        X64Word_create(ds27b70a85, ds46d22ffc), X64Word_create(ds2e1b2138, ds5c26c926),
+	        X64Word_create(ds4d2c6dfc, ds5ac42aed), X64Word_create(ds53380d13, ds9d95b3df),
+	        X64Word_create(ds650a7354, ds8baf63de), X64Word_create(ds766a0abb, ds3c77b2a8),
+	        X64Word_create(ds81c2c92e, ds47edaee6), X64Word_create(ds92722c85, ds1482353b),
+	        X64Word_create(dsa2bfe8a1, ds4cf10364), X64Word_create(dsa81a664b, dsbc423001),
+	        X64Word_create(dsc24b8b70, dsd0f89791), X64Word_create(dsc76c51a3, ds0654be30),
+	        X64Word_create(dsd192e819, dsd6ef5218), X64Word_create(dsd6990624, ds5565a910),
+	        X64Word_create(dsf40e3585, ds5771202a), X64Word_create(ds106aa070, ds32bbd1b8),
+	        X64Word_create(ds19a4c116, dsb8d2d0c8), X64Word_create(ds1e376c08, ds5141ab53),
+	        X64Word_create(ds2748774c, dsdf8eeb99), X64Word_create(ds34b0bcb5, dse19b48a8),
+	        X64Word_create(ds391c0cb3, dsc5c95a63), X64Word_create(ds4ed8aa4a, dse3418acb),
+	        X64Word_create(ds5b9cca4f, ds7763e373), X64Word_create(ds682e6ff3, dsd6b2b8a3),
+	        X64Word_create(ds748f82ee, ds5defb2fc), X64Word_create(ds78a5636f, ds43172f60),
+	        X64Word_create(ds84c87814, dsa1f0ab72), X64Word_create(ds8cc70208, ds1a6439ec),
+	        X64Word_create(ds90befffa, ds23631e28), X64Word_create(dsa4506ceb, dsde82bde9),
+	        X64Word_create(dsbef9a3f7, dsb2c67915), X64Word_create(dsc67178f2, dse372532b),
+	        X64Word_create(dsca273ece, dsea26619c), X64Word_create(dsd186b8c7, ds21c0c207),
+	        X64Word_create(dseada7dd6, dscde0eb1e), X64Word_create(dsf57d4f7f, dsee6ed178),
+	        X64Word_create(ds06f067aa, ds72176fba), X64Word_create(ds0a637dc5, dsa2c898a6),
+	        X64Word_create(ds113f9804, dsbef90dae), X64Word_create(ds1b710b35, ds131c471b),
+	        X64Word_create(ds28db77f5, ds23047d84), X64Word_create(ds32caab7b, ds40c72493),
+	        X64Word_create(ds3c9ebe0a, ds15c9bebc), X64Word_create(ds431d67c4, ds9c100d4c),
+	        X64Word_create(ds4cc5d4be, dscb3e42b6), X64Word_create(ds597f299c, dsfc657e2a),
+	        X64Word_create(ds5fcb6fab, ds3ad6faec), X64Word_create(ds6c44198c, ds4a475817)
 	    ];
 
 	    // Reusable objects
@@ -14409,10 +14409,10 @@ function objectToString(o) {
 	    var SHA512 = C_algo.SHA512 = Hasher.extend({
 	        _doReset: function () {
 	            this._hash = new X64WordArray.init([
-	                new X64Word.init(0x6a09e667, 0xf3bcc908), new X64Word.init(0xbb67ae85, 0x84caa73b),
-	                new X64Word.init(0x3c6ef372, 0xfe94f82b), new X64Word.init(0xa54ff53a, 0x5f1d36f1),
-	                new X64Word.init(0x510e527f, 0xade682d1), new X64Word.init(0x9b05688c, 0x2b3e6c1f),
-	                new X64Word.init(0x1f83d9ab, 0xfb41bd6b), new X64Word.init(0x5be0cd19, 0x137e2179)
+	                new X64Word.init(ds6a09e667, dsf3bcc908), new X64Word.init(dsbb67ae85, ds84caa73b),
+	                new X64Word.init(ds3c6ef372, dsfe94f82b), new X64Word.init(dsa54ff53a, ds5f1d36f1),
+	                new X64Word.init(ds510e527f, dsade682d1), new X64Word.init(ds9b05688c, ds2b3e6c1f),
+	                new X64Word.init(ds1f83d9ab, dsfb41bd6b), new X64Word.init(ds5be0cd19, ds137e2179)
 	            ]);
 	        },
 
@@ -14475,11 +14475,11 @@ function objectToString(o) {
 	                    var Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
 	                } else {
 	                    // Gamma0
-	                    var gamma0x  = W[i - 15];
-	                    var gamma0xh = gamma0x.high;
-	                    var gamma0xl = gamma0x.low;
-	                    var gamma0h  = ((gamma0xh >>> 1) | (gamma0xl << 31)) ^ ((gamma0xh >>> 8) | (gamma0xl << 24)) ^ (gamma0xh >>> 7);
-	                    var gamma0l  = ((gamma0xl >>> 1) | (gamma0xh << 31)) ^ ((gamma0xl >>> 8) | (gamma0xh << 24)) ^ ((gamma0xl >>> 7) | (gamma0xh << 25));
+	                    var gammads  = W[i - 15];
+	                    var gammadsh = gammads.high;
+	                    var gammadsl = gammads.low;
+	                    var gamma0h  = ((gammadsh >>> 1) | (gammadsl << 31)) ^ ((gammadsh >>> 8) | (gammadsl << 24)) ^ (gammadsh >>> 7);
+	                    var gamma0l  = ((gammadsl >>> 1) | (gammadsh << 31)) ^ ((gammadsl >>> 8) | (gammadsh << 24)) ^ ((gammadsl >>> 7) | (gammadsh << 25));
 
 	                    // Gamma1
 	                    var gamma1x  = W[i - 2];
@@ -14583,8 +14583,8 @@ function objectToString(o) {
 	            var nBitsLeft = data.sigBytes * 8;
 
 	            // Add padding
-	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 30] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[nBitsLeft >>> 5] |= ds80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 30] = Math.floor(nBitsTotal / ds100000000);
 	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 31] = nBitsTotal;
 	            data.sigBytes = dataWords.length * 4;
 
@@ -14698,539 +14698,539 @@ function objectToString(o) {
 	    // SBOXes and round permutation constants
 	    var SBOX_P = [
 	        {
-	            0x0: 0x808200,
-	            0x10000000: 0x8000,
-	            0x20000000: 0x808002,
-	            0x30000000: 0x2,
-	            0x40000000: 0x200,
-	            0x50000000: 0x808202,
-	            0x60000000: 0x800202,
-	            0x70000000: 0x800000,
-	            0x80000000: 0x202,
-	            0x90000000: 0x800200,
-	            0xa0000000: 0x8200,
-	            0xb0000000: 0x808000,
-	            0xc0000000: 0x8002,
-	            0xd0000000: 0x800002,
-	            0xe0000000: 0x0,
-	            0xf0000000: 0x8202,
-	            0x8000000: 0x0,
-	            0x18000000: 0x808202,
-	            0x28000000: 0x8202,
-	            0x38000000: 0x8000,
-	            0x48000000: 0x808200,
-	            0x58000000: 0x200,
-	            0x68000000: 0x808002,
-	            0x78000000: 0x2,
-	            0x88000000: 0x800200,
-	            0x98000000: 0x8200,
-	            0xa8000000: 0x808000,
-	            0xb8000000: 0x800202,
-	            0xc8000000: 0x800002,
-	            0xd8000000: 0x8002,
-	            0xe8000000: 0x202,
-	            0xf8000000: 0x800000,
-	            0x1: 0x8000,
-	            0x10000001: 0x2,
-	            0x20000001: 0x808200,
-	            0x30000001: 0x800000,
-	            0x40000001: 0x808002,
-	            0x50000001: 0x8200,
-	            0x60000001: 0x200,
-	            0x70000001: 0x800202,
-	            0x80000001: 0x808202,
-	            0x90000001: 0x808000,
-	            0xa0000001: 0x800002,
-	            0xb0000001: 0x8202,
-	            0xc0000001: 0x202,
-	            0xd0000001: 0x800200,
-	            0xe0000001: 0x8002,
-	            0xf0000001: 0x0,
-	            0x8000001: 0x808202,
-	            0x18000001: 0x808000,
-	            0x28000001: 0x800000,
-	            0x38000001: 0x200,
-	            0x48000001: 0x8000,
-	            0x58000001: 0x800002,
-	            0x68000001: 0x2,
-	            0x78000001: 0x8202,
-	            0x88000001: 0x8002,
-	            0x98000001: 0x800202,
-	            0xa8000001: 0x202,
-	            0xb8000001: 0x808200,
-	            0xc8000001: 0x800200,
-	            0xd8000001: 0x0,
-	            0xe8000001: 0x8200,
-	            0xf8000001: 0x808002
+	            ds0: ds808200,
+	            ds10000000: ds8000,
+	            ds20000000: ds808002,
+	            ds30000000: ds2,
+	            ds40000000: ds200,
+	            ds50000000: ds808202,
+	            ds60000000: ds800202,
+	            ds70000000: ds800000,
+	            ds80000000: ds202,
+	            ds90000000: ds800200,
+	            dsa0000000: ds8200,
+	            dsb0000000: ds808000,
+	            dsc0000000: ds8002,
+	            dsd0000000: ds800002,
+	            dse0000000: ds0,
+	            dsf0000000: ds8202,
+	            ds8000000: ds0,
+	            ds18000000: ds808202,
+	            ds28000000: ds8202,
+	            ds38000000: ds8000,
+	            ds48000000: ds808200,
+	            ds58000000: ds200,
+	            ds68000000: ds808002,
+	            ds78000000: ds2,
+	            ds88000000: ds800200,
+	            ds98000000: ds8200,
+	            dsa8000000: ds808000,
+	            dsb8000000: ds800202,
+	            dsc8000000: ds800002,
+	            dsd8000000: ds8002,
+	            dse8000000: ds202,
+	            dsf8000000: ds800000,
+	            ds1: ds8000,
+	            ds10000001: ds2,
+	            ds20000001: ds808200,
+	            ds30000001: ds800000,
+	            ds40000001: ds808002,
+	            ds50000001: ds8200,
+	            ds60000001: ds200,
+	            ds70000001: ds800202,
+	            ds80000001: ds808202,
+	            ds90000001: ds808000,
+	            dsa0000001: ds800002,
+	            dsb0000001: ds8202,
+	            dsc0000001: ds202,
+	            dsd0000001: ds800200,
+	            dse0000001: ds8002,
+	            dsf0000001: ds0,
+	            ds8000001: ds808202,
+	            ds18000001: ds808000,
+	            ds28000001: ds800000,
+	            ds38000001: ds200,
+	            ds48000001: ds8000,
+	            ds58000001: ds800002,
+	            ds68000001: ds2,
+	            ds78000001: ds8202,
+	            ds88000001: ds8002,
+	            ds98000001: ds800202,
+	            dsa8000001: ds202,
+	            dsb8000001: ds808200,
+	            dsc8000001: ds800200,
+	            dsd8000001: ds0,
+	            dse8000001: ds8200,
+	            dsf8000001: ds808002
 	        },
 	        {
-	            0x0: 0x40084010,
-	            0x1000000: 0x4000,
-	            0x2000000: 0x80000,
-	            0x3000000: 0x40080010,
-	            0x4000000: 0x40000010,
-	            0x5000000: 0x40084000,
-	            0x6000000: 0x40004000,
-	            0x7000000: 0x10,
-	            0x8000000: 0x84000,
-	            0x9000000: 0x40004010,
-	            0xa000000: 0x40000000,
-	            0xb000000: 0x84010,
-	            0xc000000: 0x80010,
-	            0xd000000: 0x0,
-	            0xe000000: 0x4010,
-	            0xf000000: 0x40080000,
-	            0x800000: 0x40004000,
-	            0x1800000: 0x84010,
-	            0x2800000: 0x10,
-	            0x3800000: 0x40004010,
-	            0x4800000: 0x40084010,
-	            0x5800000: 0x40000000,
-	            0x6800000: 0x80000,
-	            0x7800000: 0x40080010,
-	            0x8800000: 0x80010,
-	            0x9800000: 0x0,
-	            0xa800000: 0x4000,
-	            0xb800000: 0x40080000,
-	            0xc800000: 0x40000010,
-	            0xd800000: 0x84000,
-	            0xe800000: 0x40084000,
-	            0xf800000: 0x4010,
-	            0x10000000: 0x0,
-	            0x11000000: 0x40080010,
-	            0x12000000: 0x40004010,
-	            0x13000000: 0x40084000,
-	            0x14000000: 0x40080000,
-	            0x15000000: 0x10,
-	            0x16000000: 0x84010,
-	            0x17000000: 0x4000,
-	            0x18000000: 0x4010,
-	            0x19000000: 0x80000,
-	            0x1a000000: 0x80010,
-	            0x1b000000: 0x40000010,
-	            0x1c000000: 0x84000,
-	            0x1d000000: 0x40004000,
-	            0x1e000000: 0x40000000,
-	            0x1f000000: 0x40084010,
-	            0x10800000: 0x84010,
-	            0x11800000: 0x80000,
-	            0x12800000: 0x40080000,
-	            0x13800000: 0x4000,
-	            0x14800000: 0x40004000,
-	            0x15800000: 0x40084010,
-	            0x16800000: 0x10,
-	            0x17800000: 0x40000000,
-	            0x18800000: 0x40084000,
-	            0x19800000: 0x40000010,
-	            0x1a800000: 0x40004010,
-	            0x1b800000: 0x80010,
-	            0x1c800000: 0x0,
-	            0x1d800000: 0x4010,
-	            0x1e800000: 0x40080010,
-	            0x1f800000: 0x84000
+	            ds0: ds40084010,
+	            ds1000000: ds4000,
+	            ds2000000: ds80000,
+	            ds3000000: ds40080010,
+	            ds4000000: ds40000010,
+	            ds5000000: ds40084000,
+	            ds6000000: ds40004000,
+	            ds7000000: ds10,
+	            ds8000000: ds84000,
+	            ds9000000: ds40004010,
+	            dsa000000: ds40000000,
+	            dsb000000: ds84010,
+	            dsc000000: ds80010,
+	            dsd000000: ds0,
+	            dse000000: ds4010,
+	            dsf000000: ds40080000,
+	            ds800000: ds40004000,
+	            ds1800000: ds84010,
+	            ds2800000: ds10,
+	            ds3800000: ds40004010,
+	            ds4800000: ds40084010,
+	            ds5800000: ds40000000,
+	            ds6800000: ds80000,
+	            ds7800000: ds40080010,
+	            ds8800000: ds80010,
+	            ds9800000: ds0,
+	            dsa800000: ds4000,
+	            dsb800000: ds40080000,
+	            dsc800000: ds40000010,
+	            dsd800000: ds84000,
+	            dse800000: ds40084000,
+	            dsf800000: ds4010,
+	            ds10000000: ds0,
+	            ds11000000: ds40080010,
+	            ds12000000: ds40004010,
+	            ds13000000: ds40084000,
+	            ds14000000: ds40080000,
+	            ds15000000: ds10,
+	            ds16000000: ds84010,
+	            ds17000000: ds4000,
+	            ds18000000: ds4010,
+	            ds19000000: ds80000,
+	            ds1a000000: ds80010,
+	            ds1b000000: ds40000010,
+	            ds1c000000: ds84000,
+	            ds1d000000: ds40004000,
+	            ds1e000000: ds40000000,
+	            ds1f000000: ds40084010,
+	            ds10800000: ds84010,
+	            ds11800000: ds80000,
+	            ds12800000: ds40080000,
+	            ds13800000: ds4000,
+	            ds14800000: ds40004000,
+	            ds15800000: ds40084010,
+	            ds16800000: ds10,
+	            ds17800000: ds40000000,
+	            ds18800000: ds40084000,
+	            ds19800000: ds40000010,
+	            ds1a800000: ds40004010,
+	            ds1b800000: ds80010,
+	            ds1c800000: ds0,
+	            ds1d800000: ds4010,
+	            ds1e800000: ds40080010,
+	            ds1f800000: ds84000
 	        },
 	        {
-	            0x0: 0x104,
-	            0x100000: 0x0,
-	            0x200000: 0x4000100,
-	            0x300000: 0x10104,
-	            0x400000: 0x10004,
-	            0x500000: 0x4000004,
-	            0x600000: 0x4010104,
-	            0x700000: 0x4010000,
-	            0x800000: 0x4000000,
-	            0x900000: 0x4010100,
-	            0xa00000: 0x10100,
-	            0xb00000: 0x4010004,
-	            0xc00000: 0x4000104,
-	            0xd00000: 0x10000,
-	            0xe00000: 0x4,
-	            0xf00000: 0x100,
-	            0x80000: 0x4010100,
-	            0x180000: 0x4010004,
-	            0x280000: 0x0,
-	            0x380000: 0x4000100,
-	            0x480000: 0x4000004,
-	            0x580000: 0x10000,
-	            0x680000: 0x10004,
-	            0x780000: 0x104,
-	            0x880000: 0x4,
-	            0x980000: 0x100,
-	            0xa80000: 0x4010000,
-	            0xb80000: 0x10104,
-	            0xc80000: 0x10100,
-	            0xd80000: 0x4000104,
-	            0xe80000: 0x4010104,
-	            0xf80000: 0x4000000,
-	            0x1000000: 0x4010100,
-	            0x1100000: 0x10004,
-	            0x1200000: 0x10000,
-	            0x1300000: 0x4000100,
-	            0x1400000: 0x100,
-	            0x1500000: 0x4010104,
-	            0x1600000: 0x4000004,
-	            0x1700000: 0x0,
-	            0x1800000: 0x4000104,
-	            0x1900000: 0x4000000,
-	            0x1a00000: 0x4,
-	            0x1b00000: 0x10100,
-	            0x1c00000: 0x4010000,
-	            0x1d00000: 0x104,
-	            0x1e00000: 0x10104,
-	            0x1f00000: 0x4010004,
-	            0x1080000: 0x4000000,
-	            0x1180000: 0x104,
-	            0x1280000: 0x4010100,
-	            0x1380000: 0x0,
-	            0x1480000: 0x10004,
-	            0x1580000: 0x4000100,
-	            0x1680000: 0x100,
-	            0x1780000: 0x4010004,
-	            0x1880000: 0x10000,
-	            0x1980000: 0x4010104,
-	            0x1a80000: 0x10104,
-	            0x1b80000: 0x4000004,
-	            0x1c80000: 0x4000104,
-	            0x1d80000: 0x4010000,
-	            0x1e80000: 0x4,
-	            0x1f80000: 0x10100
+	            ds0: ds104,
+	            ds100000: ds0,
+	            ds200000: ds4000100,
+	            ds300000: ds10104,
+	            ds400000: ds10004,
+	            ds500000: ds4000004,
+	            ds600000: ds4010104,
+	            ds700000: ds4010000,
+	            ds800000: ds4000000,
+	            ds900000: ds4010100,
+	            dsa00000: ds10100,
+	            dsb00000: ds4010004,
+	            dsc00000: ds4000104,
+	            dsd00000: ds10000,
+	            dse00000: ds4,
+	            dsf00000: ds100,
+	            ds80000: ds4010100,
+	            ds180000: ds4010004,
+	            ds280000: ds0,
+	            ds380000: ds4000100,
+	            ds480000: ds4000004,
+	            ds580000: ds10000,
+	            ds680000: ds10004,
+	            ds780000: ds104,
+	            ds880000: ds4,
+	            ds980000: ds100,
+	            dsa80000: ds4010000,
+	            dsb80000: ds10104,
+	            dsc80000: ds10100,
+	            dsd80000: ds4000104,
+	            dse80000: ds4010104,
+	            dsf80000: ds4000000,
+	            ds1000000: ds4010100,
+	            ds1100000: ds10004,
+	            ds1200000: ds10000,
+	            ds1300000: ds4000100,
+	            ds1400000: ds100,
+	            ds1500000: ds4010104,
+	            ds1600000: ds4000004,
+	            ds1700000: ds0,
+	            ds1800000: ds4000104,
+	            ds1900000: ds4000000,
+	            ds1a00000: ds4,
+	            ds1b00000: ds10100,
+	            ds1c00000: ds4010000,
+	            ds1d00000: ds104,
+	            ds1e00000: ds10104,
+	            ds1f00000: ds4010004,
+	            ds1080000: ds4000000,
+	            ds1180000: ds104,
+	            ds1280000: ds4010100,
+	            ds1380000: ds0,
+	            ds1480000: ds10004,
+	            ds1580000: ds4000100,
+	            ds1680000: ds100,
+	            ds1780000: ds4010004,
+	            ds1880000: ds10000,
+	            ds1980000: ds4010104,
+	            ds1a80000: ds10104,
+	            ds1b80000: ds4000004,
+	            ds1c80000: ds4000104,
+	            ds1d80000: ds4010000,
+	            ds1e80000: ds4,
+	            ds1f80000: ds10100
 	        },
 	        {
-	            0x0: 0x80401000,
-	            0x10000: 0x80001040,
-	            0x20000: 0x401040,
-	            0x30000: 0x80400000,
-	            0x40000: 0x0,
-	            0x50000: 0x401000,
-	            0x60000: 0x80000040,
-	            0x70000: 0x400040,
-	            0x80000: 0x80000000,
-	            0x90000: 0x400000,
-	            0xa0000: 0x40,
-	            0xb0000: 0x80001000,
-	            0xc0000: 0x80400040,
-	            0xd0000: 0x1040,
-	            0xe0000: 0x1000,
-	            0xf0000: 0x80401040,
-	            0x8000: 0x80001040,
-	            0x18000: 0x40,
-	            0x28000: 0x80400040,
-	            0x38000: 0x80001000,
-	            0x48000: 0x401000,
-	            0x58000: 0x80401040,
-	            0x68000: 0x0,
-	            0x78000: 0x80400000,
-	            0x88000: 0x1000,
-	            0x98000: 0x80401000,
-	            0xa8000: 0x400000,
-	            0xb8000: 0x1040,
-	            0xc8000: 0x80000000,
-	            0xd8000: 0x400040,
-	            0xe8000: 0x401040,
-	            0xf8000: 0x80000040,
-	            0x100000: 0x400040,
-	            0x110000: 0x401000,
-	            0x120000: 0x80000040,
-	            0x130000: 0x0,
-	            0x140000: 0x1040,
-	            0x150000: 0x80400040,
-	            0x160000: 0x80401000,
-	            0x170000: 0x80001040,
-	            0x180000: 0x80401040,
-	            0x190000: 0x80000000,
-	            0x1a0000: 0x80400000,
-	            0x1b0000: 0x401040,
-	            0x1c0000: 0x80001000,
-	            0x1d0000: 0x400000,
-	            0x1e0000: 0x40,
-	            0x1f0000: 0x1000,
-	            0x108000: 0x80400000,
-	            0x118000: 0x80401040,
-	            0x128000: 0x0,
-	            0x138000: 0x401000,
-	            0x148000: 0x400040,
-	            0x158000: 0x80000000,
-	            0x168000: 0x80001040,
-	            0x178000: 0x40,
-	            0x188000: 0x80000040,
-	            0x198000: 0x1000,
-	            0x1a8000: 0x80001000,
-	            0x1b8000: 0x80400040,
-	            0x1c8000: 0x1040,
-	            0x1d8000: 0x80401000,
-	            0x1e8000: 0x400000,
-	            0x1f8000: 0x401040
+	            ds0: ds80401000,
+	            ds10000: ds80001040,
+	            ds20000: ds401040,
+	            ds30000: ds80400000,
+	            ds40000: ds0,
+	            ds50000: ds401000,
+	            ds60000: ds80000040,
+	            ds70000: ds400040,
+	            ds80000: ds80000000,
+	            ds90000: ds400000,
+	            dsa0000: ds40,
+	            dsb0000: ds80001000,
+	            dsc0000: ds80400040,
+	            dsd0000: ds1040,
+	            dse0000: ds1000,
+	            dsf0000: ds80401040,
+	            ds8000: ds80001040,
+	            ds18000: ds40,
+	            ds28000: ds80400040,
+	            ds38000: ds80001000,
+	            ds48000: ds401000,
+	            ds58000: ds80401040,
+	            ds68000: ds0,
+	            ds78000: ds80400000,
+	            ds88000: ds1000,
+	            ds98000: ds80401000,
+	            dsa8000: ds400000,
+	            dsb8000: ds1040,
+	            dsc8000: ds80000000,
+	            dsd8000: ds400040,
+	            dse8000: ds401040,
+	            dsf8000: ds80000040,
+	            ds100000: ds400040,
+	            ds110000: ds401000,
+	            ds120000: ds80000040,
+	            ds130000: ds0,
+	            ds140000: ds1040,
+	            ds150000: ds80400040,
+	            ds160000: ds80401000,
+	            ds170000: ds80001040,
+	            ds180000: ds80401040,
+	            ds190000: ds80000000,
+	            ds1a0000: ds80400000,
+	            ds1b0000: ds401040,
+	            ds1c0000: ds80001000,
+	            ds1d0000: ds400000,
+	            ds1e0000: ds40,
+	            ds1f0000: ds1000,
+	            ds108000: ds80400000,
+	            ds118000: ds80401040,
+	            ds128000: ds0,
+	            ds138000: ds401000,
+	            ds148000: ds400040,
+	            ds158000: ds80000000,
+	            ds168000: ds80001040,
+	            ds178000: ds40,
+	            ds188000: ds80000040,
+	            ds198000: ds1000,
+	            ds1a8000: ds80001000,
+	            ds1b8000: ds80400040,
+	            ds1c8000: ds1040,
+	            ds1d8000: ds80401000,
+	            ds1e8000: ds400000,
+	            ds1f8000: ds401040
 	        },
 	        {
-	            0x0: 0x80,
-	            0x1000: 0x1040000,
-	            0x2000: 0x40000,
-	            0x3000: 0x20000000,
-	            0x4000: 0x20040080,
-	            0x5000: 0x1000080,
-	            0x6000: 0x21000080,
-	            0x7000: 0x40080,
-	            0x8000: 0x1000000,
-	            0x9000: 0x20040000,
-	            0xa000: 0x20000080,
-	            0xb000: 0x21040080,
-	            0xc000: 0x21040000,
-	            0xd000: 0x0,
-	            0xe000: 0x1040080,
-	            0xf000: 0x21000000,
-	            0x800: 0x1040080,
-	            0x1800: 0x21000080,
-	            0x2800: 0x80,
-	            0x3800: 0x1040000,
-	            0x4800: 0x40000,
-	            0x5800: 0x20040080,
-	            0x6800: 0x21040000,
-	            0x7800: 0x20000000,
-	            0x8800: 0x20040000,
-	            0x9800: 0x0,
-	            0xa800: 0x21040080,
-	            0xb800: 0x1000080,
-	            0xc800: 0x20000080,
-	            0xd800: 0x21000000,
-	            0xe800: 0x1000000,
-	            0xf800: 0x40080,
-	            0x10000: 0x40000,
-	            0x11000: 0x80,
-	            0x12000: 0x20000000,
-	            0x13000: 0x21000080,
-	            0x14000: 0x1000080,
-	            0x15000: 0x21040000,
-	            0x16000: 0x20040080,
-	            0x17000: 0x1000000,
-	            0x18000: 0x21040080,
-	            0x19000: 0x21000000,
-	            0x1a000: 0x1040000,
-	            0x1b000: 0x20040000,
-	            0x1c000: 0x40080,
-	            0x1d000: 0x20000080,
-	            0x1e000: 0x0,
-	            0x1f000: 0x1040080,
-	            0x10800: 0x21000080,
-	            0x11800: 0x1000000,
-	            0x12800: 0x1040000,
-	            0x13800: 0x20040080,
-	            0x14800: 0x20000000,
-	            0x15800: 0x1040080,
-	            0x16800: 0x80,
-	            0x17800: 0x21040000,
-	            0x18800: 0x40080,
-	            0x19800: 0x21040080,
-	            0x1a800: 0x0,
-	            0x1b800: 0x21000000,
-	            0x1c800: 0x1000080,
-	            0x1d800: 0x40000,
-	            0x1e800: 0x20040000,
-	            0x1f800: 0x20000080
+	            ds0: ds80,
+	            ds1000: ds1040000,
+	            ds2000: ds40000,
+	            ds3000: ds20000000,
+	            ds4000: ds20040080,
+	            ds5000: ds1000080,
+	            ds6000: ds21000080,
+	            ds7000: ds40080,
+	            ds8000: ds1000000,
+	            ds9000: ds20040000,
+	            dsa000: ds20000080,
+	            dsb000: ds21040080,
+	            dsc000: ds21040000,
+	            dsd000: ds0,
+	            dse000: ds1040080,
+	            dsf000: ds21000000,
+	            ds800: ds1040080,
+	            ds1800: ds21000080,
+	            ds2800: ds80,
+	            ds3800: ds1040000,
+	            ds4800: ds40000,
+	            ds5800: ds20040080,
+	            ds6800: ds21040000,
+	            ds7800: ds20000000,
+	            ds8800: ds20040000,
+	            ds9800: ds0,
+	            dsa800: ds21040080,
+	            dsb800: ds1000080,
+	            dsc800: ds20000080,
+	            dsd800: ds21000000,
+	            dse800: ds1000000,
+	            dsf800: ds40080,
+	            ds10000: ds40000,
+	            ds11000: ds80,
+	            ds12000: ds20000000,
+	            ds13000: ds21000080,
+	            ds14000: ds1000080,
+	            ds15000: ds21040000,
+	            ds16000: ds20040080,
+	            ds17000: ds1000000,
+	            ds18000: ds21040080,
+	            ds19000: ds21000000,
+	            ds1a000: ds1040000,
+	            ds1b000: ds20040000,
+	            ds1c000: ds40080,
+	            ds1d000: ds20000080,
+	            ds1e000: ds0,
+	            ds1f000: ds1040080,
+	            ds10800: ds21000080,
+	            ds11800: ds1000000,
+	            ds12800: ds1040000,
+	            ds13800: ds20040080,
+	            ds14800: ds20000000,
+	            ds15800: ds1040080,
+	            ds16800: ds80,
+	            ds17800: ds21040000,
+	            ds18800: ds40080,
+	            ds19800: ds21040080,
+	            ds1a800: ds0,
+	            ds1b800: ds21000000,
+	            ds1c800: ds1000080,
+	            ds1d800: ds40000,
+	            ds1e800: ds20040000,
+	            ds1f800: ds20000080
 	        },
 	        {
-	            0x0: 0x10000008,
-	            0x100: 0x2000,
-	            0x200: 0x10200000,
-	            0x300: 0x10202008,
-	            0x400: 0x10002000,
-	            0x500: 0x200000,
-	            0x600: 0x200008,
-	            0x700: 0x10000000,
-	            0x800: 0x0,
-	            0x900: 0x10002008,
-	            0xa00: 0x202000,
-	            0xb00: 0x8,
-	            0xc00: 0x10200008,
-	            0xd00: 0x202008,
-	            0xe00: 0x2008,
-	            0xf00: 0x10202000,
-	            0x80: 0x10200000,
-	            0x180: 0x10202008,
-	            0x280: 0x8,
-	            0x380: 0x200000,
-	            0x480: 0x202008,
-	            0x580: 0x10000008,
-	            0x680: 0x10002000,
-	            0x780: 0x2008,
-	            0x880: 0x200008,
-	            0x980: 0x2000,
-	            0xa80: 0x10002008,
-	            0xb80: 0x10200008,
-	            0xc80: 0x0,
-	            0xd80: 0x10202000,
-	            0xe80: 0x202000,
-	            0xf80: 0x10000000,
-	            0x1000: 0x10002000,
-	            0x1100: 0x10200008,
-	            0x1200: 0x10202008,
-	            0x1300: 0x2008,
-	            0x1400: 0x200000,
-	            0x1500: 0x10000000,
-	            0x1600: 0x10000008,
-	            0x1700: 0x202000,
-	            0x1800: 0x202008,
-	            0x1900: 0x0,
-	            0x1a00: 0x8,
-	            0x1b00: 0x10200000,
-	            0x1c00: 0x2000,
-	            0x1d00: 0x10002008,
-	            0x1e00: 0x10202000,
-	            0x1f00: 0x200008,
-	            0x1080: 0x8,
-	            0x1180: 0x202000,
-	            0x1280: 0x200000,
-	            0x1380: 0x10000008,
-	            0x1480: 0x10002000,
-	            0x1580: 0x2008,
-	            0x1680: 0x10202008,
-	            0x1780: 0x10200000,
-	            0x1880: 0x10202000,
-	            0x1980: 0x10200008,
-	            0x1a80: 0x2000,
-	            0x1b80: 0x202008,
-	            0x1c80: 0x200008,
-	            0x1d80: 0x0,
-	            0x1e80: 0x10000000,
-	            0x1f80: 0x10002008
+	            ds0: ds10000008,
+	            ds100: ds2000,
+	            ds200: ds10200000,
+	            ds300: ds10202008,
+	            ds400: ds10002000,
+	            ds500: ds200000,
+	            ds600: ds200008,
+	            ds700: ds10000000,
+	            ds800: ds0,
+	            ds900: ds10002008,
+	            dsa00: ds202000,
+	            dsb00: ds8,
+	            dsc00: ds10200008,
+	            dsd00: ds202008,
+	            dse00: ds2008,
+	            dsf00: ds10202000,
+	            ds80: ds10200000,
+	            ds180: ds10202008,
+	            ds280: ds8,
+	            ds380: ds200000,
+	            ds480: ds202008,
+	            ds580: ds10000008,
+	            ds680: ds10002000,
+	            ds780: ds2008,
+	            ds880: ds200008,
+	            ds980: ds2000,
+	            dsa80: ds10002008,
+	            dsb80: ds10200008,
+	            dsc80: ds0,
+	            dsd80: ds10202000,
+	            dse80: ds202000,
+	            dsf80: ds10000000,
+	            ds1000: ds10002000,
+	            ds1100: ds10200008,
+	            ds1200: ds10202008,
+	            ds1300: ds2008,
+	            ds1400: ds200000,
+	            ds1500: ds10000000,
+	            ds1600: ds10000008,
+	            ds1700: ds202000,
+	            ds1800: ds202008,
+	            ds1900: ds0,
+	            ds1a00: ds8,
+	            ds1b00: ds10200000,
+	            ds1c00: ds2000,
+	            ds1d00: ds10002008,
+	            ds1e00: ds10202000,
+	            ds1f00: ds200008,
+	            ds1080: ds8,
+	            ds1180: ds202000,
+	            ds1280: ds200000,
+	            ds1380: ds10000008,
+	            ds1480: ds10002000,
+	            ds1580: ds2008,
+	            ds1680: ds10202008,
+	            ds1780: ds10200000,
+	            ds1880: ds10202000,
+	            ds1980: ds10200008,
+	            ds1a80: ds2000,
+	            ds1b80: ds202008,
+	            ds1c80: ds200008,
+	            ds1d80: ds0,
+	            ds1e80: ds10000000,
+	            ds1f80: ds10002008
 	        },
 	        {
-	            0x0: 0x100000,
-	            0x10: 0x2000401,
-	            0x20: 0x400,
-	            0x30: 0x100401,
-	            0x40: 0x2100401,
-	            0x50: 0x0,
-	            0x60: 0x1,
-	            0x70: 0x2100001,
-	            0x80: 0x2000400,
-	            0x90: 0x100001,
-	            0xa0: 0x2000001,
-	            0xb0: 0x2100400,
-	            0xc0: 0x2100000,
-	            0xd0: 0x401,
-	            0xe0: 0x100400,
-	            0xf0: 0x2000000,
-	            0x8: 0x2100001,
-	            0x18: 0x0,
-	            0x28: 0x2000401,
-	            0x38: 0x2100400,
-	            0x48: 0x100000,
-	            0x58: 0x2000001,
-	            0x68: 0x2000000,
-	            0x78: 0x401,
-	            0x88: 0x100401,
-	            0x98: 0x2000400,
-	            0xa8: 0x2100000,
-	            0xb8: 0x100001,
-	            0xc8: 0x400,
-	            0xd8: 0x2100401,
-	            0xe8: 0x1,
-	            0xf8: 0x100400,
-	            0x100: 0x2000000,
-	            0x110: 0x100000,
-	            0x120: 0x2000401,
-	            0x130: 0x2100001,
-	            0x140: 0x100001,
-	            0x150: 0x2000400,
-	            0x160: 0x2100400,
-	            0x170: 0x100401,
-	            0x180: 0x401,
-	            0x190: 0x2100401,
-	            0x1a0: 0x100400,
-	            0x1b0: 0x1,
-	            0x1c0: 0x0,
-	            0x1d0: 0x2100000,
-	            0x1e0: 0x2000001,
-	            0x1f0: 0x400,
-	            0x108: 0x100400,
-	            0x118: 0x2000401,
-	            0x128: 0x2100001,
-	            0x138: 0x1,
-	            0x148: 0x2000000,
-	            0x158: 0x100000,
-	            0x168: 0x401,
-	            0x178: 0x2100400,
-	            0x188: 0x2000001,
-	            0x198: 0x2100000,
-	            0x1a8: 0x0,
-	            0x1b8: 0x2100401,
-	            0x1c8: 0x100401,
-	            0x1d8: 0x400,
-	            0x1e8: 0x2000400,
-	            0x1f8: 0x100001
+	            ds0: ds100000,
+	            ds10: ds2000401,
+	            ds20: ds400,
+	            ds30: ds100401,
+	            ds40: ds2100401,
+	            ds50: ds0,
+	            ds60: ds1,
+	            ds70: ds2100001,
+	            ds80: ds2000400,
+	            ds90: ds100001,
+	            dsa0: ds2000001,
+	            dsb0: ds2100400,
+	            dsc0: ds2100000,
+	            dsd0: ds401,
+	            dse0: ds100400,
+	            dsf0: ds2000000,
+	            ds8: ds2100001,
+	            ds18: ds0,
+	            ds28: ds2000401,
+	            ds38: ds2100400,
+	            ds48: ds100000,
+	            ds58: ds2000001,
+	            ds68: ds2000000,
+	            ds78: ds401,
+	            ds88: ds100401,
+	            ds98: ds2000400,
+	            dsa8: ds2100000,
+	            dsb8: ds100001,
+	            dsc8: ds400,
+	            dsd8: ds2100401,
+	            dse8: ds1,
+	            dsf8: ds100400,
+	            ds100: ds2000000,
+	            ds110: ds100000,
+	            ds120: ds2000401,
+	            ds130: ds2100001,
+	            ds140: ds100001,
+	            ds150: ds2000400,
+	            ds160: ds2100400,
+	            ds170: ds100401,
+	            ds180: ds401,
+	            ds190: ds2100401,
+	            ds1a0: ds100400,
+	            ds1b0: ds1,
+	            ds1c0: ds0,
+	            ds1d0: ds2100000,
+	            ds1e0: ds2000001,
+	            ds1f0: ds400,
+	            ds108: ds100400,
+	            ds118: ds2000401,
+	            ds128: ds2100001,
+	            ds138: ds1,
+	            ds148: ds2000000,
+	            ds158: ds100000,
+	            ds168: ds401,
+	            ds178: ds2100400,
+	            ds188: ds2000001,
+	            ds198: ds2100000,
+	            ds1a8: ds0,
+	            ds1b8: ds2100401,
+	            ds1c8: ds100401,
+	            ds1d8: ds400,
+	            ds1e8: ds2000400,
+	            ds1f8: ds100001
 	        },
 	        {
-	            0x0: 0x8000820,
-	            0x1: 0x20000,
-	            0x2: 0x8000000,
-	            0x3: 0x20,
-	            0x4: 0x20020,
-	            0x5: 0x8020820,
-	            0x6: 0x8020800,
-	            0x7: 0x800,
-	            0x8: 0x8020000,
-	            0x9: 0x8000800,
-	            0xa: 0x20800,
-	            0xb: 0x8020020,
-	            0xc: 0x820,
-	            0xd: 0x0,
-	            0xe: 0x8000020,
-	            0xf: 0x20820,
-	            0x80000000: 0x800,
-	            0x80000001: 0x8020820,
-	            0x80000002: 0x8000820,
-	            0x80000003: 0x8000000,
-	            0x80000004: 0x8020000,
-	            0x80000005: 0x20800,
-	            0x80000006: 0x20820,
-	            0x80000007: 0x20,
-	            0x80000008: 0x8000020,
-	            0x80000009: 0x820,
-	            0x8000000a: 0x20020,
-	            0x8000000b: 0x8020800,
-	            0x8000000c: 0x0,
-	            0x8000000d: 0x8020020,
-	            0x8000000e: 0x8000800,
-	            0x8000000f: 0x20000,
-	            0x10: 0x20820,
-	            0x11: 0x8020800,
-	            0x12: 0x20,
-	            0x13: 0x800,
-	            0x14: 0x8000800,
-	            0x15: 0x8000020,
-	            0x16: 0x8020020,
-	            0x17: 0x20000,
-	            0x18: 0x0,
-	            0x19: 0x20020,
-	            0x1a: 0x8020000,
-	            0x1b: 0x8000820,
-	            0x1c: 0x8020820,
-	            0x1d: 0x20800,
-	            0x1e: 0x820,
-	            0x1f: 0x8000000,
-	            0x80000010: 0x20000,
-	            0x80000011: 0x800,
-	            0x80000012: 0x8020020,
-	            0x80000013: 0x20820,
-	            0x80000014: 0x20,
-	            0x80000015: 0x8020000,
-	            0x80000016: 0x8000000,
-	            0x80000017: 0x8000820,
-	            0x80000018: 0x8020820,
-	            0x80000019: 0x8000020,
-	            0x8000001a: 0x8000800,
-	            0x8000001b: 0x0,
-	            0x8000001c: 0x20800,
-	            0x8000001d: 0x820,
-	            0x8000001e: 0x20020,
-	            0x8000001f: 0x8020800
+	            ds0: ds8000820,
+	            ds1: ds20000,
+	            ds2: ds8000000,
+	            ds3: ds20,
+	            ds4: ds20020,
+	            ds5: ds8020820,
+	            ds6: ds8020800,
+	            ds7: ds800,
+	            ds8: ds8020000,
+	            ds9: ds8000800,
+	            dsa: ds20800,
+	            dsb: ds8020020,
+	            dsc: ds820,
+	            dsd: ds0,
+	            dse: ds8000020,
+	            dsf: ds20820,
+	            ds80000000: ds800,
+	            ds80000001: ds8020820,
+	            ds80000002: ds8000820,
+	            ds80000003: ds8000000,
+	            ds80000004: ds8020000,
+	            ds80000005: ds20800,
+	            ds80000006: ds20820,
+	            ds80000007: ds20,
+	            ds80000008: ds8000020,
+	            ds80000009: ds820,
+	            ds8000000a: ds20020,
+	            ds8000000b: ds8020800,
+	            ds8000000c: ds0,
+	            ds8000000d: ds8020020,
+	            ds8000000e: ds8000800,
+	            ds8000000f: ds20000,
+	            ds10: ds20820,
+	            ds11: ds8020800,
+	            ds12: ds20,
+	            ds13: ds800,
+	            ds14: ds8000800,
+	            ds15: ds8000020,
+	            ds16: ds8020020,
+	            ds17: ds20000,
+	            ds18: ds0,
+	            ds19: ds20020,
+	            ds1a: ds8020000,
+	            ds1b: ds8000820,
+	            ds1c: ds8020820,
+	            ds1d: ds20800,
+	            ds1e: ds820,
+	            ds1f: ds8000000,
+	            ds80000010: ds20000,
+	            ds80000011: ds800,
+	            ds80000012: ds8020020,
+	            ds80000013: ds20820,
+	            ds80000014: ds20,
+	            ds80000015: ds8020000,
+	            ds80000016: ds8000000,
+	            ds80000017: ds8000820,
+	            ds80000018: ds8020820,
+	            ds80000019: ds8000020,
+	            ds8000001a: ds8000800,
+	            ds8000001b: ds0,
+	            ds8000001c: ds20800,
+	            ds8000001d: ds820,
+	            ds8000001e: ds20020,
+	            ds8000001f: ds8020800
 	        }
 	    ];
 
 	    // Masks that select the SBOX input
 	    var SBOX_MASK = [
-	        0xf8000001, 0x1f800000, 0x01f80000, 0x001f8000,
-	        0x0001f800, 0x00001f80, 0x000001f8, 0x8000001f
+	        dsf8000001, ds1f800000, ds01f80000, ds001f8000,
+	        ds0001f800, ds00001f80, ds000001f8, ds8000001f
 	    ];
 
 	    /**
@@ -15298,11 +15298,11 @@ function objectToString(o) {
 	            this._rBlock = M[offset + 1];
 
 	            // Initial permutation
-	            exchangeLR.call(this, 4,  0x0f0f0f0f);
-	            exchangeLR.call(this, 16, 0x0000ffff);
-	            exchangeRL.call(this, 2,  0x33333333);
-	            exchangeRL.call(this, 8,  0x00ff00ff);
-	            exchangeLR.call(this, 1,  0x55555555);
+	            exchangeLR.call(this, 4,  ds0f0f0f0f);
+	            exchangeLR.call(this, 16, ds0000ffff);
+	            exchangeRL.call(this, 2,  ds33333333);
+	            exchangeRL.call(this, 8,  ds00ff00ff);
+	            exchangeLR.call(this, 1,  ds55555555);
 
 	            // Rounds
 	            for (var round = 0; round < 16; round++) {
@@ -15326,11 +15326,11 @@ function objectToString(o) {
 	            this._rBlock = t;
 
 	            // Final permutation
-	            exchangeLR.call(this, 1,  0x55555555);
-	            exchangeRL.call(this, 8,  0x00ff00ff);
-	            exchangeRL.call(this, 2,  0x33333333);
-	            exchangeLR.call(this, 16, 0x0000ffff);
-	            exchangeLR.call(this, 4,  0x0f0f0f0f);
+	            exchangeLR.call(this, 1,  ds55555555);
+	            exchangeRL.call(this, 8,  ds00ff00ff);
+	            exchangeRL.call(this, 2,  ds33333333);
+	            exchangeLR.call(this, 16, ds0000ffff);
+	            exchangeLR.call(this, 4,  ds0f0f0f0f);
 
 	            // Set output
 	            M[offset] = this._lBlock;
@@ -15456,7 +15456,7 @@ function objectToString(o) {
 	         *
 	         * @example
 	         *
-	         *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
+	         *     var x64Word = CryptoJS.x64.Word.create(ds00010203, ds04050607);
 	         */
 	        init: function (high, low) {
 	            this.high = high;
@@ -15647,13 +15647,13 @@ function objectToString(o) {
 	         *     var wordArray = CryptoJS.x64.WordArray.create();
 	         *
 	         *     var wordArray = CryptoJS.x64.WordArray.create([
-	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
-	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *         CryptoJS.x64.Word.create(ds00010203, ds04050607),
+	         *         CryptoJS.x64.Word.create(ds18191a1b, ds1c1d1e1f)
 	         *     ]);
 	         *
 	         *     var wordArray = CryptoJS.x64.WordArray.create([
-	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
-	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *         CryptoJS.x64.Word.create(ds00010203, ds04050607),
+	         *         CryptoJS.x64.Word.create(ds18191a1b, ds1c1d1e1f)
 	         *     ], 10);
 	         */
 	        init: function (words, sigBytes) {
@@ -16356,11 +16356,11 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
     }
   }
 
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+  for (; mLen >= 8; buffer[offset + i] = m & dsff, i += d, m /= 256, mLen -= 8) {}
 
   e = (e << mLen) | m
   eLen += mLen
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+  for (; eLen > 0; buffer[offset + i] = e & dsff, i += d, e /= 256, eLen -= 8) {}
 
   buffer[offset + i - d] |= s * 128
 }
@@ -16733,7 +16733,7 @@ process.umask = function() { return 0; };
 	var punycode,
 
 	/** Highest positive signed 32-bit float value */
-	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+	maxInt = 2147483647, // aka. ds7FFFFFFF or 2^31-1
 
 	/** Bootstring parameters */
 	base = 36,
@@ -16742,7 +16742,7 @@ process.umask = function() { return 0; };
 	skew = 38,
 	damp = 700,
 	initialBias = 72,
-	initialN = 128, // 0x80
+	initialN = 128, // ds80
 	delimiter = '-', // '\x2D'
 
 	/** Regular expressions */
@@ -16753,7 +16753,7 @@ process.umask = function() { return 0; };
 	/** Error messages */
 	errors = {
 		'overflow': 'Overflow: input needs wider integers to process',
-		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+		'not-basic': 'Illegal input >= ds80 (not a basic code point)',
 		'invalid-input': 'Invalid input'
 	},
 
@@ -16841,11 +16841,11 @@ process.umask = function() { return 0; };
 		    extra;
 		while (counter < length) {
 			value = string.charCodeAt(counter++);
-			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+			if (value >= dsD800 && value <= dsDBFF && counter < length) {
 				// high surrogate, and there is a next character
 				extra = string.charCodeAt(counter++);
-				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				if ((extra & dsFC00) == dsDC00) { // low surrogate
+					output.push(((value & ds3FF) << 10) + (extra & ds3FF) + ds10000);
 				} else {
 					// unmatched surrogate; only append this code unit, in case the next
 					// code unit is the high surrogate of a surrogate pair
@@ -16870,10 +16870,10 @@ process.umask = function() { return 0; };
 	function ucs2encode(array) {
 		return map(array, function(value) {
 			var output = '';
-			if (value > 0xFFFF) {
-				value -= 0x10000;
-				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-				value = 0xDC00 | value & 0x3FF;
+			if (value > dsFFFF) {
+				value -= ds10000;
+				output += stringFromCharCode(value >>> 10 & ds3FF | dsD800);
+				value = dsDC00 | value & ds3FF;
 			}
 			output += stringFromCharCode(value);
 			return output;
@@ -16971,7 +16971,7 @@ process.umask = function() { return 0; };
 
 		for (j = 0; j < basic; ++j) {
 			// if it's not a basic code point
-			if (input.charCodeAt(j) >= 0x80) {
+			if (input.charCodeAt(j) >= ds80) {
 				error('not-basic');
 			}
 			output.push(input.charCodeAt(j));
@@ -17076,7 +17076,7 @@ process.umask = function() { return 0; };
 		// Handle the basic code points
 		for (j = 0; j < inputLength; ++j) {
 			currentValue = input[j];
-			if (currentValue < 0x80) {
+			if (currentValue < ds80) {
 				output.push(stringFromCharCode(currentValue));
 			}
 		}
@@ -17939,7 +17939,7 @@ Readable.prototype.setEncoding = function (enc) {
 };
 
 // Don't raise the hwm > 8MB
-var MAX_HWM = 0x800000;
+var MAX_HWM = ds800000;
 function computeNewHighWaterMark(n) {
   if (n >= MAX_HWM) {
     n = MAX_HWM;
@@ -20443,7 +20443,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 				if (self._charset === 'x-user-defined') {
 					var buffer = new Buffer(newData.length)
 					for (var i = 0; i < newData.length; i++)
-						buffer[i] = newData.charCodeAt(i) & 0xff
+						buffer[i] = newData.charCodeAt(i) & dsff
 
 					self.push(buffer)
 				} else {
@@ -20632,8 +20632,8 @@ StringDecoder.prototype.fillLast = function (buf) {
 // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
 // continuation byte. If an invalid byte is detected, -2 is returned.
 function utf8CheckByte(byte) {
-  if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return byte >> 6 === 0x02 ? -1 : -2;
+  if (byte <= ds7F) return 0;else if (byte >> 5 === ds06) return 2;else if (byte >> 4 === ds0E) return 3;else if (byte >> 3 === ds1E) return 4;
+  return byte >> 6 === ds02 ? -1 : -2;
 }
 
 // Checks at most 3 bytes at the end of a Buffer in order to detect an
@@ -20673,17 +20673,17 @@ function utf8CheckIncomplete(self, buf, i) {
 // It is also done this way as a slight performance increase instead of using a
 // loop.
 function utf8CheckExtraBytes(self, buf, p) {
-  if ((buf[0] & 0xC0) !== 0x80) {
+  if ((buf[0] & dsC0) !== ds80) {
     self.lastNeed = 0;
     return '\ufffd';
   }
   if (self.lastNeed > 1 && buf.length > 1) {
-    if ((buf[1] & 0xC0) !== 0x80) {
+    if ((buf[1] & dsC0) !== ds80) {
       self.lastNeed = 1;
       return '\ufffd';
     }
     if (self.lastNeed > 2 && buf.length > 2) {
-      if ((buf[2] & 0xC0) !== 0x80) {
+      if ((buf[2] & dsC0) !== ds80) {
         self.lastNeed = 2;
         return '\ufffd';
       }
@@ -20733,7 +20733,7 @@ function utf16Text(buf, i) {
     var r = buf.toString('utf16le', i);
     if (r) {
       var c = r.charCodeAt(r.length - 1);
-      if (c >= 0xD800 && c <= 0xDBFF) {
+      if (c >= dsD800 && c <= dsDBFF) {
         this.lastNeed = 2;
         this.lastTotal = 4;
         this.lastChar[0] = buf[buf.length - 2];
@@ -21681,11 +21681,11 @@ module.exports = {
 		var extra;
 		while (counter < length) {
 			value = string.charCodeAt(counter++);
-			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+			if (value >= dsD800 && value <= dsDBFF && counter < length) {
 				// high surrogate, and there is a next character
 				extra = string.charCodeAt(counter++);
-				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				if ((extra & dsFC00) == dsDC00) { // low surrogate
+					output.push(((value & ds3FF) << 10) + (extra & ds3FF) + ds10000);
 				} else {
 					// unmatched surrogate; only append this code unit, in case the next
 					// code unit is the high surrogate of a surrogate pair
@@ -21707,10 +21707,10 @@ module.exports = {
 		var output = '';
 		while (++index < length) {
 			value = array[index];
-			if (value > 0xFFFF) {
-				value -= 0x10000;
-				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-				value = 0xDC00 | value & 0x3FF;
+			if (value > dsFFFF) {
+				value -= ds10000;
+				output += stringFromCharCode(value >>> 10 & ds3FF | dsD800);
+				value = dsDC00 | value & ds3FF;
 			}
 			output += stringFromCharCode(value);
 		}
@@ -21718,7 +21718,7 @@ module.exports = {
 	}
 
 	function checkScalarValue(codePoint) {
-		if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+		if (codePoint >= dsD800 && codePoint <= dsDFFF) {
 			throw Error(
 				'Lone surrogate U+' + codePoint.toString(16).toUpperCase() +
 				' is not a scalar value'
@@ -21728,28 +21728,28 @@ module.exports = {
 	/*--------------------------------------------------------------------------*/
 
 	function createByte(codePoint, shift) {
-		return stringFromCharCode(((codePoint >> shift) & 0x3F) | 0x80);
+		return stringFromCharCode(((codePoint >> shift) & ds3F) | ds80);
 	}
 
 	function encodeCodePoint(codePoint) {
-		if ((codePoint & 0xFFFFFF80) == 0) { // 1-byte sequence
+		if ((codePoint & dsFFFFFF80) == 0) { // 1-byte sequence
 			return stringFromCharCode(codePoint);
 		}
 		var symbol = '';
-		if ((codePoint & 0xFFFFF800) == 0) { // 2-byte sequence
-			symbol = stringFromCharCode(((codePoint >> 6) & 0x1F) | 0xC0);
+		if ((codePoint & dsFFFFF800) == 0) { // 2-byte sequence
+			symbol = stringFromCharCode(((codePoint >> 6) & ds1F) | dsC0);
 		}
-		else if ((codePoint & 0xFFFF0000) == 0) { // 3-byte sequence
+		else if ((codePoint & dsFFFF0000) == 0) { // 3-byte sequence
 			checkScalarValue(codePoint);
-			symbol = stringFromCharCode(((codePoint >> 12) & 0x0F) | 0xE0);
+			symbol = stringFromCharCode(((codePoint >> 12) & ds0F) | dsE0);
 			symbol += createByte(codePoint, 6);
 		}
-		else if ((codePoint & 0xFFE00000) == 0) { // 4-byte sequence
-			symbol = stringFromCharCode(((codePoint >> 18) & 0x07) | 0xF0);
+		else if ((codePoint & dsFFE00000) == 0) { // 4-byte sequence
+			symbol = stringFromCharCode(((codePoint >> 18) & ds07) | dsF0);
 			symbol += createByte(codePoint, 12);
 			symbol += createByte(codePoint, 6);
 		}
-		symbol += stringFromCharCode((codePoint & 0x3F) | 0x80);
+		symbol += stringFromCharCode((codePoint & ds3F) | ds80);
 		return symbol;
 	}
 
@@ -21773,11 +21773,11 @@ module.exports = {
 			throw Error('Invalid byte index');
 		}
 
-		var continuationByte = byteArray[byteIndex] & 0xFF;
+		var continuationByte = byteArray[byteIndex] & dsFF;
 		byteIndex++;
 
-		if ((continuationByte & 0xC0) == 0x80) {
-			return continuationByte & 0x3F;
+		if ((continuationByte & dsC0) == ds80) {
+			return continuationByte & ds3F;
 		}
 
 		// If we end up here, it’s not a continuation byte
@@ -21800,19 +21800,19 @@ module.exports = {
 		}
 
 		// Read first byte
-		byte1 = byteArray[byteIndex] & 0xFF;
+		byte1 = byteArray[byteIndex] & dsFF;
 		byteIndex++;
 
 		// 1-byte sequence (no continuation bytes)
-		if ((byte1 & 0x80) == 0) {
+		if ((byte1 & ds80) == 0) {
 			return byte1;
 		}
 
 		// 2-byte sequence
-		if ((byte1 & 0xE0) == 0xC0) {
+		if ((byte1 & dsE0) == dsC0) {
 			byte2 = readContinuationByte();
-			codePoint = ((byte1 & 0x1F) << 6) | byte2;
-			if (codePoint >= 0x80) {
+			codePoint = ((byte1 & ds1F) << 6) | byte2;
+			if (codePoint >= ds80) {
 				return codePoint;
 			} else {
 				throw Error('Invalid continuation byte');
@@ -21820,11 +21820,11 @@ module.exports = {
 		}
 
 		// 3-byte sequence (may include unpaired surrogates)
-		if ((byte1 & 0xF0) == 0xE0) {
+		if ((byte1 & dsF0) == dsE0) {
 			byte2 = readContinuationByte();
 			byte3 = readContinuationByte();
-			codePoint = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
-			if (codePoint >= 0x0800) {
+			codePoint = ((byte1 & ds0F) << 12) | (byte2 << 6) | byte3;
+			if (codePoint >= ds0800) {
 				checkScalarValue(codePoint);
 				return codePoint;
 			} else {
@@ -21833,13 +21833,13 @@ module.exports = {
 		}
 
 		// 4-byte sequence
-		if ((byte1 & 0xF8) == 0xF0) {
+		if ((byte1 & dsF8) == dsF0) {
 			byte2 = readContinuationByte();
 			byte3 = readContinuationByte();
 			byte4 = readContinuationByte();
-			codePoint = ((byte1 & 0x07) << 0x12) | (byte2 << 0x0C) |
-				(byte3 << 0x06) | byte4;
-			if (codePoint >= 0x010000 && codePoint <= 0x10FFFF) {
+			codePoint = ((byte1 & ds07) << ds12) | (byte2 << ds0C) |
+				(byte3 << ds06) | byte4;
+			if (codePoint >= ds010000 && codePoint <= ds10FFFF) {
 				return codePoint;
 			}
 		}
@@ -22663,8 +22663,8 @@ function extend() {
         ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_',
         BASE = 1e14,
         LOG_BASE = 14,
-        MAX_SAFE_INTEGER = 0x1fffffffffffff,         // 2^53 - 1
-        // MAX_INT32 = 0x7fffffff,                   // 2^31 - 1
+        MAX_SAFE_INTEGER = ds1fffffffffffff,         // 2^53 - 1
+        // MAX_INT32 = ds7fffffff,                   // 2^31 - 1
         POWS_TEN = [1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13],
         SQRT_BASE = 1e7,
 
@@ -23150,16 +23150,16 @@ function extend() {
          * 'random() crypto unavailable: {crypto}'
          */
         BigNumber.random = (function () {
-            var pow2_53 = 0x20000000000000;
+            var pow2_53 = ds20000000000000;
 
             // Return a 53 bit integer n, where 0 <= n < 9007199254740992.
             // Check if Math.random() produces more than 32 bits of randomness.
             // If it does, assume at least 53 bits are produced, otherwise assume at least 30 bits.
-            // 0x40000000 is 2^30, 0x800000 is 2^23, 0x1fffff is 2^21 - 1.
-            var random53bitInt = (Math.random() * pow2_53) & 0x1fffff
+            // ds40000000 is 2^30, ds800000 is 2^23, ds1fffff is 2^21 - 1.
+            var random53bitInt = (Math.random() * pow2_53) & ds1fffff
               ? function () { return mathfloor( Math.random() * pow2_53 ); }
-              : function () { return ((Math.random() * 0x40000000 | 0) * 0x800000) +
-                  (Math.random() * 0x800000 | 0); };
+              : function () { return ((Math.random() * ds40000000 | 0) * ds800000) +
+                  (Math.random() * ds800000 | 0); };
 
             return function (dp) {
                 var a, b, e, k, v,
@@ -23184,8 +23184,8 @@ function extend() {
                             // 11111 11111111 11111111 11111111 11100000 00000000 00000000
                             // ((Math.pow(2, 32) - 1) >>> 11).toString(2)
                             //                                     11111 11111111 11111111
-                            // 0x20000 is 2^21.
-                            v = a[i] * 0x20000 + (a[i + 1] >>> 11);
+                            // ds20000 is 2^21.
+                            v = a[i] * ds20000 + (a[i + 1] >>> 11);
 
                             // Rejection sampling:
                             // 0 <= v < 9007199254740992
@@ -23213,12 +23213,12 @@ function extend() {
 
                         for ( ; i < k; ) {
 
-                            // 0x1000000000000 is 2^48, 0x10000000000 is 2^40
-                            // 0x100000000 is 2^32, 0x1000000 is 2^24
+                            // ds1000000000000 is 2^48, ds10000000000 is 2^40
+                            // ds100000000 is 2^32, ds1000000 is 2^24
                             // 11111 11111111 11111111 11111111 11111111 11111111 11111111
                             // 0 <= v < 9007199254740992
-                            v = ( ( a[i] & 31 ) * 0x1000000000000 ) + ( a[i + 1] * 0x10000000000 ) +
-                                  ( a[i + 2] * 0x100000000 ) + ( a[i + 3] * 0x1000000 ) +
+                            v = ( ( a[i] & 31 ) * ds1000000000000 ) + ( a[i + 1] * ds10000000000 ) +
+                                  ( a[i + 2] * ds100000000 ) + ( a[i + 3] * ds1000000 ) +
                                   ( a[i + 4] << 16 ) + ( a[i + 5] << 8 ) + a[i + 6];
 
                             if ( v >= 9e15 ) {
